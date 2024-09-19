@@ -2,6 +2,47 @@
   "expo": {
     "name": "Burty",
     "slug": "Burty",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000"
+    },
+    "android": {
+      "package": "com.rahimwws.Burty",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#222221"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "com.rahimwws.Burty"
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Show current location on map."
+        }
+      ],
+      [
+        "@rnmapbox/maps",
+        {
+          "RNMapboxMapsDownloadToken": "sk.eyJ1IjoicmFoaW13d3MiLCJhIjoiY20weGN2cDd1MGI0ajJqc2MwdjFlM3R5diJ9.8vpgtZksyraEnmyo6gd-iA",
+          "RNMapboxMapsVersion": "11.6.0"
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ]
+    ]
   }
 }
