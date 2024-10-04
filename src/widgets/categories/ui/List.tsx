@@ -3,9 +3,16 @@ import React from "react";
 import Button from "./Button";
 import Typography from "@/shared/ui/Typography";
 import { useAppNavigation } from "@/shared/lib/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { categories } from "../model/routes";
 
 const List = () => {
   const navigation = useAppNavigation();
+  const { data, isSuccess, isPending } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () => categories.getCategories(),
+  });
+  if (isPending) return null;
   return (
     <>
       <View
@@ -35,11 +42,9 @@ const List = () => {
           gap: 10,
         }}
       >
-        <Button title="Soccer field" />
-        <Button title="Basketball court" />
-        <Button title="Tennis court" />
-        <Button title="Swimming pool" />
-        <Button title="Gym" />
+        {data?.data.slice(0, 5).map((item, index) => {
+          return <Button title={item.title} key={index} />;
+        })}
         <Button title="Other" route="Categories" />
       </View>
     </>

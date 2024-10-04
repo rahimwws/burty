@@ -92,8 +92,10 @@ const SignUpService: FC = () => {
       <View style={{ marginVertical: "2%" }}>
         <LargeButton
           text="Sign Up"
-          isRoute={false}
-          action={validateAndSubmit}
+          isRoute={true}
+          // action={}
+          route="Service"
+          // temporary
         />
       </View>
 

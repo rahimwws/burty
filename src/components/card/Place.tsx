@@ -30,7 +30,6 @@ const PlaceCard = ({
 }) => {
   const { width, height } = Dimensions.get("window");
   const navigation = useAppNavigation();
-  const role = useRoleStore((store) => store.role);
   return (
     <TouchableOpacity
       style={{
@@ -72,6 +71,7 @@ const PlaceCard = ({
               flexDirection: "row",
               padding: 5,
               paddingHorizontal: 10,
+              gap: 5,
             }}
           >
             <Star size={15} fill={used ? "#A0A0A0" : colors.primary} />
@@ -98,7 +98,7 @@ const PlaceCard = ({
               color: used ? "#A0A0A0" : colors.light,
             }}
           >
-            Basketball place
+            {item?.name}
           </Typography>
 
           <View
@@ -132,7 +132,7 @@ const PlaceCard = ({
               font="b"
               styles={{ color: used ? "#A0A0A0" : colors.light }}
             >
-              ${80}-{500}
+              ${item?.minPrice}-{item?.maxPrice}
             </Typography>
           </View>
         </View>

@@ -1,8 +1,9 @@
 import { client } from "@/shared/api";
+import { UserT } from "@/shared/model/types";
 import * as FileSystem from "expo-file-system";
 export const user = {
   async get() {
-    return await client.get<User>("/users/me");
+    return await client.get<UserT>("/users/me");
   },
   async uploadAvatar(uri: string): Promise<void> {
     const formData = new FormData();

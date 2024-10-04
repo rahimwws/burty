@@ -4,7 +4,7 @@ import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
 import Checkbox from "@/shared/ui/CheckBox";
 
-const Select = () => {
+const Select = ({ item }: { item: string }) => {
   const [isChecked, setIsChecked] = React.useState(false);
   return (
     <View
@@ -19,7 +19,7 @@ const Select = () => {
         marginVertical: 5,
       }}
     >
-      <Typography>Category</Typography>
+      <Typography>{item}</Typography>
       <Checkbox
         value={isChecked}
         onValueChange={setIsChecked}

@@ -45,11 +45,11 @@ const refreshAccessToken = async () => {
       }
     );
     ``;
-
     const { accessToken, refreshToken: newRefreshToken } = response.data;
     // Save new tokens
     await saveTokens(accessToken, newRefreshToken);
 
+    console.log(newRefreshToken);
     return accessToken;
   } catch (error) {
     console.error("Failed to refresh access token", error);

@@ -1,13 +1,20 @@
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import React, { useEffect } from "react";
+import React from "react";
 import { PlaceCard } from "@/components/card";
 import Typography from "@/shared/ui/Typography";
 import { useAppNavigation } from "@/shared/lib/navigation";
-import { useNearbySpaces } from "@/service/spaces/lib";
+import { useQuery } from "@tanstack/react-query";
+import { spaces } from "@/service/spaces/model/routes";
+import { useLocationStore } from "@/shared/store/location";
 
 const List = () => {
   const navigation = useAppNavigation();
-  const { data, isPending } = useNearbySpaces();
+  const { latitude, longitude } = useLocationStore.getState();
+  const { data, isPending } = useQuery({
+    queryKey: ["popular"],
+    queryFn: () => spaces.getPopularSpaces(latitude, longitude),
+    enabled: !!latitude && !!longitude,
+  });
 
   if (isPending) {
     return null;
@@ -23,12 +30,12 @@ const List = () => {
         }}
       >
         <Typography font="b" size={20}>
-          Nearby
+          Popular
         </Typography>
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("ListSpaces", {
-              name: "Nearby",
+              name: "Popular",
               data: data?.data,
             })
           }

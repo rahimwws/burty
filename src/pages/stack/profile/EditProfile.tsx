@@ -10,9 +10,10 @@ import { FormField } from "@/shared/ui/FormField";
 import { useChangeAvatar, useUpdateProfile } from "@/widgets/profile/lib/hooks";
 import { pickImageAsync } from "@/widgets/profile/config/picker";
 import Avatar from "@/shared/ui/Avatar";
+import { UserT } from "@/shared/model/types";
 
 type EditProfileRouteProp = RouteProp<
-  { EditProfile: { user: User } },
+  { EditProfile: { user: UserT } },
   "EditProfile"
 >;
 

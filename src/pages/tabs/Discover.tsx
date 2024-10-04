@@ -5,6 +5,7 @@ import { ScrollView } from "react-native";
 import Line from "@/shared/ui/Lines";
 import { CategoriesList } from "@/widgets/categories/ui";
 import { NearByList } from "@/widgets/nearby";
+import { PopularByList } from "@/widgets/popular";
 
 const Discover = () => {
   return (
@@ -20,7 +21,7 @@ const Discover = () => {
         <Line color="primary" styles={{ opacity: 0.7, marginVertical: "3%" }} />
         <CategoriesList />
         <NearByList />
-        <NearByList />
+        <PopularByList />
       </ScrollView>
     </ScreenLayout>
   );

@@ -1,13 +1,15 @@
 // Define the media type
-interface Media {
+export interface Media {
   filePath: string;
 }
 
-interface User {
+export interface User {
   id: string;
   email: string;
   role: "USER" | "MENTOR";
   userName: string;
   lastLoginTime: string;
   media: Media;
+  latitude: number;
+  longitude: number;
 }

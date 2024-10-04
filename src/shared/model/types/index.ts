@@ -1,3 +1,3 @@
-import { Place } from "./Place";
-
-export { Place as PlaceT };
+import { User } from "./user";
+import { PlaceT } from "./space";
+export { User as UserT, PlaceT };

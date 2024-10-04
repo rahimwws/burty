@@ -13,9 +13,9 @@ import { WorkoutScreen } from "@/pages/tabs/Workouts";
 import MyPass from "@/pages/tabs/MyPass";
 import Profile from "@/pages/tabs/Profile";
 import Typography from "@/shared/ui/Typography";
-import useRoleStore from "@/shared/store/role";
 import Scan from "@/pages/stack/scan/Scan";
 import ScanSvg from "@/shared/assets/icons/interface/ScanSvg";
+import useRoleStore from "@/shared/store/role";
 const Tabs = () => {
   const Tab = createBottomTabNavigator();
   const { width } = Dimensions.get("window");
