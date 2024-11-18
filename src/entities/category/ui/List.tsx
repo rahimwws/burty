@@ -8,11 +8,14 @@ import { categories } from "../model/routes";
 
 const List = () => {
   const navigation = useAppNavigation();
-  const { data, isSuccess, isPending } = useQuery({
-    queryKey: ["categories"],
-    queryFn: () => categories.getCategories(),
-  });
-  if (isPending) return null;
+  // const { data, isSuccess, isPending } = useQuery({
+  //   queryKey: ["categories"],
+  //   queryFn: () => categories.getCategories(),
+  // });
+  // if (isPending && !data) return null;
+  const data = {
+    data: [{ title: "something" }],
+  };
   return (
     <>
       <View

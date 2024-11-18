@@ -12,7 +12,8 @@ const Button = ({ title, route }: { title: string; route?: string }) => {
       style={{
         paddingHorizontal: 12,
         paddingVertical: 9,
-        backgroundColor: active ? colors.primary : colors.dark,
+        backgroundColor:
+          active && route !== "Categories" ? colors.primary : colors.dark,
         borderRadius: 3,
       }}
       onPress={() => {
@@ -23,8 +24,8 @@ const Button = ({ title, route }: { title: string; route?: string }) => {
     >
       <Typography
         align="left"
-        styles={{ opacity: active ? 1 : 0.5 }}
-        color={active ? "background" : "light"}
+        styles={{ opacity: active && route !== "Categories" ? 1 : 0.5 }}
+        color={active && route !== "Categories" ? "background" : "light"}
       >
         {title}
       </Typography>
