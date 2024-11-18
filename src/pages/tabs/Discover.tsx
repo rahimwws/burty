@@ -3,7 +3,7 @@ import ScreenLayout from "@/shared/ui/Layout";
 import { Header } from "@/components/header";
 import { ScrollView } from "react-native";
 import Line from "@/shared/ui/Lines";
-import { CategoriesList } from "@/widgets/categories/ui";
+import { CategoriesList } from "@/entities/category";
 import { NearByList } from "@/widgets/nearby";
 import { PopularByList } from "@/widgets/popular";
 

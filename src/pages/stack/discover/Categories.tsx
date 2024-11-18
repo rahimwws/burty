@@ -2,9 +2,9 @@ import { View, Text, ScrollView } from "react-native";
 import React from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import { Header } from "@/components/header";
-import { CategoriesSelect } from "@/widgets/categories/ui";
+import { CategoriesSelect } from "@/entities/category";
 import { useQuery } from "@tanstack/react-query";
-import { categories } from "@/widgets/categories/model/routes";
+import { categories } from "@/entities/category/model/routes";
 
 const Categories = () => {
   const { data, isSuccess, isPending } = useQuery({

@@ -1,4 +1,4 @@
-export * from './api'
-export * from './config'
-export * from './model'
-export * from './ui'
+import List from "./ui/List";
+import Select from "./ui/Select";
+
+export { List as CategoriesList, Select as CategoriesSelect };
