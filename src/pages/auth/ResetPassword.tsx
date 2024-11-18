@@ -12,7 +12,7 @@ import { StatusBar } from "expo-status-bar";
 import ScreenLayout from "@/shared/ui/Layout";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
-import ResetPasswordService from "@/service/auth/ui/reset";
+import { ResetPasswordService } from "@/features/auth/";
 
 const ResetPassword = () => {
   const { height } = Dimensions.get("window");

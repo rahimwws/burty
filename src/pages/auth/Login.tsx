@@ -8,7 +8,7 @@ import {
 import React from "react";
 import Typography from "@/shared/ui/Typography";
 import ScreenLayout from "@/shared/ui/Layout";
-import LoginService from "@/service/auth/ui/login";
+import { LoginService } from "@/features/auth";
 
 const Login = () => {
   const { height } = Dimensions.get("window");

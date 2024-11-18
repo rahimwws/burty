@@ -11,7 +11,7 @@ import React from "react";
 import { StatusBar } from "expo-status-bar";
 import ScreenLayout from "@/shared/ui/Layout";
 import Typography from "@/shared/ui/Typography";
-import NewPasswordService from "@/service/auth/ui/new-password";
+import { NewPasswordService } from "@/features/auth/";
 
 const NewPassword = () => {
   const { height } = Dimensions.get("window");

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, FC } from "react";
 import { View } from "react-native";
 import { useAppNavigation } from "@/shared/lib/navigation";
-import { useRegister } from "../../lib/hooks/useRegister";
+import { useRegister } from "../lib/hooks/useRegister";
 import TopTabs from "@/components/tab/TopTabs";
 import AuthError from "@/shared/ui/Error/AuthError";
 import { LargeButton } from "@/shared/ui/Button";

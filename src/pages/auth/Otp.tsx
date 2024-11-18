@@ -3,7 +3,7 @@ import React from "react";
 import { StatusBar } from "expo-status-bar";
 import ScreenLayout from "@/shared/ui/Layout";
 import Typography from "@/shared/ui/Typography";
-import OtpService from "@/service/auth/ui/otp";
+import { OtpService } from "@/features/auth/";
 import { LargeButton } from "@/shared/ui/Button";
 
 const Otp = () => {

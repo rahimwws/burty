@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Typography from "@/shared/ui/Typography";
 import Input from "@/shared/ui/Input";
 import { LargeButton } from "@/shared/ui/Button";
-import { useForgotPassword } from "../../lib/hooks/useForgotPassword";
+import { useForgotPassword } from "../lib/hooks/useForgotPassword";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { RouteProp, useRoute } from "@react-navigation/native";
 

@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import React, { useState } from "react";
 import { LargeButton } from "@/shared/ui/Button";
 import { FormField } from "@/shared/ui/FormField";
-import { useNewPassword } from "../../lib/hooks/useNewPassword";
+import { useNewPassword } from "../lib/hooks/useNewPassword";
 
 const NewPasswordService = () => {
   const [password, setPassword] = useState<string>("");

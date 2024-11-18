@@ -2,10 +2,10 @@ import { View, Text, Keyboard } from "react-native";
 import React, { useEffect } from "react";
 import OtpTextInput from "react-native-text-input-otp";
 import { colors } from "@/shared/lib/theme";
-import useUserIdStore from "../../model/stores/userId";
-import { useVerify } from "../../lib/hooks/useVerify";
+import useUserIdStore from "../model/stores/userId";
+import { useVerify } from "../lib/hooks/useVerify";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { useVerifyPassword } from "../../lib/hooks/useForgotPassword";
+import { useVerifyPassword } from "../lib/hooks/useForgotPassword";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { isAxiosError } from "axios";
 type RouteParams = {

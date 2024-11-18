@@ -10,7 +10,7 @@ import {
 import React from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import Typography from "@/shared/ui/Typography";
-import SignUpService from "@/service/auth/ui/signup";
+import { SignUpService } from "@/features/auth/";
 import { StatusBar } from "expo-status-bar";
 
 const SignUp = () => {

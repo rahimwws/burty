@@ -7,7 +7,7 @@ import Google from "@/shared/assets/icons/social/Google";
 import Facebook from "@/shared/assets/icons/social/Facebook";
 import AuthError from "@/shared/ui/Error/AuthError";
 import { useAppNavigation } from "@/shared/lib/navigation";
-import { useLogin } from "../../lib/hooks/useLogin";
+import { useLogin } from "../lib/hooks/useLogin";
 import { FormField } from "@/shared/ui/FormField";
 
 const LoginService = () => {
