@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import { Header } from "@/components/header";
 import StepIndicator from "@/components/pagination/StepIndicator";
-import PaymentService from "@/service/payment";
+import { PaymentService } from "@/features/payment";
 import Typography from "@/shared/ui/Typography";
 import { LargeButton } from "@/shared/ui/Button";
 import { colors } from "@/shared/lib/theme";
