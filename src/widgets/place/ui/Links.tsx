@@ -62,7 +62,7 @@ const PlaceLinks = () => {
           <Marker size={15} fill={colors.light} />
           <Typography>2972 Westheimer Rd. Santa Ana, Illinois</Typography>
         </View>
-        <View
+        <TouchableOpacity
           style={{
             flexDirection: "row",
             alignItems: "center",
@@ -76,10 +76,11 @@ const PlaceLinks = () => {
             borderEndStartRadius: 10,
             width: "100%",
           }}
+          onPress={() => openLink("tel:+99365123456")}
         >
           <Call size={15} fill={colors.light} />
-          <Typography>(066) 242 42 12</Typography>
-        </View>
+          <Typography>+99365123456</Typography>
+        </TouchableOpacity>
         <View
           style={{
             flexDirection: "row",
