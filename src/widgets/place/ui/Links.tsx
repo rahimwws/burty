@@ -1,7 +1,8 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
+import { openLink } from "@/shared/lib/utils/linkUtils";
 import Link from "@/shared/assets/icons/interface/Link";
 import Marker from "@/shared/assets/icons/interface/Marker";
 import Call from "@/shared/assets/icons/interface/Call";
@@ -26,7 +27,7 @@ const PlaceLinks = () => {
           borderRadius: 10,
         }}
       >
-        <View
+        <TouchableOpacity
           style={{
             flexDirection: "row",
             alignItems: "center",
@@ -39,10 +40,11 @@ const PlaceLinks = () => {
             borderEndEndRadius: 10,
             borderEndStartRadius: 10,
           }}
+          onPress={() => openLink("https://website.com")}
         >
           <Link size={15} fill={colors.light} />
           <Typography>website.com</Typography>
-        </View>
+        </TouchableOpacity>
         <View
           style={{
             flexDirection: "row",
