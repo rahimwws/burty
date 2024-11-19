@@ -28,9 +28,13 @@ const Tabs = () => {
         tabBarStyle: {
           backgroundColor: colors.dark,
           borderTopWidth: 0,
-          borderTopRightRadius: 20,
-          borderTopLeftRadius: 20,
+          borderRadius: 30,
           position: "absolute",
+          marginHorizontal: 10,
+          paddingBottom: 5,
+          paddingTop: 5,
+          height: 60,
+          bottom: Platform.OS === "ios" ? 15 : 0,
         },
         tabBarIcon: ({ focused }) => {
           if (route.name === "DiscoverNavigator") {
