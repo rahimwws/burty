@@ -11,3 +11,10 @@ export const openLink = (link: string) => {
     })
     .catch((err) => console.error("An error occurred:", err));
 };
+
+const openMapWithAddress = (address: string) => {
+    const url = `https://maps.google.com/?q=${encodeURIComponent(address)}`;
+    Linking.openURL(url).catch((err) => {
+      console.error('An error occurred while opening map:', err);
+    });
+  };
