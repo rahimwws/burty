@@ -1,5 +1,6 @@
 import Index from "@/navigation";
 import React, { useCallback, useEffect } from "react";
+import { Platform } from "react-native";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -34,7 +35,9 @@ export default function App() {
     "pk.eyJ1IjoicmFoaW13d3MiLCJhIjoiY20weGNwZTFrMGJlNzJqcHNvMzQxN3pqayJ9.lxS8jNdIP0tFbscBre8ExQ"
   );
   const queryClient = new QueryClient();
-  NavigationBar.setVisibilityAsync("hidden");
+  if (Platform.OS === "android") {
+    NavigationBar.setVisibilityAsync("hidden");
+  }
   return (
     <QueryClientProvider client={queryClient}>
       <GestureHandlerRootView>
