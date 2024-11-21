@@ -8,14 +8,14 @@ import {
 } from "../token/storage";
 
 const client = axios.create({
-  baseURL: "http://localhost:5005/api",
+  baseURL: "http://82.117.243.32/api",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
 export const clientWithoutToken = axios.create({
-  baseURL: "http://localhost:5005/api",
+  baseURL: "http://82.117.243.32/api",
   headers: {
     "Content-Type": "application/json",
   },
