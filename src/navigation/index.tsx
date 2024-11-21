@@ -15,7 +15,7 @@ const Index = () => {
         setInitialRoute("Service");
         console.log(token);
       } else {
-        setInitialRoute("Service");
+        setInitialRoute("Auth");
       }
     };
 
