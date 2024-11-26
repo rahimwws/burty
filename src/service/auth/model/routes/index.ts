@@ -1,4 +1,5 @@
 import { client, clientWithoutToken } from "@/shared/api";
+import axios, { isAxiosError } from "axios";
 export const auth = {
   async register(email: string, password: string, role: "MENTOR" | "USER") {
     return await clientWithoutToken.post("/auth/registration", {
@@ -8,10 +9,14 @@ export const auth = {
     });
   },
   async login(email: string, password: string) {
-    return await clientWithoutToken.post("/auth/login", {
-      email,
-      password,
-    });
+    try {
+      return await clientWithoutToken.post("/auth/login", {
+        email,
+        password,
+      });
+    } catch (error) {
+      if (isAxiosError(error)) console.log(error.response);
+    }
   },
 
   async verify(id: string, code: string) {

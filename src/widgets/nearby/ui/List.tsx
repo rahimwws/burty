@@ -12,6 +12,8 @@ const List = () => {
   if (isPending) {
     return null;
   }
+  console.log(data?.data);
+
   return (
     <>
       <View

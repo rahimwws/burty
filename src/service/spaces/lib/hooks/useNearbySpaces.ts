@@ -5,6 +5,8 @@ import { useQuery } from "@tanstack/react-query";
 export const useNearbySpaces = () => {
   const { latitude, longitude } = useLocationStore.getState();
 
+  console.log(latitude, longitude);
+
   return useQuery({
     queryKey: ["nearby"],
     queryFn: () => spaces.getNearbySpaces(latitude, longitude),

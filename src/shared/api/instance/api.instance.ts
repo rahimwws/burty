@@ -8,14 +8,14 @@ import {
 } from "../token/storage";
 
 const client = axios.create({
-  baseURL: "http://localhost:5005/api",
+  baseURL: "https://burty-api.ru/api",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
 export const clientWithoutToken = axios.create({
-  baseURL: "http://localhost:5005/api",
+  baseURL: "https://burty-api.ru/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -38,12 +38,9 @@ const refreshAccessToken = async () => {
     if (!refreshToken) {
       throw new Error("No refresh token available");
     }
-    const response = await axios.post(
-      "http://localhost:5005/api/auth/refresh",
-      {
-        refreshToken: refreshToken,
-      }
-    );
+    const response = await axios.post("https://burty-api.ru/api/auth/refresh", {
+      refreshToken: refreshToken,
+    });
     ``;
     const { accessToken, refreshToken: newRefreshToken } = response.data;
     // Save new tokens

@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import Mapbox from "@rnmapbox/maps";
+import { getLocation } from "@/utils/user/getLocation";
 SplashScreen.preventAutoHideAsync();
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -33,6 +34,7 @@ export default function App() {
     "pk.eyJ1IjoicmFoaW13d3MiLCJhIjoiY20weGNwZTFrMGJlNzJqcHNvMzQxN3pqayJ9.lxS8jNdIP0tFbscBre8ExQ"
   );
   const queryClient = new QueryClient();
+  getLocation();
   return (
     <QueryClientProvider client={queryClient}>
       <GestureHandlerRootView>
