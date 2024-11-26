@@ -41,7 +41,7 @@ const SignUpService: FC = () => {
     }
     if (isChecked) {
       mutate();
-      // navigation.navigate("Login");
+      // navigation.navigate("Login");  # TODO line 96 question
     }
   };
 
@@ -92,9 +92,9 @@ const SignUpService: FC = () => {
       <View style={{ marginVertical: "2%" }}>
         <LargeButton
           text="Sign Up"
-          isRoute={true}
-          // action={}
-          route="Service"
+          // isRoute={true}
+          action={validateAndSubmit}  // TODO What after registartion?
+          // route="Service"
           // temporary
         />
       </View>
