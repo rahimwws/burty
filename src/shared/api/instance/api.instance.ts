@@ -7,15 +7,17 @@ import {
   removeTokens,
 } from "../token/storage";
 
+const API_URL: string = "https://burty-api.ru/api/";
+
 const client = axios.create({
-  baseURL: "http://82.117.243.32/api",
+  baseURL: API_URL,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
 export const clientWithoutToken = axios.create({
-  baseURL: "http://82.117.243.32/api",
+  baseURL: API_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -39,7 +41,7 @@ const refreshAccessToken = async () => {
       throw new Error("No refresh token available");
     }
     const response = await axios.post(
-      "http://localhost:5005/api/auth/refresh",
+      `${API_URL}auth/refresh`,
       {
         refreshToken: refreshToken,
       }
