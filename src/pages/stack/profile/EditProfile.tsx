@@ -22,15 +22,9 @@ const EditProfile: React.FC = () => {
   const navigation = useAppNavigation();
   const user = route.params.user;
 
-  const [name, setName] = useState(() => {
-    const userName = user.userName ?? "";
-    return userName.split(" ")[0] || "";
-  });
+  const [name, setName] = useState(user.firstName ?? "");
 
-  const [surname, setSurname] = useState(() => {
-    const userName = user.userName ?? "";
-    return userName.split(" ").slice(1).join(" ") || "";
-  });
+  const [surname, setSurname] = useState(user.lastName ?? "");
 
   const [email, setEmail] = useState(user.email ?? "");
   const [imageUri, setImageUri] = useState<string | null>(
@@ -50,7 +44,7 @@ const EditProfile: React.FC = () => {
 
   const handleUpdateProfile = useCallback(() => {
     updateProfile(
-      { email, userName: `${name} ${surname}` },
+      { email, firstName: name, lastName: surname },
       {
         onSuccess: () => navigation.goBack(),
       }

@@ -27,10 +27,11 @@ export const user = {
       },
     });
   },
-  async changeProfile(email: string, userName: string, password?: string) {
+  async changeProfile(email: string, firstName: string, lastName: string, password?: string) {
     return client.patch("/users", {
       email,
-      userName,
+      firstName,
+      lastName,
       password,
     });
   },

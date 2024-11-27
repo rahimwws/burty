@@ -33,7 +33,7 @@ const ProfileView = ({ qr = false, item }: { qr?: boolean; item: User }) => {
         ></View>
         <View>
           <Typography size={22} font="black" align="left">
-            {item?.userName ?? "Name Surname"}
+            {item?.firstName ?? "Name"} {item?.lastName ?? "Surname"}
           </Typography>
           <Typography font="m" color="gray" align="left">
             {item?.email}

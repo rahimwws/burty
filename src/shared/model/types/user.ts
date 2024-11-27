@@ -7,7 +7,8 @@ export interface User {
   id: string;
   email: string;
   role: "USER" | "MENTOR";
-  userName: string;
+  firstName: string;
+  lastName: string;
   lastLoginTime: string;
   media: Media;
   latitude: number;

@@ -8,13 +8,15 @@ export const useUpdateProfile = () => {
   return useMutation({
     mutationFn: ({
       email,
-      userName,
+      firstName,
+      lastName,
       password,
     }: {
       email: string;
-      userName: string;
+      firstName: string;
+      lastName: string;
       password?: string;
-    }) => user.changeProfile(email, userName, password),
+    }) => user.changeProfile(email, firstName, lastName, password),
     onError: (err) => {
       if (isAxiosError(err)) {
         alert(err.response?.data.message);
