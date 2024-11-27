@@ -1,4 +1,5 @@
 import { client } from "@/shared/api";
+import { getRefreshToken } from "@/shared/api/token/storage";
 import { UserT } from "@/shared/model/types";
 import * as FileSystem from "expo-file-system";
 export const user = {
@@ -36,5 +37,12 @@ export const user = {
 
   async deleteAccount() {
     return client.delete("users");
+  },
+
+  async logOut() {
+    const refreshToken = await getRefreshToken();
+    return client.post("auth/logout", {
+      refreshToken: refreshToken
+    });
   },
 };
