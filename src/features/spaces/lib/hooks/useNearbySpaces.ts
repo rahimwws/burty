@@ -1,4 +1,4 @@
-import { spaces } from "@/service/spaces/model/routes";
+import { spaces } from "@/features/spaces/model/routes";
 import { useLocationStore } from "@/shared/store/location";
 import { useQuery } from "@tanstack/react-query";
 

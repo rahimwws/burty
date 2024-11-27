@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { PlaceCard } from "@/components/card";
 import Typography from "@/shared/ui/Typography";
 import { useAppNavigation } from "@/shared/lib/navigation";
-import { useNearbySpaces } from "@/service/spaces/lib";
+import { useNearbySpaces } from "@/features/spaces/";
 
 const List = () => {
   const navigation = useAppNavigation();

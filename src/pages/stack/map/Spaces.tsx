@@ -14,7 +14,7 @@ import { Sheet } from "@/shared/ui/Sheets";
 import Typography from "@/shared/ui/Typography";
 import { SearchHeader } from "@/components/header";
 import PlaceCard from "@/components/card/Place";
-import { useNearbySpaces } from "@/service/spaces/lib";
+import { useNearbySpaces } from "@/features/spaces/";
 import { PlaceT } from "@/shared/model/types";
 import { OnPressEvent } from "@rnmapbox/maps/lib/typescript/src/types/OnPressEvent";
 

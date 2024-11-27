@@ -4,7 +4,7 @@ import { PlaceCard } from "@/components/card";
 import Typography from "@/shared/ui/Typography";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { spaces } from "@/service/spaces/model/routes";
+import { spaces } from "@/features/spaces/model/routes";
 import { useLocationStore } from "@/shared/store/location";
 
 const List = () => {
