@@ -7,6 +7,11 @@ import Typography from "@/shared/ui/Typography";
 const DistanceBar = () => {
   const [distance, setDistance] = useState(1); // Default value is 1 kilometer
 
+  const handleOnValueChange = (value: number) => {
+    const formattedDistance: number = +value.toFixed(1)
+    setDistance(formattedDistance)
+  }
+
   return (
     <View style={styles.container}>
       <Typography align="left" size={18} font="b">
@@ -24,13 +29,13 @@ const DistanceBar = () => {
           thumbTintColor={colors.primary}
           step={0.05}
           value={distance}
-          onValueChange={(value) => setDistance(value)}
+          onValueChange={(value) => handleOnValueChange(value)}
         />
         <Typography styles={{ color: colors.light + "fff80" }}>15km</Typography>
       </View>
 
       <Typography align="left" styles={{ color: colors.light + "fff80" }}>
-        You will see gyms within a radius of 1 kilometers
+        You will see gyms within a radius of {distance} kilometers
       </Typography>
     </View>
   );
