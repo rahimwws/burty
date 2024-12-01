@@ -1,4 +1,4 @@
-import { View, TextInput } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
@@ -9,12 +9,12 @@ const Price = () => {
 
   const handleFromTextChange = (text: string) => {
     const numericValue = text.replace(/[^0-9]/g, "");
-    setFromValue(numericValue ? `${numericValue}$` : "");
+    setFromValue(numericValue);
   };
 
   const handleToTextChange = (text: string) => {
     const numericValue = text.replace(/[^0-9]/g, "");
-    setToValue(numericValue ? `${numericValue}$` : "");
+    setToValue(numericValue);
   };
 
   return (
@@ -37,13 +37,16 @@ const Price = () => {
           >
             From
           </Typography>
-          <TextInput
-            style={styles.input}
-            value={fromValue}
-            onChangeText={handleFromTextChange}
-            maxLength={5}
-            keyboardType="numeric"
-          />
+          <View style={styles.inputWrapper}>
+            <TextInput
+              style={styles.input}
+              value={fromValue}
+              onChangeText={handleFromTextChange}
+              maxLength={5}
+              keyboardType="numeric"
+            />
+            <Typography styles={styles.currencySymbol}>$</Typography>
+          </View>
         </View>
 
         <View style={{ width: "48%", marginVertical: "2%" }}>
@@ -53,28 +56,45 @@ const Price = () => {
           >
             To
           </Typography>
-          <TextInput
-            style={styles.input}
-            value={toValue}
-            onChangeText={handleToTextChange}
-            maxLength={5}
-            keyboardType="numeric"
-          />
+          <View style={styles.inputWrapper}>
+            <TextInput
+              style={styles.input}
+              value={toValue}
+              onChangeText={handleToTextChange}
+              maxLength={5}
+              keyboardType="numeric"
+            />
+            <Typography styles={styles.currencySymbol}>$</Typography>
+          </View>
         </View>
       </View>
     </View>
   );
 };
-const styles = {
-  input: {
-    height: 40,
+
+const styles = StyleSheet.create({
+  inputWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
     borderColor: colors.dark,
+    height: 40,
     paddingHorizontal: 10,
+    backgroundColor: "black",
+  },
+  input: {
+    flex: 1,
+    color: colors.light,
+    fontFamily: "m",
+    fontSize: 18,
+    textAlign: "center",
+  },
+  currencySymbol: {
+    marginLeft: 5,
     color: colors.light,
     fontFamily: "m",
     fontSize: 18,
   },
-};
+});
 
 export default Price;
