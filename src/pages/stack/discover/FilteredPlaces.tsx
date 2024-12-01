@@ -5,11 +5,12 @@ import { Header } from "@/components/header";
 import { colors } from "@/shared/lib/theme";
 import Typography from "@/shared/ui/Typography";
 import { useAppNavigation } from "@/shared/lib/navigation";
-import { PlaceCard } from "@/components/card";
+import { FilteredPlacesList } from "@/widgets/filter";
 
 const FilteredPlaces = () => {
   const tags = ["1 km+-", "Single", "20$"];
   const navigation = useAppNavigation();
+
   return (
     <ScreenLayout pb={0}>
       <Header title="Filters" type="stack" />
@@ -49,17 +50,7 @@ const FilteredPlaces = () => {
           </Typography>
         </TouchableOpacity>
       </View>
-      <FlatList
-        data={[1, 2, 3]}
-        renderItem={({ item, index }) => {
-          return <PlaceCard type="large" key={index} />;
-        }}
-        contentContainerStyle={{
-          alignItems: "center",
-          gap: 15,
-        }}
-        showsVerticalScrollIndicator={false}
-      />
+      <FilteredPlacesList />
     </ScreenLayout>
   );
 };
