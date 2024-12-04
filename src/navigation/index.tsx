@@ -36,7 +36,7 @@ const Index = () => {
         component={StackScreens}
         options={
           {
-            // gestureEnabled: false,
+            gestureEnabled: false,
           }
         }
       />
