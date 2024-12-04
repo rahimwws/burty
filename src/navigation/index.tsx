@@ -30,15 +30,17 @@ const Index = () => {
       }}
       initialRouteName={initialRoute}
     >
-      <Stack.Screen name="Auth" component={AuthNavigator} />
+      <Stack.Screen
+        name="Auth"
+        component={AuthNavigator}
+        options={{ gestureEnabled: false }}
+      />
       <Stack.Screen
         name="Service"
         component={StackScreens}
-        options={
-          {
-            gestureEnabled: false,
-          }
-        }
+        options={{
+          gestureEnabled: false,
+        }}
       />
     </Stack.Navigator>
   );
