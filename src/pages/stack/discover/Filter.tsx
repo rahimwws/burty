@@ -80,23 +80,23 @@ const Filter = () => {
           </View>
 
           <FilterPrice />
-          <View
-            style={{
-              alignSelf: "flex-end",
-              marginTop: "auto",
-              width: "100%",
-            }}
-          >
-            <LargeButton
-              text="Show 4 places"
-              isRoute={true}
-              bg={colors.light}
-              type="rounded"
-              action={() => Keyboard.dismiss()}
-              route="FilteredPlaces"
-            />
-          </View>
         </ScrollView>
+        <View
+          style={{
+            alignSelf: "flex-end",
+            marginTop: "auto",
+            width: "100%",
+          }}
+        >
+          <LargeButton
+            text="Show 4 places"
+            isRoute={true}
+            bg={colors.light}
+            type="rounded"
+            action={() => Keyboard.dismiss()}
+            route="FilteredPlaces"
+          />
+        </View>
       </KeyboardAvoidingView>
     </ScreenLayout>
   );
