@@ -25,59 +25,62 @@ const Filter = () => {
   return (
     <ScreenLayout>
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "position" : "height"}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 10 : 0}
+        behavior="height"
+        keyboardVerticalOffset={0}
+        enabled
+        style={{ flex: 1, flexDirection: "column", justifyContent: "center" }}
       >
         <Header type="stack" title="Filters" />
-
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginVertical: "5%",
-          }}
-        >
-          <Typography size={18} font="b">
-            Sports categories
-          </Typography>
-          <TouchableOpacity onPress={() => navigation.navigate("Categories")}>
-            <Typography size={14} font="m" color="primary">
-              Show all
+        <ScrollView>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginVertical: "5%",
+            }}
+          >
+            <Typography size={18} font="b">
+              Sports categories
             </Typography>
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity onPress={() => navigation.navigate("Categories")}>
+              <Typography size={14} font="m" color="primary">
+                Show all
+              </Typography>
+            </TouchableOpacity>
+          </View>
 
-        <DistanceBar />
+          <DistanceBar />
 
-        {/* Pass Type */}
-        <Typography
-          styles={{ marginTop: "10%", marginBottom: "3%" }}
-          align="left"
-          size={18}
-          font="b"
-        >
-          Pass type
-        </Typography>
-        <View
-          style={{
-            gap: 10,
-          }}
-        >
-          {PassTypes.map((item, key) => {
-            return (
-              <DarkButton
-                isRoute={false}
-                text={item.name}
-                disabled={item.name !== type}
-                key={key}
-                action={() => setType(item.name)}
-              />
-            );
-          })}
-        </View>
+          {/* Pass Type */}
+          <Typography
+            styles={{ marginTop: "10%", marginBottom: "3%" }}
+            align="left"
+            size={18}
+            font="b"
+          >
+            Pass type
+          </Typography>
+          <View
+            style={{
+              gap: 10,
+            }}
+          >
+            {PassTypes.map((item, key) => {
+              return (
+                <DarkButton
+                  isRoute={false}
+                  text={item.name}
+                  disabled={item.name !== type}
+                  key={key}
+                  action={() => setType(item.name)}
+                />
+              );
+            })}
+          </View>
 
-        <FilterPrice />
+          <FilterPrice />
+        </ScrollView>
         <View
           style={{
             alignSelf: "flex-end",
