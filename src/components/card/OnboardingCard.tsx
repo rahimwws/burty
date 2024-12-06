@@ -24,7 +24,7 @@ const Cart = ({ title, description, image, scrollX }: Props) => {
         height,
         flex: 1,
       }}
-      resizeMode="contain"
+      resizeMode="cover"
     >
       <View
         style={{
