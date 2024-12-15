@@ -32,6 +32,7 @@ const Typography = ({
       }}
       {...textProps}
       adjustsFontSizeToFit={false}
+      allowFontScaling={false}
     >
       {children}
     </Text>

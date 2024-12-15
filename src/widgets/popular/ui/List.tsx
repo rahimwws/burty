@@ -16,9 +16,9 @@ const List = () => {
     enabled: !!latitude && !!longitude,
   });
 
-  if (isPending) {
-    return null;
-  }
+  // if (isPending) {
+  //   return null;
+  // }
   return (
     <>
       <View

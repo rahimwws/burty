@@ -12,7 +12,7 @@ const List = () => {
     queryKey: ["categories"],
     queryFn: () => categories.getCategories(),
   });
-  if (isPending && !data) return null;
+  // if (isPending && !data) return null;
   return (
     <>
       <View

@@ -26,7 +26,7 @@ const Spaces = () => {
   const [selectedItem, setSelectedItem] = useState<null | PlaceT>(null);
   const { data, isPending } = useNearbySpaces();
 
-  if (isPending) return null;
+  // if (isPending) return null;
 
   const points = useMemo(() => mapSpacesToPoints(data?.data), [data?.data]);
 

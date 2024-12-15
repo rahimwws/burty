@@ -11,7 +11,7 @@ const Categories = () => {
     queryKey: ["categories"],
     queryFn: () => categories.getCategories(),
   });
-  if (isPending) return null;
+  // if (isPending) return null;
   return (
     <ScreenLayout>
       <ScrollView>
