@@ -1,20 +1,31 @@
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { PlaceCard } from "@/components/card";
 import Typography from "@/shared/ui/Typography";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { spaces } from "@/features/spaces/model/routes";
 import { useLocationStore } from "@/shared/store/location";
+import { toast } from "@/shared/ui/Toast";
 
 const List = () => {
   const navigation = useAppNavigation();
   const { latitude, longitude } = useLocationStore.getState();
-  const { data, isPending } = useQuery({
+  const { data, isLoading, isPending } = useQuery({
     queryKey: ["popular"],
     queryFn: () => spaces.getPopularSpaces(latitude, longitude),
     enabled: !!latitude && !!longitude,
+
   });
+
+  useEffect(() => {
+    if (!data?.data.length && !isLoading) {
+      toast.show({
+        type: 'error',
+        description: 'No popular places data'
+      })
+    }
+  }, [data?.data.length, isLoading]);
 
   // if (isPending) {
   //   return null;

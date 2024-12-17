@@ -8,6 +8,8 @@ import { theme } from "../config/theme";
 import { queryClient } from "../config/queryClient";
 import { configureNavigationBar } from "../config/navigationBar";
 import { configureMapbox } from "../config/mapbox";
+import { ToastProvider } from "@/shared/ui/Toast";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 interface AppProviderProps {
   children: ReactNode;
@@ -31,10 +33,15 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   if (!fontsLoaded) return null;
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <GestureHandlerRootView>
-        <NavigationContainer theme={theme}>{children}</NavigationContainer>
-      </GestureHandlerRootView>
-    </QueryClientProvider>
+    <SafeAreaProvider>
+      <QueryClientProvider client={queryClient}>
+        <GestureHandlerRootView>
+          <NavigationContainer theme={theme}>
+            <ToastProvider />
+            {children}
+          </NavigationContainer>
+        </GestureHandlerRootView>
+      </QueryClientProvider>
+    </SafeAreaProvider>
   );
 };

@@ -18,6 +18,7 @@ import { useQuery } from "@tanstack/react-query";
 import { user } from "@/widgets/profile/model/routes";
 import { useUserStore } from "@/shared/store/user";
 import { useLocationStore } from "@/shared/store/location";
+import { toast } from "@/shared/ui/Toast";
 
 const Profile = () => {
   const navigation = useAppNavigation();
@@ -27,7 +28,7 @@ const Profile = () => {
     longitude: store.longitude,
   }));
 
-  const { data, isPending, refetch, isSuccess } = useQuery({
+  const { data, isPending, refetch, isSuccess, isLoading } = useQuery({
     queryKey: ["profile"],
     queryFn: () => user.get(),
   });
@@ -48,6 +49,16 @@ const Profile = () => {
       });
     }
   }, [isSuccess, data, latitude, longitude, setUser]);
+
+  useEffect(() => {
+    if (!Object.keys(data?.data || {}).length && !isLoading) {
+      toast.show({
+        type: 'error',
+        description: 'No profile data'
+      })
+    }
+  }, [data?.data]);
+
   if (!data?.data || isPending) {
     return (
       <ScreenLayout>

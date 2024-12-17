@@ -6,6 +6,7 @@ import {
   saveTokens,
   removeTokens,
 } from "../token/storage";
+import { toast } from "@/shared/ui/Toast";
 
 const API_URL: string = "https://burty-api.ru/api/";
 
@@ -61,10 +62,17 @@ const refreshAccessToken = async () => {
 };
 
 client.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    if (!response.data) { // if data has falsy value
+      toast.show({
+        type: "error",
+        description: "External service error",
+      })
+    }
+    return response;
+  },
   async (error) => {
     const originalRequest = error.config;
-
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
@@ -74,6 +82,11 @@ client.interceptors.response.use(
         return client(originalRequest);
       }
     }
+
+    toast.show({ // show in any error
+      type: "error",
+      description: "External service error",
+    })
 
     return Promise.reject(error);
   }

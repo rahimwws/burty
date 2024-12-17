@@ -94,8 +94,8 @@ const SignUpService: FC = () => {
           text="Sign Up"
           // isRoute={true}
           action={validateAndSubmit}  // TODO What after registartion?
-          // route="Service"
-          // temporary
+        // route="Service"
+        // temporary
         />
       </View>
 

@@ -1,17 +1,26 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "./Button";
 import Typography from "@/shared/ui/Typography";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { categories } from "../model/routes";
+import { toast } from "@/shared/ui/Toast";
 
 const List = () => {
   const navigation = useAppNavigation();
-  const { data, isSuccess, isPending } = useQuery({
+  const { data, isSuccess, isPending, isLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: () => categories.getCategories(),
   });
+  useEffect(() => {
+    if (!data?.data.length && !isLoading) {
+      toast.show({
+        type: 'error',
+        description: 'No categories data'
+      })
+    }
+  }, [data?.data.length, isLoading]);
   // if (isPending && !data) return null;
   return (
     <>

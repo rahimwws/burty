@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from "react";
+import React, { useRef, useState, useMemo, useEffect } from "react";
 import {
   Camera,
   Images,
@@ -17,6 +17,7 @@ import PlaceCard from "@/components/card/Place";
 import { useNearbySpaces } from "@/features/spaces/";
 import { PlaceT } from "@/shared/model/types";
 import { OnPressEvent } from "@rnmapbox/maps/lib/typescript/src/types/OnPressEvent";
+import { toast } from "@/shared/ui/Toast";
 
 const mapSpacesToPoints = (spaces: PlaceT[] = []) =>
   spaces.map((item) => point([item.longitude, item.latitude], { item }));
@@ -24,7 +25,16 @@ const mapSpacesToPoints = (spaces: PlaceT[] = []) =>
 const Spaces = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [selectedItem, setSelectedItem] = useState<null | PlaceT>(null);
-  const { data, isPending } = useNearbySpaces();
+  const { data, isPending, isLoading } = useNearbySpaces();
+
+  useEffect(() => {
+    if (!data?.data.length && !isLoading) {
+      toast.show({
+        type: 'error',
+        description: 'No spaces data'
+      })
+    }
+  }, [data?.data.length]);
 
   // if (isPending) return null;
 

@@ -4,10 +4,20 @@ import { PlaceCard } from "@/components/card";
 import Typography from "@/shared/ui/Typography";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { useNearbySpaces } from "@/features/spaces/";
+import { toast } from "@/shared/ui/Toast";
 
 const List = () => {
   const navigation = useAppNavigation();
-  const { data, isPending } = useNearbySpaces();
+  const { data, isPending, isLoading } = useNearbySpaces();
+
+  useEffect(() => {
+    if (!data?.data.length && !isLoading) {
+      toast.show({
+        type: 'error',
+        description: 'No nearby places data'
+      })
+    }
+  }, [data?.data.length]);
 
   if (isPending) {
     return null;

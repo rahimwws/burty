@@ -1,16 +1,25 @@
 import { View, Text, ScrollView } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import { Header } from "@/components/header";
 import { CategoriesSelect } from "@/entities/category";
 import { useQuery } from "@tanstack/react-query";
 import { categories } from "@/entities/category/model/routes";
+import { toast } from "@/shared/ui/Toast";
 
 const Categories = () => {
-  const { data, isSuccess, isPending } = useQuery({
+  const { data, isSuccess, isPending, isLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: () => categories.getCategories(),
   });
+  useEffect(() => {
+    if (!data?.data.length && !isLoading) {
+      toast.show({
+        type: 'error',
+        description: 'No categories data'
+      })
+    }
+  }, [data?.data.length]);
   // if (isPending) return null;
   return (
     <ScreenLayout>
