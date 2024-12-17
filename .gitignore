@@ -33,3 +33,6 @@ bun.lockb
 
 # typescript
 *.tsbuildinfo
+
+#lock-files
+yarn.lock
