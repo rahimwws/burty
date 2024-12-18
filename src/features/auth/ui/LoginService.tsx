@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
 import Typography from "@/shared/ui/Typography";
 import { LargeButton } from "@/shared/ui/Button";
@@ -58,34 +58,15 @@ const LoginService = () => {
       <LargeButton text="Log in" isRoute={false} action={action} />
       <Typography styles={{ marginVertical: 10 }}>or sign up with</Typography>
       <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 10,
-          justifyContent: "center",
-        }}
+        style={styles.externalSignContainer}
       >
         <TouchableOpacity
-          style={{
-            width: 50,
-            height: 50,
-            borderRadius: 50,
-            backgroundColor: colors.primary,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+          style={styles.externalSignBtn}
         >
           <Google />
         </TouchableOpacity>
         <TouchableOpacity
-          style={{
-            width: 50,
-            height: 50,
-            borderRadius: 50,
-            backgroundColor: colors.primary,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+          style={styles.externalSignBtn}
         >
           <Facebook />
         </TouchableOpacity>
@@ -99,5 +80,22 @@ const LoginService = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  externalSignContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    justifyContent: "center",
+  },
+  externalSignBtn: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    backgroundColor: colors.primary,
+    alignItems: "center",
+    justifyContent: "center",
+  }
+})
 
 export default LoginService;

@@ -1,4 +1,4 @@
-import { View, Text, Keyboard } from "react-native";
+import { View, Text, Keyboard, StyleSheet } from "react-native";
 import React, { useEffect } from "react";
 import OtpTextInput from "react-native-text-input-otp";
 import { colors } from "@/shared/lib/theme";
@@ -51,25 +51,30 @@ const OtpService = () => {
         otp={otp}
         setOtp={setOtp}
         digits={6}
-        style={{
-          borderRadius: 15,
-          borderWidth: 1,
-          borderColor: colors.gray,
-          height: 105,
-          color: colors.light,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-        fontStyle={{
-          fontSize: 32,
-          fontWeight: "bold",
-          color: colors.light,
-          fontFamily: "m",
-        }}
+        style={styles.otp}
+        fontStyle={styles.otpFont}
         focusedStyle={{ borderColor: colors.primary }}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  otp: {
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: colors.gray,
+    height: 105,
+    color: colors.light,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  otpFont: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: colors.light,
+    fontFamily: "m",
+  }
+})
 
 export default OtpService;

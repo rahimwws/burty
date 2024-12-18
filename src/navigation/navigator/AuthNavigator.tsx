@@ -17,11 +17,11 @@ const AuthNavigator = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="OnBoarding" component={Onboarding} />
+      {/* <Stack.Screen name="OnBoarding" component={Onboarding} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="ForgotPassword" component={ResetPassword} />
-      <Stack.Screen name="NewPassword" component={NewPassword} />
+      <Stack.Screen name="NewPassword" component={NewPassword} /> */}
       <Stack.Screen name="Otp" component={Otp} />
     </Stack.Navigator>
   );
