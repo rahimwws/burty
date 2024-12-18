@@ -8,7 +8,7 @@ import {
 } from "../token/storage";
 import { toast } from "@/shared/ui/Toast";
 
-const API_URL: string = "https://burty-api.ru/api/";
+const API_URL: string = process?.env?.EXPO_PUBLIC_API_URL || 'https://burty-api.ru/api/';
 
 const client = axios.create({
   baseURL: API_URL,
