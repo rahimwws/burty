@@ -43,7 +43,7 @@ export const FormField: FC<FormFieldProps> = ({
           if (isPassword) setShowAnimation(true);
         }}
       />
-      {isPassword && showAnimation && (
+      {isPassword && showAnimation && Boolean(value?.length) && (
         <>
           <PasswordBar strength={passwordStrength} />
           <Typography
