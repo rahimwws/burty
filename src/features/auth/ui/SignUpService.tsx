@@ -111,18 +111,6 @@ const SignUpService: FC = () => {
         />
       </View>
 
-      <Modal
-        title="Registration successful!"
-        description="A confirmation has been sent to your email. Please check your inbox and follow the instructions to complete your registration."
-        rightText="Continue"
-        visible={status === "success"}
-        rightAction={() => {
-          setStatus(null);
-          navigation.navigate("Service");
-        }}
-        leftAction={() => setStatus(null)}
-        leftText="Back"
-      />
     </>
   );
 };

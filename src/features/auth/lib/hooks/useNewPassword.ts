@@ -1,9 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import { auth } from "../../model/routes";
-import { AxiosError, isAxiosError } from "axios";
+import { isAxiosError } from "axios";
+import { useState } from "react";
 
 export const useNewPassword = () => {
-  return useMutation({
+  const [errorMessage, setError] = useState<string | null>(null);
+  const mutation = useMutation({
     mutationFn: (password: string) => auth.newPassword(password),
     onSuccess: async (data) => {
       console.log(data.data.user.id);
@@ -12,9 +14,13 @@ export const useNewPassword = () => {
     },
     onError: (err) => {
       if (isAxiosError(err)) {
-        alert(err.response?.data);
         console.log(err.response?.data);
+        setError(err.response?.data?.message || err.message);
+      } else {
+        setError(err.message);
       }
     },
   });
+
+  return { ...mutation, errorMessage };
 };
