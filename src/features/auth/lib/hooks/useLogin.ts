@@ -11,6 +11,7 @@ export const useLogin = (email: string, password: string) => {
     mutationFn: () => auth.login(email, password),
     onSuccess: async (data) => {
       console.log(data.data);
+      setError(null);
       setRole(data.data.user.role === "USER" ? "user" : "mentor");
       await saveTokens(data.data.accessToken, data.data.refreshToken);
     },

@@ -9,6 +9,7 @@ import { useAppNavigation } from "@/shared/lib/navigation";
 import { useLogin } from "../../lib/hooks/useLogin";
 import { FormField } from "@/shared/ui/FormField";
 import styles from "./styles";
+import isEmail from "@/utils/validators/isEmail";
 
 const LoginService = () => {
   const navigation = useAppNavigation();
@@ -20,6 +21,20 @@ const LoginService = () => {
   const action = () => {
     mutate();
   };
+
+  // Validate before submitting
+  const validateAndSubmit = () => {
+    if (!isEmail(email)) {
+      setError("Email address should be valid");
+      return;
+    }
+    if (!password.trim()) {
+      setError("Password should not be empty")
+      return;
+    }
+    action();
+  };
+
   useEffect(() => {
     if (isSuccess) navigation.navigate("Service");
     if (errorMessage) setError(errorMessage);
@@ -58,7 +73,7 @@ const LoginService = () => {
       <LargeButton
         text="Log in"
         isRoute={false}
-        action={action}
+        action={validateAndSubmit}
         isLoading={isPending}
       />
       <Typography styles={{ marginVertical: 10 }}>or sign up with</Typography>

@@ -9,6 +9,7 @@ import Modal from "@/shared/ui/Modal";
 import { FormField } from "@/shared/ui/FormField";
 import { CheckboxWithText } from "@/shared/ui/CheckBox/CheckBoxWithText";
 import useRoleStore from "@/shared/store/role";
+import isEmail from "@/utils/validators/isEmail";
 
 type UserType = "USER" | "MENTOR";
 type StatusType = "error" | "success" | null;
@@ -26,29 +27,39 @@ const SignUpService: FC = () => {
   const [status, setStatus] = useState<StatusType>(null);
   const [isChecked, setIsChecked] = useState(false);
 
-  const { mutate, isSuccess, errorMessage, isPending } = useRegister(
+  const { mutate, isSuccess, errorMessage, setError, isPending } = useRegister(
     email,
     password,
     role === "mentor" ? "MENTOR" : "USER"
   );
   const navigation = useAppNavigation();
 
-  // Validate passwords before submitting
+  // Validate before submitting
   const validateAndSubmit = () => {
-    if (password !== confirmPassword) {
+    if (!isEmail(email)) {
       setStatus("error");
+      setError("Email address should be valid");
       return;
     }
-    if (isChecked) {
-      mutate();
+    if (password !== confirmPassword) {
+      setStatus("error");
+      setError("Password does not match with confirm password")
+      return;
+    }
+    if (!isChecked) {
+      setStatus("error");
+      setError("Agree to the user agreement and confirm that you are 18 years of age or older")
+      return;
       // navigation.navigate("Login");  # TODO line 96 question
     }
+    mutate();
   };
 
   useEffect(() => {
     if (isSuccess) navigation.navigate("Otp");
     if (errorMessage) setStatus("error");
   }, [isSuccess, errorMessage, navigation]);
+
   return (
     <>
       <TopTabs

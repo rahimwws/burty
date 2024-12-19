@@ -3,6 +3,7 @@ import Checkbox from ".";
 import { View } from "react-native-animatable";
 import Typography from "../Typography";
 import { colors } from "@/shared/lib/theme";
+import { TouchableOpacity } from "react-native";
 
 type CheckboxWithTextProps = {
   value: boolean;
@@ -15,7 +16,7 @@ export const CheckboxWithText: FC<CheckboxWithTextProps> = ({
   text,
   value,
 }) => (
-  <View style={{ flexDirection: "row", marginVertical: "3%" }}>
+  <TouchableOpacity onPress={() => onValueChange(!value)} style={{ flexDirection: "row", marginVertical: "3%" }}>
     <Checkbox
       value={value}
       onValueChange={onValueChange}
@@ -30,5 +31,5 @@ export const CheckboxWithText: FC<CheckboxWithTextProps> = ({
     >
       {text}
     </Typography>
-  </View>
+  </TouchableOpacity>
 );

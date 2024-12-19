@@ -25,5 +25,5 @@ export const useRegister = (
     },
   });
 
-  return { ...mutation, errorMessage };
+  return { ...mutation, errorMessage, setError };
 };
