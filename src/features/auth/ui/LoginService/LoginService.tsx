@@ -1,14 +1,14 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import Typography from "@/shared/ui/Typography";
 import { LargeButton } from "@/shared/ui/Button";
-import { colors } from "@/shared/lib/theme";
 import Google from "@/shared/assets/icons/social/Google";
 import Facebook from "@/shared/assets/icons/social/Facebook";
 import AuthError from "@/shared/ui/Error/AuthError";
 import { useAppNavigation } from "@/shared/lib/navigation";
-import { useLogin } from "../lib/hooks/useLogin";
+import { useLogin } from "../../lib/hooks/useLogin";
 import { FormField } from "@/shared/ui/FormField";
+import styles from "./styles";
 
 const LoginService = () => {
   const navigation = useAppNavigation();
@@ -80,22 +80,5 @@ const LoginService = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  externalSignContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    justifyContent: "center",
-  },
-  externalSignBtn: {
-    width: 50,
-    height: 50,
-    borderRadius: 50,
-    backgroundColor: colors.primary,
-    alignItems: "center",
-    justifyContent: "center",
-  }
-})
 
 export default LoginService;
