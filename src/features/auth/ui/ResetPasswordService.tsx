@@ -10,7 +10,7 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 const ResetPasswordService = () => {
   const navigation = useAppNavigation();
   const [email, setEmail] = useState<string>("");
-  const { mutate, isSuccess } = useForgotPassword();
+  const { mutate, isSuccess, isPending } = useForgotPassword();
   const action = () => {
     mutate(email);
   };
@@ -33,7 +33,7 @@ const ResetPasswordService = () => {
           onChangeText={(text) => setEmail(text)}
         />
       </View>
-      <LargeButton text="Reset Password" isRoute={false} action={action} />
+      <LargeButton text="Reset Password" isRoute={false} action={action} isLoading={isPending} />
     </>
   );
 };

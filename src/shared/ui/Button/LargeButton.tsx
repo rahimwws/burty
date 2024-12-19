@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import React from "react";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { ColorsT, colors } from "@/shared/lib/theme";
@@ -15,6 +15,7 @@ const LargeButton = ({
   bg,
   textColor,
   theme,
+  isLoading = false
 }: {
   text: string;
   isRoute?: boolean;
@@ -26,6 +27,8 @@ const LargeButton = ({
   bg?: string;
   textColor?: keyof ColorsT;
   theme?: "default" | "outline";
+  /** @default false */
+  isLoading?: boolean
 }) => {
   const navigation = useAppNavigation();
   const HandleClick = () => {
@@ -47,13 +50,18 @@ const LargeButton = ({
         borderWidth: theme === "outline" ? 1 : 0,
         borderColor: theme === "outline" ? bg : "transparent",
       }}
-      disabled={disabled}
+      disabled={disabled || isLoading}
       activeOpacity={0.7}
       onPress={HandleClick}
     >
-      <Typography color={textColor ?? "background"} size={18} font="m">
-        {text}
-      </Typography>
+      {
+        isLoading ?
+          <ActivityIndicator color={textColor ?? colors.dark} />
+          :
+          <Typography color={textColor ?? "background"} size={18} font="m">
+            {text}
+          </Typography>
+      }
     </TouchableOpacity>
   );
 };

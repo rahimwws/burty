@@ -16,14 +16,14 @@ const LoginService = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const { mutate, isSuccess, errorMessage } = useLogin(email, password);
+  const { mutate, isSuccess, errorMessage, isPending } = useLogin(email, password);
   const action = () => {
     mutate();
   };
   useEffect(() => {
     if (isSuccess) navigation.navigate("Service");
     if (errorMessage) setError(errorMessage);
-  }, [isSuccess]);
+  }, [isSuccess, errorMessage]);
   return (
     <View>
       {error ? (
@@ -55,7 +55,12 @@ const LoginService = () => {
         </Typography>
       </TouchableOpacity>
 
-      <LargeButton text="Log in" isRoute={false} action={action} />
+      <LargeButton
+        text="Log in"
+        isRoute={false}
+        action={action}
+        isLoading={isPending}
+      />
       <Typography styles={{ marginVertical: 10 }}>or sign up with</Typography>
       <View
         style={styles.externalSignContainer}

@@ -37,14 +37,6 @@ const Otp = () => {
             <OtpService />
           </ScrollView>
         </ScreenLayout>
-        <View
-          style={{
-            marginBottom: "5%",
-            paddingHorizontal: 10,
-          }}
-        >
-          <LargeButton text="Confirm" isRoute={false} />
-        </View>
       </ImageBackground>
     </>
   );

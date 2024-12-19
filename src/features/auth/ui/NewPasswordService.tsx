@@ -7,7 +7,7 @@ import { useNewPassword } from "../lib/hooks/useNewPassword";
 const NewPasswordService = () => {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const { mutate } = useNewPassword();
+  const { mutate, isPending } = useNewPassword();
 
   const action = () => {
     if (password === confirmPassword) {
@@ -36,7 +36,7 @@ const NewPasswordService = () => {
         isPassword
       />
 
-      <LargeButton text="Confirm" isRoute={false} action={action} />
+      <LargeButton text="Confirm" isRoute={false} action={action} isLoading={isPending} />
     </View>
   );
 };

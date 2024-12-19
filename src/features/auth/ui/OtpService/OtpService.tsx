@@ -9,6 +9,7 @@ import { useVerifyPassword } from "../../lib/hooks/useForgotPassword";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { isAxiosError } from "axios";
 import styles from "./styles";
+import { LargeButton } from "@/shared/ui/Button";
 type RouteParams = {
   MyScreen: {
     password: boolean;
@@ -23,8 +24,8 @@ const OtpService = () => {
   const [otp, setOtp] = React.useState<string>("");
   const userId = useUserIdStore((store) => store.id);
 
-  const { mutate } = useVerify(userId);
-  const { mutate: VerifyPassword } = useVerifyPassword(userId);
+  const { mutate, isPending } = useVerify(userId);
+  const { mutate: VerifyPassword, isPending: isVerifyingPassword } = useVerifyPassword(userId);
 
   const action = () => {
     if (!route.params?.password)
@@ -47,16 +48,26 @@ const OtpService = () => {
     }
   }, [otp]);
   return (
-    <View style={{ marginVertical: "5%" }}>
-      <OtpTextInput
-        otp={otp}
-        setOtp={setOtp}
-        digits={6}
-        style={styles.otp}
-        fontStyle={styles.otpFont}
-        focusedStyle={{ borderColor: colors.primary }}
-      />
-    </View>
+    <>
+      <View style={{ marginVertical: "5%" }}>
+        <OtpTextInput
+          otp={otp}
+          setOtp={setOtp}
+          digits={6}
+          style={styles.otp}
+          fontStyle={styles.otpFont}
+          focusedStyle={{ borderColor: colors.primary }}
+        />
+      </View>
+      <View
+        style={{
+          marginBottom: "5%",
+          paddingHorizontal: 10,
+        }}
+      >
+        <LargeButton text="Confirm" isRoute={false} isLoading={isPending || isVerifyingPassword} />
+      </View>
+    </>
   );
 };
 

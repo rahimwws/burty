@@ -26,7 +26,7 @@ const SignUpService: FC = () => {
   const [status, setStatus] = useState<StatusType>(null);
   const [isChecked, setIsChecked] = useState(false);
 
-  const { mutate, isSuccess, errorMessage } = useRegister(
+  const { mutate, isSuccess, errorMessage, isPending } = useRegister(
     email,
     password,
     role === "mentor" ? "MENTOR" : "USER"
@@ -94,6 +94,7 @@ const SignUpService: FC = () => {
           text="Sign Up"
           // isRoute={true}
           action={validateAndSubmit}  // TODO What after registartion?
+          isLoading={isPending}
         // route="Service"
         // temporary
         />
