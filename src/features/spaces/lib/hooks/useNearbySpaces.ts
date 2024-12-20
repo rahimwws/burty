@@ -6,7 +6,7 @@ export const useNearbySpaces = () => {
   const { latitude, longitude } = useLocationStore.getState();
 
   return useQuery({
-    queryKey: ["nearby"],
+    queryKey: ["nearby", latitude, longitude],
     queryFn: () => spaces.getNearbySpaces(latitude, longitude),
     enabled: !!latitude && !!longitude,
     staleTime: 5 * 60 * 1000,

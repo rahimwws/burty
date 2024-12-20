@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { useState } from "react";
 import useUserIdStore from "../../model/stores/userId";
+import { getLocation } from "@/utils/user/getLocation";
 export const useRegister = (
   email: string,
   password: string,
@@ -13,6 +14,7 @@ export const useRegister = (
   const mutation = useMutation({
     mutationFn: () => auth.register(email, password, role),
     onSuccess: async (data) => {
+      await getLocation();
       console.log(data.data.user.id);
       setUserId(data.data.user.id);
     },

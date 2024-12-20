@@ -1,22 +1,17 @@
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
 import React, { useEffect, useRef } from "react";
 import { PlaceCard } from "@/components/card";
 import Typography from "@/shared/ui/Typography";
 import { useAppNavigation } from "@/shared/lib/navigation";
-import { useQuery } from "@tanstack/react-query";
-import { spaces } from "@/features/spaces/model/routes";
 import { useLocationStore } from "@/shared/store/location";
 import { toast } from "@/shared/ui/Toast";
+import { usePopularSpaces } from "@/features/spaces/lib/hooks/usePopularSpaces";
+import { colors } from "@/shared/lib/theme";
 
 const List = () => {
   const navigation = useAppNavigation();
   const { latitude, longitude } = useLocationStore.getState();
-  const { data, isLoading, isPending } = useQuery({
-    queryKey: ["popular"],
-    queryFn: () => spaces.getPopularSpaces(latitude, longitude),
-    enabled: !!latitude && !!longitude,
-
-  });
+  const { data, isLoading, isPending } = usePopularSpaces();
 
   useEffect(() => {
     if (!data?.data.length && !isLoading) {
@@ -27,9 +22,9 @@ const List = () => {
     }
   }, [data?.data.length, isLoading]);
 
-  // if (isPending) {
-  //   return null;
-  // }
+  if (!isLoading && isPending) {
+    return null;
+  }
   return (
     <>
       <View
@@ -56,17 +51,22 @@ const List = () => {
           </Typography>
         </TouchableOpacity>
       </View>
-      <FlatList
-        data={data?.data.slice(0, 3)}
-        renderItem={({ item, index }) => {
-          return <PlaceCard item={item} />;
-        }}
-        horizontal
-        contentContainerStyle={{
-          gap: 15,
-        }}
-        showsHorizontalScrollIndicator={false}
-      />
+      {
+        isLoading ?
+          <ActivityIndicator color={colors.primary} />
+          :
+          <FlatList
+            data={data?.data.slice(0, 3)}
+            renderItem={({ item, index }) => {
+              return <PlaceCard item={item} />;
+            }}
+            horizontal
+            contentContainerStyle={{
+              gap: 15,
+            }}
+            showsHorizontalScrollIndicator={false}
+          />
+      }
     </>
   );
 };

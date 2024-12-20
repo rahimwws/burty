@@ -30,6 +30,7 @@ const PlaceCard = ({
 }) => {
   const { width, height } = Dimensions.get("window");
   const navigation = useAppNavigation();
+
   return (
     <TouchableOpacity
       style={{
@@ -52,34 +53,38 @@ const PlaceCard = ({
       >
         {used && <View style={styles.overlay} />}
 
-        <View
-          style={{
-            position: "absolute",
-            top: "5%",
-            right: "5%",
-            borderRadius: 100,
-            overflow: "hidden",
-          }}
-        >
-          <BlurView
-            intensity={30}
-            tint="light"
-            style={{
-              backgroundColor: "rgba(0, 0, 0, 0.07)",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "row",
-              padding: 5,
-              paddingHorizontal: 10,
-              gap: 5,
-            }}
-          >
-            <Star size={15} fill={used ? "#A0A0A0" : colors.primary} />
-            <Typography styles={{ color: used ? "#A0A0A0" : colors.light }}>
-              4.5
-            </Typography>
-          </BlurView>
-        </View>
+        {
+          typeof item?.averageRating == 'number' ?
+            <View
+              style={{
+                position: "absolute",
+                top: "5%",
+                right: "5%",
+                borderRadius: 100,
+                overflow: "hidden",
+              }}
+            >
+              <BlurView
+                intensity={30}
+                tint="light"
+                style={{
+                  backgroundColor: "rgba(0, 0, 0, 0.07)",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "row",
+                  padding: 5,
+                  paddingHorizontal: 10,
+                  gap: 5,
+                }}
+              >
+                <Star size={15} fill={used ? "#A0A0A0" : colors.primary} />
+                <Typography styles={{ color: used ? "#A0A0A0" : colors.light }}>
+                  {item?.averageRating?.toFixed(1)}
+                </Typography>
+              </BlurView>
+            </View>
+            : null
+        }
 
         <View
           style={{
@@ -132,7 +137,7 @@ const PlaceCard = ({
               font="b"
               styles={{ color: used ? "#A0A0A0" : colors.light }}
             >
-              ${item?.minPrice}-{item?.maxPrice}
+              ${Math.round(item?.minPrice || 0)}-{Math.round(item?.maxPrice || 0)}
             </Typography>
           </View>
         </View>

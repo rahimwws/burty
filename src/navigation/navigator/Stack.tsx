@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import Filter from "@/pages/stack/discover/Filter";
 import FilteredPlaces from "@/pages/stack/discover/FilteredPlaces";
 import Tabs from "../Tabs";
@@ -16,9 +16,22 @@ import Support from "@/pages/stack/profile/Support";
 import MentorDetail from "@/pages/stack/place/MentorDetail";
 import QrDetail from "@/pages/stack/scan/QrDetail";
 import AddComment from "@/pages/stack/place/AddComment";
+import { getLocation } from "@/utils/user/getLocation";
 
 const StackScreens = () => {
   const Stack = createNativeStackNavigator();
+  const [isLocationInited, setIsLocationInited] = useState(false);
+
+  useLayoutEffect(() => { // only after got location render
+    (async () => {
+      await getLocation();
+      setIsLocationInited(true);
+    })()
+  }, []);
+
+
+  if (!isLocationInited) return null;
+
   return (
     <Stack.Navigator
       screenOptions={{

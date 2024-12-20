@@ -11,5 +11,6 @@ export interface PlaceT {
   minPrice: number;
   openTime: Date;
   phoneNumber: string;
+  averageRating: number;
   site: string;
 }

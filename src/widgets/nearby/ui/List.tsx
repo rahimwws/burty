@@ -1,10 +1,11 @@
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
 import React, { useEffect } from "react";
 import { PlaceCard } from "@/components/card";
 import Typography from "@/shared/ui/Typography";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { useNearbySpaces } from "@/features/spaces/";
 import { toast } from "@/shared/ui/Toast";
+import { colors } from "@/shared/lib/theme";
 
 const List = () => {
   const navigation = useAppNavigation();
@@ -19,7 +20,7 @@ const List = () => {
     }
   }, [data?.data.length]);
 
-  if (isPending) {
+  if (!isLoading && isPending) {
     return null;
   }
   return (
@@ -48,17 +49,22 @@ const List = () => {
           </Typography>
         </TouchableOpacity>
       </View>
-      <FlatList
-        data={data?.data.slice(0, 3)}
-        renderItem={({ item, index }) => {
-          return <PlaceCard item={item} />;
-        }}
-        horizontal
-        contentContainerStyle={{
-          gap: 15,
-        }}
-        showsHorizontalScrollIndicator={false}
-      />
+      {
+        isLoading ?
+          <ActivityIndicator color={colors.primary} />
+          :
+          <FlatList
+            data={data?.data.slice(0, 3)}
+            renderItem={({ item, index }) => {
+              return <PlaceCard item={item} />;
+            }}
+            horizontal
+            contentContainerStyle={{
+              gap: 15,
+            }}
+            showsHorizontalScrollIndicator={false}
+          />
+      }
     </>
   );
 };

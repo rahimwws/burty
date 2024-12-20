@@ -89,7 +89,7 @@ const Filter = () => {
           }}
         >
           <LargeButton
-            text="Show 4 places"
+            text="Show places"
             isRoute={true}
             bg={colors.light}
             type="rounded"

@@ -4,12 +4,14 @@ import { useMutation } from "@tanstack/react-query";
 import { saveTokens } from "@/shared/api/token/storage";
 import { useState } from "react";
 import useRoleStore from "@/shared/store/role";
+import { getLocation } from "@/utils/user/getLocation";
 export const useLogin = (email: string, password: string) => {
   const [errorMessage, setError] = useState<string | null>(null);
   const setRole = useRoleStore((store) => store.setRole);
   const mutation = useMutation({
     mutationFn: () => auth.login(email, password),
     onSuccess: async (data) => {
+      await getLocation();
       console.log(data.data);
       setError(null);
       setRole(data.data.user.role === "USER" ? "user" : "mentor");

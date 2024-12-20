@@ -1,31 +1,25 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
-import { useAppNavigation } from "@/shared/lib/navigation";
 
-const Button = ({ title, route }: { title: string; route?: string }) => {
-  const [active, setActive] = useState<boolean>(false);
-  const navigation = useAppNavigation();
+const Button = ({ title, onPress }: { title: string; onPress?: Function }) => {
   return (
     <TouchableOpacity
       style={{
         paddingHorizontal: 12,
         paddingVertical: 9,
-        backgroundColor:
-          active && route !== "Categories" ? colors.primary : colors.dark,
+        backgroundColor: colors.dark,
         borderRadius: 3,
       }}
       onPress={() => {
-        setActive(!active);
-
-        route && navigation.navigate(route);
+        onPress?.();
       }}
     >
       <Typography
         align="left"
-        styles={{ opacity: active && route !== "Categories" ? 1 : 0.5 }}
-        color={active && route !== "Categories" ? "background" : "light"}
+        styles={{ opacity: 0.5 }}
+        color={"light"}
       >
         {title}
       </Typography>
