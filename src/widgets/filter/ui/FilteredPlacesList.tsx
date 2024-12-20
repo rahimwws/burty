@@ -1,12 +1,26 @@
-import { FlatList, View } from "react-native";
+import { ActivityIndicator, FlatList, View } from "react-native";
 import { useFilteredSpaces } from "@/features/spaces";
 import Typography from "@/shared/ui/Typography";
 import { PlaceCard } from "@/components/card";
 import { useEffect } from "react";
 import { toast } from "@/shared/ui/Toast";
+import FilterParamsDto from "@/features/spaces/model/types/FilterParamsDto";
+import { colors } from "@/shared/lib/theme";
 
-const FilteredPlacesList = () => {
-  const { data, isPending, isLoading } = useFilteredSpaces();
+type FilteredPlacesListProps = FilterParamsDto & {}
+
+const FilteredPlacesList = ({
+  maxDistance,
+  maxPrice,
+  minPrice,
+  passType,
+}: FilteredPlacesListProps) => {
+  const { data, isPending, isLoading } = useFilteredSpaces({
+    maxDistance,
+    maxPrice,
+    minPrice,
+    passType,
+  });
 
   useEffect(() => {
     if (!data?.data.length && !isLoading) {
@@ -17,7 +31,7 @@ const FilteredPlacesList = () => {
     }
   }, [data?.data.length]);
 
-  if (isPending) {
+  if (!isLoading && isPending) {
     return null
   }
 
@@ -28,17 +42,22 @@ const FilteredPlacesList = () => {
           No results
         </Typography>
       )}
-      <FlatList
-        data={data?.data}
-        renderItem={({ item, index }) => {
-          return <PlaceCard type="large" item={item} key={index} />;
-        }}
-        contentContainerStyle={{
-          alignItems: "center",
-          gap: 15,
-        }}
-        showsVerticalScrollIndicator={false}
-      />
+      {
+        isLoading ?
+          <ActivityIndicator color={colors.primary} />
+          :
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={data?.data}
+            renderItem={({ item, index }) => {
+              return <PlaceCard type="large" item={item} key={index} />;
+            }}
+            contentContainerStyle={{
+              alignItems: "center",
+              gap: 15,
+            }}
+          />
+      }
     </View>
   );
 };

@@ -1,14 +1,10 @@
 import {
   View,
-  Text,
-  TouchableOpacity,
   ScrollView,
   KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import Typography from "@/shared/ui/Typography";
 import { Header } from "@/components/header";
@@ -17,10 +13,16 @@ import { DistanceBar, FilterPrice } from "@/widgets/filter";
 import { DarkButton, LargeButton } from "@/shared/ui/Button";
 import { PassTypes } from "@/widgets/filter/model/types";
 import { colors } from "@/shared/lib/theme";
+import { PriceFromToRefT } from "@/widgets/filter/ui/Price";
+import { DistanceBarRef } from "@/widgets/filter/ui/DistanceBar";
+
 
 const Filter = () => {
   const navigation = useAppNavigation();
+
   const [type, setType] = useState("Single");
+  const filterPriceRef = useRef<PriceFromToRefT | null>(null);
+  const distanceRef = useRef<DistanceBarRef>(null);
 
   return (
     <ScreenLayout>
@@ -34,23 +36,13 @@ const Filter = () => {
         <ScrollView>
           <View
             style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
               marginVertical: "5%",
             }}
           >
-            <Typography size={18} font="b">
-              Sports categories
-            </Typography>
-            <TouchableOpacity onPress={() => navigation.navigate("Categories")}>
-              <Typography size={14} font="m" color="primary">
-                Show all
-              </Typography>
-            </TouchableOpacity>
+            <DistanceBar
+              ref={distanceRef}
+            />
           </View>
-
-          <DistanceBar />
 
           {/* Pass Type */}
           <Typography
@@ -79,7 +71,9 @@ const Filter = () => {
             })}
           </View>
 
-          <FilterPrice />
+          <FilterPrice
+            ref={filterPriceRef}
+          />
         </ScrollView>
         <View
           style={{
@@ -90,11 +84,25 @@ const Filter = () => {
         >
           <LargeButton
             text="Show places"
-            isRoute={true}
             bg={colors.light}
             type="rounded"
-            action={() => Keyboard.dismiss()}
-            route="FilteredPlaces"
+            action={() => {
+              const { fromValue, toValue } = filterPriceRef.current!.getValues();
+              const distance = distanceRef.current!.getValue();
+
+              navigation.navigate("FilteredPlaces", {
+                distance: distance,
+                passType: type,
+                fromPrice: fromValue ? Number(fromValue) : undefined,
+                toPrice: toValue ? Number(toValue) : undefined,
+                onGoBack: () => {
+                  setType("Single");
+                  filterPriceRef.current?.clearValues();
+                  distanceRef.current?.clearValue();
+                }
+              });
+              Keyboard.dismiss();
+            }}
           />
         </View>
       </KeyboardAvoidingView>

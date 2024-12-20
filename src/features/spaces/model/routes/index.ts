@@ -1,6 +1,8 @@
 import { client } from "@/shared/api";
 import { PlaceT } from "@/shared/model/types";
+import FilterParamsDto from '../types/FilterParamsDto';
 import axios from "axios";
+import removeFalsyFields from "@/shared/lib/utils/removeFalsyFields";
 
 export const spaces = {
   async getNearbySpaces(latitude: number | null, longitude: number | null) {
@@ -41,13 +43,31 @@ export const spaces = {
     }
   },
 
-  async getFilteredSpaces(latitude: number | null, longitude: number | null) {
-    console.log("fetch filtered spaces");
-
+  async getFilteredSpaces({
+    latitude,
+    longitude,
+    maxDistance,
+    minPrice,
+    maxPrice,
+    passType
+  }: FilterParamsDto & {
+    latitude: number | null
+    longitude: number | null
+  }) {
     if (latitude && longitude) {
       try {
         return await client.get<PlaceT[]>(
-          `/spaces/filter?latitude=${latitude}&longitude=${longitude}&maxDistance=10000`
+          `/spaces/filter`,
+          {
+            params: removeFalsyFields({
+              latitude,
+              longitude,
+              maxDistance,
+              minPrice,
+              maxPrice,
+              passType: passType?.toLowerCase()
+            })
+          }
         );
       } catch (error) {
         if (axios.isAxiosError(error)) {

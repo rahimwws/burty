@@ -6,10 +6,32 @@ import { colors } from "@/shared/lib/theme";
 import Typography from "@/shared/ui/Typography";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { FilteredPlacesList } from "@/widgets/filter";
+import { RouteProp, useRoute } from "@react-navigation/native";
+
+type RouteParams = {
+  filters: {
+    distance: number
+    fromPrice: number
+    toPrice: number
+    passType: string
+    onGoBack?: Function
+  };
+};
+
+type MyScreenRouteProp = RouteProp<RouteParams, "filters">;
 
 const FilteredPlaces = () => {
-  const tags = ["1 km+-", "Single", "20$"];
+  const route = useRoute<MyScreenRouteProp>();
   const navigation = useAppNavigation();
+  const {
+    distance,
+    fromPrice,
+    toPrice,
+    passType,
+    onGoBack
+  } = route.params;
+
+  const tags = [`${distance} km+-`, passType, toPrice ? `${toPrice}$` : null];
 
   return (
     <ScreenLayout pb={0}>
@@ -30,27 +52,36 @@ const FilteredPlaces = () => {
           }}
         >
           {tags.map((tag, index) => {
-            return (
-              <View
-                style={{
-                  backgroundColor: colors.dark,
-                  padding: 10,
-                  borderRadius: 5,
-                }}
-                key={index}
-              >
-                <Typography color="gray">{tag}</Typography>
-              </View>
-            );
+            if (tag)
+              return (
+                <View
+                  style={{
+                    backgroundColor: colors.dark,
+                    padding: 10,
+                    borderRadius: 5,
+                  }}
+                  key={index}
+                >
+                  <Typography color="gray">{tag}</Typography>
+                </View>
+              );
           })}
         </View>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => {
+          onGoBack?.();
+          navigation.goBack()
+        }}>
           <Typography color="primary" font="m">
             Clear All
           </Typography>
         </TouchableOpacity>
       </View>
-      <FilteredPlacesList />
+      <FilteredPlacesList
+        maxDistance={distance}
+        minPrice={fromPrice}
+        maxPrice={toPrice}
+        passType={passType}
+      />
     </ScreenLayout>
   );
 };

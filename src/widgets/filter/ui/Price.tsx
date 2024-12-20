@@ -1,9 +1,14 @@
 import { View, TextInput, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React, { forwardRef, useImperativeHandle, useState } from "react";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
 
-const Price = () => {
+export type PriceFromToRefT = {
+  getValues: () => { fromValue: string, toValue: string }
+  clearValues: () => void
+}
+
+const Price = forwardRef<PriceFromToRefT, object>(({ }, ref) => {
   const [fromValue, setFromValue] = useState<string>("");
   const [toValue, setToValue] = useState<string>("");
 
@@ -16,6 +21,19 @@ const Price = () => {
     const numericValue = text.replace(/[^0-9]/g, "");
     setToValue(numericValue);
   };
+
+  useImperativeHandle(ref, () => {
+    return {
+      getValues: () => {
+        return { fromValue, toValue }
+      },
+      clearValues: () => {
+        setFromValue("");
+        setToValue("");
+      }
+    };
+  });
+
 
   return (
     <View style={{ marginVertical: "5%" }}>
@@ -70,7 +88,7 @@ const Price = () => {
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   inputWrapper: {

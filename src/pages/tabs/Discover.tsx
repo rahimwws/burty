@@ -11,9 +11,12 @@ const Discover = () => {
   return (
     <ScreenLayout>
       <ScrollView
+        contentContainerStyle={{
+          paddingBottom: '5%',
+        }}
         style={{
           flex: 1,
-          marginBottom: "10%",
+          marginBottom: "15%",
         }}
         showsVerticalScrollIndicator={false}
       >

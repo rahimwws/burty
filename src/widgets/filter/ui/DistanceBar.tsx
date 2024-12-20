@@ -1,16 +1,32 @@
-import React, { useState } from "react";
+import React, { forwardRef, useImperativeHandle, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Slider from "@react-native-community/slider";
 import { colors } from "@/shared/lib/theme"; // Assuming you have a colors object
 import Typography from "@/shared/ui/Typography";
 
-const DistanceBar = () => {
+export type DistanceBarRef = {
+  getValue: () => number
+  clearValue: () => void
+}
+
+const DistanceBar = forwardRef<DistanceBarRef, object>(({ }, ref) => {
   const [distance, setDistance] = useState(1); // Default value is 1 kilometer
 
   const handleOnValueChange = (value: number) => {
     const formattedDistance: number = +value.toFixed(1)
     setDistance(formattedDistance)
   }
+
+  useImperativeHandle(ref, () => {
+    return {
+      getValue: () => {
+        return distance;
+      },
+      clearValue: () => {
+        setDistance(1);
+      }
+    }
+  });
 
   return (
     <View style={styles.container}>
@@ -39,7 +55,7 @@ const DistanceBar = () => {
       </Typography>
     </View>
   );
-};
+});
 
 export default DistanceBar;
 
