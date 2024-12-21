@@ -27,7 +27,7 @@ const SignUpService: FC = () => {
   const [status, setStatus] = useState<StatusType>(null);
   const [isChecked, setIsChecked] = useState(false);
 
-  const { mutate, isSuccess, errorMessage, setError, isPending } = useRegister(
+  const { mutate, isSuccess, errorMessage, setError, isPending,  } = useRegister(
     email,
     password,
     role === "mentor" ? "MENTOR" : "USER"
@@ -50,13 +50,12 @@ const SignUpService: FC = () => {
       setStatus("error");
       setError("Agree to the user agreement and confirm that you are 18 years of age or older")
       return;
-      // navigation.navigate("Login");  # TODO line 96 question
     }
     mutate();
   };
 
   useEffect(() => {
-    if (isSuccess) navigation.navigate("Otp");
+    if (isSuccess) setStatus('success');
     if (errorMessage) setStatus("error");
   }, [isSuccess, errorMessage, navigation]);
 
@@ -104,13 +103,25 @@ const SignUpService: FC = () => {
         <LargeButton
           text="Sign Up"
           // isRoute={true}
-          action={validateAndSubmit}  // TODO What after registartion?
+          action={validateAndSubmit}
           isLoading={isPending}
         // route="Service"
         // temporary
         />
       </View>
 
+      <Modal
+        title="Registration successful!"
+        description="A confirmation has been sent to your email. Please check your inbox and follow the instructions to complete your registration."
+        rightText="Ok"
+        visible={status === "success"}
+        rightAction={() => {
+          setStatus(null);
+          navigation.navigate("Otp", {fromPageName: "Sign Up"})
+        }}
+        // leftAction={() => setStatus(null)}
+        // leftText="Back"
+      />
     </>
   );
 };

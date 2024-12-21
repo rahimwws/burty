@@ -66,24 +66,32 @@ const Modal: React.FC<CustomModalProps> = ({
               {/* Actions */}
               <View style={styles.actions}>
                 {/* Left Button */}
-                <TouchableOpacity
-                  onPress={leftAction}
-                  style={styles.actionButton}
-                >
-                  <Typography color="primary" font="m" size={18}>
-                    {leftText}
-                  </Typography>
-                </TouchableOpacity>
+                {
+                  leftAction && leftText ?
+                    <TouchableOpacity
+                      onPress={leftAction}
+                      style={styles.actionButton}
+                    >
+                      <Typography color="primary" font="m" size={18}>
+                        {leftText}
+                      </Typography>
+                    </TouchableOpacity>
+                    : null
+                }
 
                 {/* Right Button */}
-                <TouchableOpacity
-                  onPress={rightAction}
-                  style={styles.actionButton}
-                >
-                  <Typography color="primary" font="m" size={18}>
-                    {rightText}
-                  </Typography>
-                </TouchableOpacity>
+                {
+                  rightAction && rightText ?
+                    <TouchableOpacity
+                      onPress={rightAction}
+                      style={styles.actionButton}
+                    >
+                      <Typography color="primary" font="m" size={18}>
+                        {rightText}
+                      </Typography>
+                    </TouchableOpacity>
+                    : null
+                }
               </View>
             </>
           ) : (

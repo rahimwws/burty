@@ -14,6 +14,7 @@ import ScreenLayout from "@/shared/ui/Layout";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
 import { ResetPasswordService } from "@/features/auth/";
+import AuthTitle from "@/shared/ui/AuthTitle";
 
 const ResetPassword = () => {
   const { height } = Dimensions.get("window");
@@ -40,9 +41,7 @@ const ResetPassword = () => {
               style={{ width: 155, height: 200, alignSelf: "center" }}
               resizeMode="contain"
             />
-            <Typography font="b" size={22}>
-              Reset Password
-            </Typography>
+            <AuthTitle title="Reset Password" />
             <ResetPasswordService />
           </ScrollView>
         </ScreenLayout>

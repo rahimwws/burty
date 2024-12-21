@@ -14,7 +14,7 @@ const ResetPasswordService = () => {
     mutate(email);
   };
   useEffect(() => {
-    if (isSuccess) navigation.navigate("Otp", { password: true });
+    if (isSuccess) navigation.navigate("Otp", { password: true, fromPageName: "Reset Password" });
   }, [isSuccess]);
   return (
     <>

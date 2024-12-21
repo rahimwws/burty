@@ -5,9 +5,22 @@ import ScreenLayout from "@/shared/ui/Layout";
 import Typography from "@/shared/ui/Typography";
 import { OtpService } from "@/features/auth/";
 import { LargeButton } from "@/shared/ui/Button";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import AuthTitle from "@/shared/ui/AuthTitle";
+
+type RouteParams = {
+  filters: {
+    fromPageName?: string
+  };
+};
+
+type MyScreenRouteProp = RouteProp<RouteParams, "filters">;
+
 
 const Otp = () => {
+  const route = useRoute<MyScreenRouteProp>();
   const { height } = Dimensions.get("window");
+
   return (
     <>
       <StatusBar backgroundColor="transparent" translucent={true} />
@@ -31,9 +44,7 @@ const Otp = () => {
               style={{ width: 155, height: 200, alignSelf: "center" }}
               resizeMode="contain"
             />
-            <Typography font="b" size={22}>
-              OTP
-            </Typography>
+            <AuthTitle title={route.params?.fromPageName || 'Otp'} />
             <OtpService />
           </ScrollView>
         </ScreenLayout>

@@ -5,6 +5,7 @@ import { FormField } from "@/shared/ui/FormField";
 import { useNewPassword } from "../lib/hooks/useNewPassword";
 import { AuthError } from "@/shared/ui/Error";
 import { useAppNavigation } from "@/shared/lib/navigation";
+import AuthTitle from "@/shared/ui/AuthTitle";
 
 const NewPasswordService = () => {
   const navigation = useAppNavigation();

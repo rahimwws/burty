@@ -13,6 +13,7 @@ import { StatusBar } from "expo-status-bar";
 import ScreenLayout from "@/shared/ui/Layout";
 import Typography from "@/shared/ui/Typography";
 import { NewPasswordService } from "@/features/auth/";
+import AuthTitle from "@/shared/ui/AuthTitle";
 
 const NewPassword = () => {
   const { height } = Dimensions.get("window");
@@ -44,9 +45,7 @@ const NewPassword = () => {
                 style={{ width: 155, height: 200, alignSelf: "center" }}
                 resizeMode="contain"
               />
-              <Typography font="b" size={22}>
-                New Password
-              </Typography>
+              <AuthTitle title="New Password" />
               <NewPasswordService />
             </ScrollView>
           </KeyboardAvoidingView>

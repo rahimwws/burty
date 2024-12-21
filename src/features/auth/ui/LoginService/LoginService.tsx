@@ -10,6 +10,7 @@ import { useLogin } from "../../lib/hooks/useLogin";
 import { FormField } from "@/shared/ui/FormField";
 import styles from "./styles";
 import isEmail from "@/utils/validators/isEmail";
+import AuthTitle from "@/shared/ui/AuthTitle";
 
 const LoginService = () => {
   const navigation = useAppNavigation();
@@ -47,6 +48,8 @@ const LoginService = () => {
       ) : (
         <View style={{ height: 25 }}></View>
       )}
+      <AuthTitle title="Login" />
+      
       <FormField
         label="Email"
         placeholder="example@example.com"
