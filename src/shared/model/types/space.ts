@@ -1,3 +1,16 @@
+export interface PlaceMediaT {
+  id: string
+  fileName: string
+  filePath: string
+  size: string
+  mimeType: string
+  originalName: string
+  spaceId: string
+  mediaType: string
+  createdAt: string
+  updatedAt: string
+}
+
 export interface PlaceT {
   id: string;
   name: string;
@@ -13,4 +26,6 @@ export interface PlaceT {
   phoneNumber: string;
   averageRating: number;
   site: string;
+  medias: PlaceMediaT[]
+  distanceInM: number
 }

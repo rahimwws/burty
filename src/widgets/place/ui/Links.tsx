@@ -8,7 +8,19 @@ import Marker from "@/shared/assets/icons/interface/Marker";
 import Call from "@/shared/assets/icons/interface/Call";
 import Time from "@/shared/assets/icons/interface/Time";
 
-const PlaceLinks = () => {
+type PlaceLinksProps = {
+  link?: string
+  address?: string
+  phoneNumber?: string
+  workTime?: string
+}
+
+const PlaceLinks = ({
+  address = '',
+  link = '',
+  phoneNumber = '',
+  workTime = ''
+}: PlaceLinksProps) => {
   return (
     <>
       <Typography
@@ -40,10 +52,10 @@ const PlaceLinks = () => {
             borderEndEndRadius: 10,
             borderEndStartRadius: 10,
           }}
-          onPress={() => openLink("https://website.com")}
+          onPress={() => openLink(link || '')}
         >
           <Link size={15} fill={colors.light} />
-          <Typography>website.com</Typography>
+          <Typography>{link}</Typography>
         </TouchableOpacity>
         <View
           style={{
@@ -60,7 +72,7 @@ const PlaceLinks = () => {
           }}
         >
           <Marker size={15} fill={colors.light} />
-          <Typography>2972 Westheimer Rd. Santa Ana, Illinois</Typography>
+          <Typography>{address}</Typography>
         </View>
         <TouchableOpacity
           style={{
@@ -79,7 +91,7 @@ const PlaceLinks = () => {
           onPress={() => openLink("tel:+99365123456")}
         >
           <Call size={15} fill={colors.light} />
-          <Typography>+99365123456</Typography>
+          <Typography>{phoneNumber}</Typography>
         </TouchableOpacity>
         <View
           style={{
@@ -97,7 +109,7 @@ const PlaceLinks = () => {
           }}
         >
           <Time size={15} fill={colors.light} />
-          <Typography>Open: 8:00 AM - 10:00 PM</Typography>
+          <Typography>Open: {workTime}</Typography>
         </View>
       </View>
     </>

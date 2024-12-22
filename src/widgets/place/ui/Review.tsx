@@ -1,11 +1,29 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
+import { View, TouchableOpacity, ActivityIndicator } from "react-native";
+import React, { useEffect } from "react";
 import Typography from "@/shared/ui/Typography";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import ReviewCard from "@/components/card/ReviewCard";
+import { useReviews } from "@/features/reviews";
+import { colors } from "@/shared/lib/theme";
+import { toast } from "@/shared/ui/Toast";
 
-const Review = () => {
+const Review = ({ spaceId }: { spaceId: string }) => {
   const navigation = useAppNavigation();
+
+  const {
+    data,
+    isLoading,
+  } = useReviews(spaceId);
+
+  useEffect(() => {
+    if (!data?.data.length && !isLoading) {
+      toast.show({
+        type: 'error',
+        description: 'No reviews data'
+      })
+    }
+  }, [data?.data.length, isLoading]);
+
   return (
     <View style={{ marginTop: "3%" }}>
       <Typography
@@ -21,8 +39,15 @@ const Review = () => {
           gap: 10,
         }}
       >
-        <ReviewCard />
-        <ReviewCard />
+        {
+          isLoading ?
+            <ActivityIndicator color={colors.primary} />
+            : data?.data.map(item => {
+              return (
+                <ReviewCard review={item} />
+              )
+            })
+        }
         <TouchableOpacity
           style={{ marginVertical: "3%" }}
           onPress={() => navigation.navigate("Review")}

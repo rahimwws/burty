@@ -12,9 +12,23 @@ import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
 import ReviewStar from "@/shared/assets/icons/interface/ReviewStar";
 import { LargeButton } from "@/shared/ui/Button";
+import { useCreateReview } from "@/features/reviews";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { toast } from "@/shared/ui/Toast";
+
+type RouteParams = {
+  MyScreen: {
+    bookingId: string
+  };
+};
+
+type MyScreenRouteProp = RouteProp<RouteParams, "MyScreen">;
 
 const CreateReview = () => {
-  const [rating, setRating] = useState<number>(0);
+  const route = useRoute<MyScreenRouteProp>();
+  const navigator = useNavigation();
+  const [rating, setRating] = useState<number>(1);
+  const [comment, setComment] = useState('');
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();
@@ -23,6 +37,28 @@ const CreateReview = () => {
   const handleStarPress = (star: number) => {
     setRating(star);
   };
+
+  const {
+    mutate,
+    isPending,
+  } = useCreateReview();
+
+  const handleAddReview = () => {
+    if (!comment.trim().length) {
+      toast.show({
+        type: 'error',
+        description: "Comment cannot be emtpy"
+      });
+      return;
+    }
+    mutate({
+      bookingId: route.params.bookingId,
+      comment: comment,
+      rating: rating
+    }, {
+      onSuccess: () => navigator.goBack()
+    })
+  }
 
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
@@ -47,12 +83,14 @@ const CreateReview = () => {
               borderRadius: 8,
               color: colors.light,
               fontFamily: "m",
+              textAlignVertical: 'top',
             }}
             multiline={true}
             returnKeyType="done"
             onSubmitEditing={dismissKeyboard}
             placeholder="Text you message here..."
             placeholderTextColor={colors.gray}
+            onChangeText={(text) => setComment(text)}
           />
 
           <Typography
@@ -97,8 +135,10 @@ const CreateReview = () => {
               type="rounded"
               theme="outline"
               textColor="light"
-              isRoute
+              isRoute={false}
               route="Review"
+              action={() => handleAddReview()}
+              isLoading={isPending}
             />
           </View>
         </ScreenLayout>

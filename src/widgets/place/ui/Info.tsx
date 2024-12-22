@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import { colors } from "@/shared/lib/theme";
 import Typography from "@/shared/ui/Typography";
@@ -6,14 +6,20 @@ import { BlurView } from "expo-blur";
 import Star from "@/shared/assets/icons/interface/Star";
 import Marker from "@/shared/assets/icons/interface/Marker";
 import ProfileSvg from "@/shared/assets/icons/tabs/ProfileSvg";
+import dayjs from 'dayjs';
+import { PlaceT } from "@/shared/model/types";
+
+type PlaceInfoProps = {
+  reserved?: boolean;
+  mentor?: boolean;
+  place?: PlaceT
+}
 
 const PlaceInfo = ({
   reserved = false,
   mentor = false,
-}: {
-  reserved?: boolean;
-  mentor?: boolean;
-}) => {
+  place
+}: PlaceInfoProps) => {
   return (
     <View
       style={{
@@ -25,7 +31,7 @@ const PlaceInfo = ({
     >
       <View style={{}}>
         <Typography size={22} font="m" align="left">
-          Place Name
+          {place?.name}
         </Typography>
         <Typography
           font="m"
@@ -33,7 +39,7 @@ const PlaceInfo = ({
           size={14}
           styles={{ color: colors.light + "FFFCC", marginTop: 15 }}
         >
-          2972 Westheimer Rd. Santa Ana, Illinois
+          {place?.address}
         </Typography>
         {!reserved && (
           <Typography
@@ -44,7 +50,7 @@ const PlaceInfo = ({
               marginTop: 5,
             }}
           >
-            $100-$300
+            ${Math.round(place?.minPrice || 0)}-${Math.round(place?.maxPrice || 0)}
           </Typography>
         )}
       </View>
@@ -74,9 +80,9 @@ const PlaceInfo = ({
           >
             {!mentor && <Star size={15} />}
             {!mentor ? (
-              <Typography>4.5</Typography>
+              <Typography>{place?.averageRating.toFixed(1)}</Typography>
             ) : (
-              <Typography>19:00</Typography>
+              <Typography>{dayjs(place?.openTime).format('H:mm')}</Typography>
             )}
           </BlurView>
         </View>
@@ -94,11 +100,11 @@ const PlaceInfo = ({
           )}
           {!mentor ? (
             <Typography size={15} styles={{ color: colors.light + "fffCC" }}>
-              {300} m
+              {Math.round(place?.distanceInM || 0)} m
             </Typography>
           ) : (
             <Typography size={15} styles={{ color: colors.light + "fffCC" }}>
-              {12}
+              {place?.minPlayers} - {place?.maxPlayers}
             </Typography>
           )}
         </View>

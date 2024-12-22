@@ -6,8 +6,9 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ArrowLeft from "@/shared/assets/icons/interface/ArrowLeft";
 import { colors } from "@/shared/lib/theme";
 import Share from "@/shared/assets/icons/interface/Share";
+import onShare from "@/shared/lib/utils/onShare";
 
-const PlaceHeader = ({ role = "user" }: { role?: "user" | "mentor" }) => {
+const PlaceHeader = ({ role = "user", link }: { role?: "user" | "mentor", link: string }) => {
   const navigation = useAppNavigation();
   const insets = useSafeAreaInsets();
   return (
@@ -51,6 +52,7 @@ const PlaceHeader = ({ role = "user" }: { role?: "user" | "mentor" }) => {
           }}
           onPress={() => {
             LightHeptic();
+            onShare(link)
           }}
         >
           <Share size={20} fill={colors.light} />

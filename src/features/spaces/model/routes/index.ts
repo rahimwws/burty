@@ -80,4 +80,28 @@ export const spaces = {
       console.warn("Invalid coordinates: latitude or longitude is null.");
     }
   },
+
+  async getSpaceDetails(latitude: number | null, longitude: number | null, spaceId: string) {
+    if (latitude && longitude) {
+      try {
+        return await client.get<PlaceT>(
+          `/spaces/${spaceId}`,
+          {
+            params: {
+              longitude,
+              latitude
+            }
+          }
+        );
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          alert(error.response?.data);
+        } else {
+          alert(error);
+        }
+      }
+    } else {
+      console.warn("Invalid coordinates: latitude or longitude is null.");
+    }
+  }
 };

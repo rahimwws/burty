@@ -11,6 +11,7 @@ type Props = {
   align?: AlignSetting;
   styles?: StyleProp<TextStyle>;
   textProps?: TextProps;
+  numberOfLines?: number
 };
 const Typography = ({
   children,
@@ -20,6 +21,7 @@ const Typography = ({
   align = "center",
   styles,
   textProps,
+  numberOfLines
 }: Props) => {
   return (
     <Text
@@ -33,6 +35,7 @@ const Typography = ({
       {...textProps}
       adjustsFontSizeToFit={false}
       allowFontScaling={false}
+      numberOfLines={numberOfLines}
     >
       {children}
     </Text>

@@ -4,8 +4,16 @@ import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
 import { BlurView } from "expo-blur";
 import Star from "@/shared/assets/icons/interface/Star";
+import ReviewT from "@/features/reviews/model/types/Review";
 
-const ReviewCard = ({ type = false }: { type?: "full" | false }) => {
+type ReviewCardProps = {
+  review: ReviewT
+  /** @default false */
+  type?: boolean | 'full'
+}
+
+const ReviewCard = ({ type = false, review }: ReviewCardProps) => {
+
   return (
     <TouchableOpacity
       style={{
@@ -39,7 +47,7 @@ const ReviewCard = ({ type = false }: { type?: "full" | false }) => {
             }}
           >
             <Typography size={20} font="m">
-              Account name
+              {review.user.firstName}
             </Typography>
             <View
               style={{
@@ -60,7 +68,7 @@ const ReviewCard = ({ type = false }: { type?: "full" | false }) => {
                 }}
               >
                 <Star size={15} />
-                <Typography>4.5</Typography>
+                <Typography>{review.rating.toFixed(1)}</Typography>
               </BlurView>
             </View>
           </View>
@@ -70,8 +78,7 @@ const ReviewCard = ({ type = false }: { type?: "full" | false }) => {
           size={14}
           styles={{ width: "90%", color: colors.light + "FFFCC" }}
         >
-          Great location for evening training. The lighting is perfect and the
-          turf is well-maintained!
+          {review.comment}
         </Typography>
       </View>
     </TouchableOpacity>

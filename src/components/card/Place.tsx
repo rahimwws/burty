@@ -42,7 +42,7 @@ const PlaceCard = ({
       }}
       onPress={() => {
         LightHeptic();
-        navigation.navigate("PlaceDetail", { reserved, finished: used });
+        navigation.navigate("PlaceDetail", { reserved, finished: used, placeId: item?.id });
       }}
     >
       <ImageBackground
