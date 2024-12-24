@@ -4,6 +4,7 @@ import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
 import Edit from "@/shared/assets/icons/interface/Edit";
 import { useAppNavigation } from "@/shared/lib/navigation";
+import { User } from "@/shared/model/types/user";
 
 const ProfileView = ({ qr = false, item }: { qr?: boolean; item: User }) => {
   const navigation = useAppNavigation();

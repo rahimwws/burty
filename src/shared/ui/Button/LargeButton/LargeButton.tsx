@@ -1,9 +1,10 @@
 import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
-import React from "react";
+import React, { ReactNode } from "react";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { ColorsT, colors } from "@/shared/lib/theme";
-import Typography from "../Typography";
+import Typography from "../../Typography";
 import { LightHeptic } from "@/shared/lib/heptics";
+import styles from "./styles";
 const LargeButton = ({
   text,
   isRoute,
@@ -15,7 +16,8 @@ const LargeButton = ({
   bg,
   textColor,
   theme,
-  isLoading = false
+  isLoading = false,
+  startIcon
 }: {
   text: string;
   isRoute?: boolean;
@@ -29,6 +31,7 @@ const LargeButton = ({
   theme?: "default" | "outline";
   /** @default false */
   isLoading?: boolean
+  startIcon?: ReactNode
 }) => {
   const navigation = useAppNavigation();
   const HandleClick = () => {
@@ -38,18 +41,17 @@ const LargeButton = ({
   };
   return (
     <TouchableOpacity
-      style={{
-        width: "100%",
-        backgroundColor:
-          theme === "outline" ? "transparent" : bg ?? colors.primary,
-        height: 55,
-        alignItems: "center",
-        justifyContent: "center",
-        borderRadius: type === "default" ? 5 : 100,
-        opacity: disabled ? 0.5 : 1,
-        borderWidth: theme === "outline" ? 1 : 0,
-        borderColor: theme === "outline" ? bg : "transparent",
-      }}
+      style={[
+        styles.btn,
+        {
+          backgroundColor:
+            theme === "outline" ? "transparent" : bg ?? colors.primary,
+          borderRadius: type === "default" ? 5 : 100,
+          opacity: disabled ? 0.5 : 1,
+          borderWidth: theme === "outline" ? 1 : 0,
+          borderColor: theme === "outline" ? bg : "transparent",
+        }
+      ]}
       disabled={disabled || isLoading}
       activeOpacity={0.7}
       onPress={HandleClick}
@@ -58,9 +60,17 @@ const LargeButton = ({
         isLoading ?
           <ActivityIndicator color={textColor ?? colors.dark} />
           :
-          <Typography color={textColor ?? "background"} size={18} font="m">
-            {text}
-          </Typography>
+          <View style={styles.verticalCenter}>
+            {startIcon}
+            <Typography
+              styles={{ marginLeft: startIcon ? '2%' : 0 }}
+              color={textColor ?? "background"}
+              size={18}
+              font="m"
+            >
+              {text}
+            </Typography>
+          </View>
       }
     </TouchableOpacity>
   );

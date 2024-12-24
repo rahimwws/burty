@@ -19,6 +19,8 @@ import { user } from "@/widgets/profile/model/routes";
 import { useUserStore } from "@/shared/store/user";
 import { useLocationStore } from "@/shared/store/location";
 import { toast } from "@/shared/ui/Toast";
+import { LargeButton } from "@/shared/ui/Button";
+import StatisticsIcon from "@/shared/assets/icons/interface/StatisticsBar";
 
 const Profile = () => {
   const navigation = useAppNavigation();
@@ -79,7 +81,16 @@ const Profile = () => {
           />
         }
       >
-        <ProfileView item={data.data} />
+        <ProfileView item={data?.data} />
+
+        <View style={{ marginTop: '2%' }}>
+          <LargeButton
+            startIcon={<StatisticsIcon fill="#000" size={24} />}
+            text="Personal Statistics"
+            bg={colors.light}
+            type="rounded"
+          />
+        </View>
 
         <Typography
           size={22}
