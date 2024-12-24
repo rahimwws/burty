@@ -10,6 +10,7 @@ import { configureNavigationBar } from "../config/navigationBar";
 import { configureMapbox } from "../config/mapbox";
 import { ToastProvider } from "@/shared/ui/Toast";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { navigationRef } from "@/shared/lib/navigation";
 
 interface AppProviderProps {
   children: ReactNode;
@@ -36,7 +37,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     <SafeAreaProvider>
       <QueryClientProvider client={queryClient}>
         <GestureHandlerRootView>
-          <NavigationContainer theme={theme}>
+          <NavigationContainer theme={theme} ref={navigationRef}>
             <ToastProvider />
             {children}
           </NavigationContainer>

@@ -16,6 +16,7 @@ import Support from "@/pages/stack/profile/Support";
 import MentorDetail from "@/pages/stack/place/MentorDetail";
 import QrDetail from "@/pages/stack/scan/QrDetail";
 import AddComment from "@/pages/stack/place/AddComment";
+import Error from "@/pages/stack/error/Error";
 import { getLocation } from "@/utils/user/getLocation";
 
 const StackScreens = () => {
@@ -54,6 +55,7 @@ const StackScreens = () => {
       <Stack.Screen name="MentorDetail" component={MentorDetail} />
       <Stack.Screen name="QrDetail" component={QrDetail} />
       <Stack.Screen name="AddComment" component={AddComment} />
+      <Stack.Screen name="Error" component={Error} />
     </Stack.Navigator>
   );
 };

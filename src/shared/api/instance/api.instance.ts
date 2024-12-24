@@ -7,6 +7,7 @@ import {
   removeTokens,
 } from "../token/storage";
 import { toast } from "@/shared/ui/Toast";
+import { navigate } from "@/shared/lib/navigation";
 
 const API_URL: string = process?.env?.EXPO_PUBLIC_API_URL || 'https://burty-api.ru/api/';
 
@@ -81,6 +82,10 @@ client.interceptors.response.use(
         originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
         return client(originalRequest);
       }
+    }
+
+    if(error.response?.status > 403) {
+      navigate("Error")
     }
 
     toast.show({ // show in any error
