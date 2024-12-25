@@ -12,12 +12,14 @@ import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import BottomSheet from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet";
 import { Sheet } from "@/shared/ui/Sheets";
 import Typography from "@/shared/ui/Typography";
-import PlaceCard from "@/features/search/ui/SearchPlaceCard/SearchPlaceCard";
+import { PlaceCard } from "@/components/card";
 import { useNearbySpaces } from "@/features/spaces/";
 import { PlaceT } from "@/shared/model/types";
 import { OnPressEvent } from "@rnmapbox/maps/lib/typescript/src/types/OnPressEvent";
 import { toast } from "@/shared/ui/Toast";
 import { SearchInput } from "@/features/search/ui";
+import { ActivityIndicator } from "react-native";
+import { colors } from "@/shared/lib/theme";
 
 const mapSpacesToPoints = (spaces: PlaceT[] = []) =>
   spaces.map((item) => point([item.longitude, item.latitude], { item }));
@@ -36,12 +38,9 @@ const Spaces = () => {
     }
   }, [data?.data.length]);
 
-  // if (isPending) return null;
-
   const points = useMemo(() => mapSpacesToPoints(data?.data), [data?.data]);
 
   const handleDotPress = (event: OnPressEvent) => {
-    console.log(JSON.stringify(event.features, null, 2))
     const feature = event.features[0];
     const properties = feature?.properties;
     if (properties) setSelectedItem(properties.item);
@@ -49,7 +48,7 @@ const Spaces = () => {
 
   return (
     <>
-        <SearchInput map />
+      <SearchInput map />
       <MapView
         style={{ flex: 1, zIndex: -1 }}
         styleURL="mapbox://styles/mapbox/dark-v11"
@@ -98,12 +97,22 @@ const Spaces = () => {
           <PlaceCard type="large" item={selectedItem} />
         ) : (
           <BottomSheetScrollView
-            contentContainerStyle={{ gap: 20 }}
+            contentContainerStyle={{
+              gap: 20,
+              paddingBottom: '18%'
+            }}
+            style={{
+            }}
             showsVerticalScrollIndicator={false}
           >
-            {data?.data.map((item, index) => (
-              <PlaceCard type="large" item={item} key={index} />
-            ))}
+            {
+              isLoading ?
+                <ActivityIndicator color={colors.primary} />
+                :
+                data?.data.map((item, index) => (
+                  <PlaceCard type="large" item={item} key={index} />
+                ))
+            }
           </BottomSheetScrollView>
         )}
       </Sheet>

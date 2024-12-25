@@ -13,7 +13,7 @@ export const useFilteredSpaces = ({
   const { latitude, longitude } = useLocationStore.getState();
 
   return useQuery({
-    queryKey: ["filtered"],
+    queryKey: ["filtered", maxDistance, maxPrice, minPrice, passType, search],
     queryFn: () => spaces.getFilteredSpaces({
       latitude,
       longitude,

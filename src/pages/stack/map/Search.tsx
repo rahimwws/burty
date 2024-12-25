@@ -1,31 +1,40 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { SearchInput } from "@/features/search/ui";
 import ScreenLayout from "@/shared/ui/Layout";
 import SearchList from "@/components/list/SearchList";
 import { SearchInputRef } from "@/features/search/ui/SearchInput/SearchInput";
 import { useFilteredSpaces } from "@/features/spaces";
+import { recentSearchHistory } from "@/features/search/model/recentSearchHistory";
 
 const Search = () => {
-
   const [searchValue, setSearchValue] = useState("");
   const searchRef = useRef<SearchInputRef | null>(null);
-  const items: any[] = [{}];
+
   const {
     data: places,
-    isLoading: placesLoading
+    isLoading: placesLoading,
+    isSuccess: placesGotSuccess,
   } = useFilteredSpaces({
     search: searchValue
-  })
+  });
 
   const handleEditingEnd = useCallback(() => {
-    if (searchRef.current)
+    if (searchRef.current) {
       setSearchValue(searchRef.current.getValue())
+    }
   }, []);
+
+  useEffect(() => {
+    if (placesGotSuccess && searchValue.trim()) {
+      recentSearchHistory.add(searchValue);
+    }
+  }, [placesGotSuccess])
 
   return (
     <ScreenLayout>
       <SearchInput
         ref={searchRef}
+        searchValue={searchValue}
         onEndEditing={handleEditingEnd}
       />
       <SearchList
@@ -34,6 +43,7 @@ const Search = () => {
             places.data : []
         }
         itemsLoading={placesLoading}
+        onPress={(searchValue) => setSearchValue(searchValue)}
       />
     </ScreenLayout>
   );

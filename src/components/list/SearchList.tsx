@@ -1,20 +1,21 @@
-import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
+import { View, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import Typography from "@/shared/ui/Typography";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { SearchCard } from "@/features/search/ui";
 import { recentSearchHistory } from "@/features/search/model/recentSearchHistory";
 import { usePopularSpaces } from "@/features/spaces";
-import { PlaceCard } from "../card";
 import { PlaceT } from "@/shared/model/types";
 import { colors } from "@/shared/lib/theme";
+import SearchPlaceCard from "@/features/search/ui/SearchPlaceCard";
 
 type SearchListProps = {
   items: PlaceT[]
   itemsLoading?: boolean
+  onPress?: (value: string) => void
 }
 
-const SearchList = ({ items, itemsLoading }: SearchListProps) => {
+const SearchList = ({ items, itemsLoading, onPress }: SearchListProps) => {
   const navigation = useAppNavigation();
   const [recentSearches, setRecentSearches] = useState<string[] | null>();
 
@@ -57,10 +58,12 @@ const SearchList = ({ items, itemsLoading }: SearchListProps) => {
             </View>
           }
           {
-            recentSearches?.map(txt => {
+            recentSearches?.map((txt, i) => {
               return (
                 <SearchCard
+                  key={i}
                   txt={txt}
+                  onPress={() => onPress?.(txt)}
                   recent
                 />
               )
@@ -75,7 +78,11 @@ const SearchList = ({ items, itemsLoading }: SearchListProps) => {
               {
                 popularSpaces?.data.map(space => {
                   return (
-                    <SearchCard txt={space.name} />
+                    <SearchCard
+                      key={space.id}
+                      txt={space.name}
+                      onPress={() => onPress?.(space.name)}
+                    />
                   )
                 })
               }
@@ -85,7 +92,8 @@ const SearchList = ({ items, itemsLoading }: SearchListProps) => {
       ) : (
         <View
           style={{
-            gap: 20,
+            marginVertical: '5%',
+            gap: 15,
           }}
         >
           {
@@ -94,9 +102,9 @@ const SearchList = ({ items, itemsLoading }: SearchListProps) => {
               :
               items.map(item => {
                 return (
-                  <PlaceCard
-                    item={item}
-                    type="small"
+                  <SearchPlaceCard
+                    key={item.id}
+                    place={item}
                   />
                 )
               })

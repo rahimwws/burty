@@ -44,7 +44,7 @@ const Review = ({ spaceId }: { spaceId: string }) => {
             <ActivityIndicator color={colors.primary} />
             : data?.data.map(item => {
               return (
-                <ReviewCard review={item} />
+                <ReviewCard review={item} key={item.id} />
               )
             })
         }

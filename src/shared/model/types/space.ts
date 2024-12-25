@@ -28,4 +28,5 @@ export interface PlaceT {
   site: string;
   medias: PlaceMediaT[]
   distanceInM: number
+  distanceInKm: number
 }

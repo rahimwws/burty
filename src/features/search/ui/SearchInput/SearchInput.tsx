@@ -1,5 +1,5 @@
 import { View, TextInput } from "react-native";
-import React, { forwardRef, useImperativeHandle, useState } from "react";
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { colors } from "@/shared/lib/theme";
 import SearchSvg from "@/shared/assets/icons/interface/SearchSvg";
@@ -9,6 +9,7 @@ import styles from "./style";
 type SearchInputProps = {
     /** @default false */
     map?: boolean;
+    searchValue?: string
     onEndEditing?: Function
 }
 
@@ -18,11 +19,16 @@ export type SearchInputRef = {
 
 const SearchInput = forwardRef<SearchInputRef, SearchInputProps>(({
     map = false,
+    searchValue = "",
     onEndEditing
 }, ref) => {
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState(searchValue);
     const insects = useSafeAreaInsets();
     const navigation = useAppNavigation();
+
+    useEffect(() => {
+        setValue(searchValue)
+    }, [searchValue])
 
     useImperativeHandle(ref, () => {
         return {

@@ -49,11 +49,23 @@ export const spaces = {
     maxDistance,
     minPrice,
     maxPrice,
-    passType
+    passType,
+    search
   }: FilterParamsDto & {
     latitude: number | null
     longitude: number | null
   }) {
+    console.log({
+      params: removeFalsyFields({
+        latitude,
+        longitude,
+        maxDistance,
+        minPrice,
+        maxPrice,
+        passType: passType?.toLowerCase(),
+        search
+      })
+    })
     if (latitude && longitude) {
       try {
         return await client.get<PlaceT[]>(
@@ -65,7 +77,8 @@ export const spaces = {
               maxDistance,
               minPrice,
               maxPrice,
-              passType: passType?.toLowerCase()
+              passType: passType?.toLowerCase(),
+              q: search
             })
           }
         );

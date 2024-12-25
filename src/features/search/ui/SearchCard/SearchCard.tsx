@@ -10,15 +10,18 @@ type SearchCardProps = {
     /** @default false */
     recent?: boolean
     txt: string
+    onPress?: () => void
 }
 
 const SearchCard = ({
     recent = false,
-    txt
+    txt,
+    onPress
 }: SearchCardProps) => {
     return (
         <TouchableOpacity
             style={styles.card}
+            onPress={() => onPress?.()}
         >
             <View
                 style={styles.content}

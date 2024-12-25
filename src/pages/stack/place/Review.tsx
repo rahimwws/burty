@@ -61,7 +61,7 @@ const Review = () => {
               :
               data?.data.map(item => {
                 return (
-                  <ReviewCard type="full" review={item} />
+                  <ReviewCard type="full" review={item} key={item.id} />
                 )
               })
           }

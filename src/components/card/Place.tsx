@@ -45,7 +45,12 @@ const PlaceCard = ({
       }}
     >
       <ImageBackground
-        source={require("@/shared/assets/images/bg-card.png")}
+        source={
+          item?.medias?.[0]?.filePath ?
+            { uri: item.medias[0].filePath }
+            :
+            require("@/shared/assets/images/bg-card.png")
+        }
         style={{ width: "100%", height: height / 4 }}
         resizeMode="cover"
         borderRadius={15}
