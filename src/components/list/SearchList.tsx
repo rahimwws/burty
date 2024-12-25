@@ -1,45 +1,34 @@
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
-import React from "react";
+import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
+import React, { useEffect, useState } from "react";
 import Typography from "@/shared/ui/Typography";
-import Recent from "@/shared/assets/icons/interface/Recent";
-import { colors } from "@/shared/lib/theme";
-import ArrowUp from "@/shared/assets/icons/interface/ArrowUp";
-import Fire from "@/shared/assets/icons/interface/Fire";
-import Place from "../card/Place";
 import { useAppNavigation } from "@/shared/lib/navigation";
+import { SearchCard } from "@/features/search/ui";
+import { recentSearchHistory } from "@/features/search/model/recentSearchHistory";
+import { usePopularSpaces } from "@/features/spaces";
+import { PlaceCard } from "../card";
+import { PlaceT } from "@/shared/model/types";
+import { colors } from "@/shared/lib/theme";
 
-const SearchCard = ({ recent = false }: { recent?: boolean }) => {
-  return (
-    <TouchableOpacity
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        marginVertical: "2%",
-        paddingVertical: 5,
-      }}
-    >
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 5,
-        }}
-      >
-        {recent ? (
-          <Recent size={20} fill={colors.light} />
-        ) : (
-          <Fire size={22} fill={colors.light} />
-        )}
-        <Typography>Basketball</Typography>
-      </View>
-      <ArrowUp size={15} fill={colors.light} />
-    </TouchableOpacity>
-  );
-};
+type SearchListProps = {
+  items: PlaceT[]
+  itemsLoading?: boolean
+}
 
-const SearchList = ({ items }: { items: any[] }) => {
+const SearchList = ({ items, itemsLoading }: SearchListProps) => {
   const navigation = useAppNavigation();
+  const [recentSearches, setRecentSearches] = useState<string[] | null>();
+
+  const {
+    data: popularSpaces,
+  } = usePopularSpaces();
+
+  useEffect(() => {
+    (async () => {
+      const searches = await recentSearchHistory.load();
+      setRecentSearches(searches)
+    })()
+  }, []);
+
   return (
     <ScrollView
       style={{
@@ -49,30 +38,49 @@ const SearchList = ({ items }: { items: any[] }) => {
     >
       {items.length === 0 ? (
         <View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginVertical: "2%",
-            }}
-          >
-            <Typography size={22} font="m">
-              Recent
-            </Typography>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Typography color="primary">View all</Typography>
-            </TouchableOpacity>
-          </View>
-          <SearchCard recent />
-          <View style={{ marginVertical: "2%" }}>
-            <Typography size={22} font="m" align="left">
-              Popular
-            </Typography>
-            <SearchCard />
-            <SearchCard />
-            <SearchCard />
-          </View>
+          {
+            !!recentSearches?.length &&
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginVertical: "2%",
+              }}
+            >
+              <Typography size={22} font="m">
+                Recent
+              </Typography>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Typography color="primary">View all</Typography>
+              </TouchableOpacity>
+            </View>
+          }
+          {
+            recentSearches?.map(txt => {
+              return (
+                <SearchCard
+                  txt={txt}
+                  recent
+                />
+              )
+            })
+          }
+          {
+            !!popularSpaces?.data.length &&
+            <View style={{ marginVertical: "2%" }}>
+              <Typography size={22} font="m" align="left">
+                Popular
+              </Typography>
+              {
+                popularSpaces?.data.map(space => {
+                  return (
+                    <SearchCard txt={space.name} />
+                  )
+                })
+              }
+            </View>
+          }
         </View>
       ) : (
         <View
@@ -80,9 +88,19 @@ const SearchList = ({ items }: { items: any[] }) => {
             gap: 20,
           }}
         >
-          <Place type="small" />
-          <Place type="small" />
-          <Place type="small" />
+          {
+            itemsLoading ?
+              <ActivityIndicator color={colors.primary} />
+              :
+              items.map(item => {
+                return (
+                  <PlaceCard
+                    item={item}
+                    type="small"
+                  />
+                )
+              })
+          }
         </View>
       )}
     </ScrollView>

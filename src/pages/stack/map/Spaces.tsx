@@ -12,12 +12,12 @@ import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import BottomSheet from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet";
 import { Sheet } from "@/shared/ui/Sheets";
 import Typography from "@/shared/ui/Typography";
-import { SearchHeader } from "@/components/header";
-import PlaceCard from "@/components/card/Place";
+import PlaceCard from "@/features/search/ui/SearchPlaceCard/SearchPlaceCard";
 import { useNearbySpaces } from "@/features/spaces/";
 import { PlaceT } from "@/shared/model/types";
 import { OnPressEvent } from "@rnmapbox/maps/lib/typescript/src/types/OnPressEvent";
 import { toast } from "@/shared/ui/Toast";
+import { SearchInput } from "@/features/search/ui";
 
 const mapSpacesToPoints = (spaces: PlaceT[] = []) =>
   spaces.map((item) => point([item.longitude, item.latitude], { item }));
@@ -41,6 +41,7 @@ const Spaces = () => {
   const points = useMemo(() => mapSpacesToPoints(data?.data), [data?.data]);
 
   const handleDotPress = (event: OnPressEvent) => {
+    console.log(JSON.stringify(event.features, null, 2))
     const feature = event.features[0];
     const properties = feature?.properties;
     if (properties) setSelectedItem(properties.item);
@@ -48,8 +49,9 @@ const Spaces = () => {
 
   return (
     <>
+        <SearchInput map />
       <MapView
-        style={{ flex: 1 }}
+        style={{ flex: 1, zIndex: -1 }}
         styleURL="mapbox://styles/mapbox/dark-v11"
         logoEnabled={false}
         scaleBarEnabled={false}
@@ -68,6 +70,7 @@ const Spaces = () => {
           shape={featureCollection(points)}
           cluster
           onPress={handleDotPress}
+
         >
           <SymbolLayer
             id="dot-icon"
@@ -78,10 +81,12 @@ const Spaces = () => {
               iconAnchor: "bottom",
             }}
           />
-          <Images images={{ dot: require("@/shared/assets/images/dot.png") }} />
+          <Images images={{
+            dot: require("@/shared/assets/images/dot.png"),
+            "selected-dot": require("@/shared/assets/images/bg.png")
+          }} />
         </ShapeSource>
 
-        <SearchHeader map />
       </MapView>
 
       <Sheet ref={bottomSheetRef} snapPoints={["30%", "70%", "100%"]}>

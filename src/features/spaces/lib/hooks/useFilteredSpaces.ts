@@ -7,7 +7,8 @@ export const useFilteredSpaces = ({
   maxDistance,
   maxPrice,
   minPrice,
-  passType
+  passType,
+  search,
 }: FilterParamsDto) => {
   const { latitude, longitude } = useLocationStore.getState();
 
@@ -19,7 +20,8 @@ export const useFilteredSpaces = ({
       maxDistance,
       maxPrice,
       minPrice,
-      passType
+      passType,
+      search
     }),
     enabled: !!latitude && !!longitude,
     staleTime: 5 * 60 * 1000,

@@ -1,8 +1,9 @@
 type FilterParamsDto = {
-  maxDistance: number | null
-  passType: string | null
-  minPrice: number | null
-  maxPrice: number | null
+  maxDistance?: number
+  passType?: string
+  minPrice?: number
+  maxPrice?: number
+  search?: string
 }
 
 export default FilterParamsDto;

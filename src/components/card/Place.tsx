@@ -15,7 +15,6 @@ import Star from "@/shared/assets/icons/interface/Star";
 import { BlurView } from "expo-blur";
 import { PlaceT } from "@/shared/model/types";
 import { useAppNavigation } from "@/shared/lib/navigation";
-import useRoleStore from "@/shared/store/role";
 
 const PlaceCard = ({
   item,
