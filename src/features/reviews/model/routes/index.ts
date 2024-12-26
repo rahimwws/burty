@@ -18,20 +18,12 @@ export const reviews = {
       }
    },
    async createReview({ bookingId, comment, rating }: ReviewCreateDto) {
-      try {
-         return await client.post(
-            `/reviews/${bookingId}`,
-            {
-               comment,
-               rating
-            }
-         );
-      } catch (error) {
-         if (axios.isAxiosError(error)) {
-            alert(error.response?.data);
-         } else {
-            alert(error);
+      return await client.post(
+         `/reviews/${bookingId}`,
+         {
+            comment,
+            rating
          }
-      }
+      );
    }
 };

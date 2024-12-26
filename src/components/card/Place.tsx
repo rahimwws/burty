@@ -14,7 +14,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import Star from "@/shared/assets/icons/interface/Star";
 import { BlurView } from "expo-blur";
 import { PlaceT } from "@/shared/model/types";
-import { Booking } from "@/features/booking/model/types";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import Time from "@/shared/assets/icons/interface/Time";
 import Calendar from "@/shared/assets/icons/interface/Calendar";
@@ -27,13 +26,17 @@ const PlaceCard = ({
   startTime,
   reserved = false,
   used = false,
+  canceled = false,
+  bookingId,
 }: {
   item?: PlaceT;
   type?: "default" | "large" | "small";
   reserved?: boolean;
   used?: boolean;
+  canceled?: boolean
   startDate?: string
   startTime?: string
+  bookingId?: string
 }) => {
   const { width, height } = Dimensions.get("window");
   const navigation = useAppNavigation();
@@ -49,7 +52,12 @@ const PlaceCard = ({
       }}
       onPress={() => {
         LightHeptic();
-        navigation.navigate("PlaceDetail", { reserved, finished: used, placeId: item?.id });
+        navigation.navigate("PlaceDetail", {
+          reserved,
+          finished: canceled,
+          placeId: !bookingId ? item?.id : undefined,
+          bookingId
+        });
       }}
     >
       <ImageBackground
@@ -101,7 +109,7 @@ const PlaceCard = ({
         <View
           style={{
             flexDirection: 'column',
-            alignItems:'flex-start',
+            alignItems: 'flex-start',
             position: "absolute",
             top: "5%",
             left: "5%",
@@ -229,8 +237,9 @@ const PlaceCard = ({
 const styles = StyleSheet.create({
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(100, 100, 100, 0.6)",
+    backgroundColor: "rgba(100, 100, 100, 0.8)",
     borderRadius: 15,
+    zIndex: 1
   },
 });
 

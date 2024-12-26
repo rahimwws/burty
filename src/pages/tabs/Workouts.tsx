@@ -8,6 +8,7 @@ import { Type } from "@/features/workout/ui";
 import { useBookings } from "@/features/booking";
 import { toast } from "@/shared/ui/Toast";
 import { colors } from "@/shared/lib/theme";
+import isTimeOver from "@/shared/lib/utils/isTimeOver";
 
 
 const Workouts = () => {
@@ -92,6 +93,9 @@ const Workouts = () => {
                     item={item.spaces}
                     startDate={item.startDate}
                     startTime={item.startTime}
+                    bookingId={item.id}
+                    used={isTimeOver({ startDate: item.startDate, endTime: item.endTime })}
+                    canceled={item.status == 'cancelled'}
                     reserved
                   />
                 )

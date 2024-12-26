@@ -1,3 +1,5 @@
+import BookingStatus from "./BookingStatus"
+
 type Booking = {
    id: string
    passType: string
@@ -34,7 +36,7 @@ type Booking = {
    }
    isArchived: boolean
    startDate: string
-   status: string
+   status: BookingStatus
    userId: string
    createdAt: string
    startTime: string

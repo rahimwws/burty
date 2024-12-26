@@ -8,7 +8,10 @@ const useCreateReview = () => {
       mutationFn: (dto: ReviewCreateDto) => reviews.createReview(dto),
       onSuccess: () => queryClient.invalidateQueries({
          queryKey: ["reviews"]
-      })
+      }),
+      onError: (err) => {
+         alert(JSON.stringify(err, null, 2))
+      }
    });
 
    return { ...mutation };

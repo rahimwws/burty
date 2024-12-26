@@ -122,7 +122,7 @@ const Toast = forwardRef<ToastRef, {}>((_, ref) => {
         >
           <View style={styles.titleCard}>
             {state.description && (
-              <Typography color="light" align="center">
+              <Typography color={state.type == "success" ? "dark" : "light"} align="center">
                 {state.description}
               </Typography>
             )}

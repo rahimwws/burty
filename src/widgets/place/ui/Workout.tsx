@@ -2,12 +2,29 @@ import { View, Text } from "react-native";
 import React from "react";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
+import dayjs from "dayjs";
 
-const Workout = ({ showTitle = true }: { showTitle?: boolean }) => {
+type WorkoutProps = {
+  /** @default true */
+  showTitle?: boolean
+  date?: string
+  passType?: string
+  price?: number
+  status?: string
+}
+
+const Workout = ({
+  showTitle = true,
+  date,
+  passType,
+  price,
+  status
+}: WorkoutProps) => {
+
   return (
     <View
       style={{
-        marginVertical: "3%",
+        marginVertical: "5%",
       }}
     >
       {showTitle && (
@@ -17,7 +34,7 @@ const Workout = ({ showTitle = true }: { showTitle?: boolean }) => {
           align="left"
           styles={{ marginBottom: "3%" }}
         >
-          Work Detail
+          Workout details
         </Typography>
       )}
       <View
@@ -31,7 +48,7 @@ const Workout = ({ showTitle = true }: { showTitle?: boolean }) => {
           Date
         </Typography>
         <Typography color="gray" font="m">
-          22 May, 2024
+          {dayjs(date).format('DD MMM, YYYY')}
         </Typography>
       </View>
       <View
@@ -46,7 +63,7 @@ const Workout = ({ showTitle = true }: { showTitle?: boolean }) => {
           Pass type
         </Typography>
         <Typography color="gray" font="m">
-          Single visit
+          {passType} visit
         </Typography>
       </View>
       <View
@@ -60,7 +77,7 @@ const Workout = ({ showTitle = true }: { showTitle?: boolean }) => {
           Price
         </Typography>
         <Typography color="gray" font="m">
-          20$
+          {Math.round(price || 0)}$
         </Typography>
       </View>
       <View
@@ -82,8 +99,8 @@ const Workout = ({ showTitle = true }: { showTitle?: boolean }) => {
             borderRadius: 3,
           }}
         >
-          <Typography color="background" font="m">
-            Paid
+          <Typography color="background" font="m" styles={{ textTransform: 'capitalize' }}>
+            {status}
           </Typography>
         </View>
       </View>

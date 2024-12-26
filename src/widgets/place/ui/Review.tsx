@@ -7,7 +7,7 @@ import { useReviews } from "@/features/reviews";
 import { colors } from "@/shared/lib/theme";
 import { toast } from "@/shared/ui/Toast";
 
-const Review = ({ spaceId }: { spaceId: string }) => {
+const Review = ({ spaceId }: { spaceId?: string }) => {
   const navigation = useAppNavigation();
 
   const {

@@ -8,6 +8,7 @@ import Marker from "@/shared/assets/icons/interface/Marker";
 import ProfileSvg from "@/shared/assets/icons/tabs/ProfileSvg";
 import dayjs from 'dayjs';
 import { PlaceT } from "@/shared/model/types";
+import styles from "./styles";
 
 type PlaceInfoProps = {
   reserved?: boolean;
@@ -20,14 +21,14 @@ const PlaceInfo = ({
   mentor = false,
   place
 }: PlaceInfoProps) => {
+
+  const haveDistance = !!place?.distanceInM || !!place?.distance?.meters;
+  const haveMinMaxPlayers = !!place?.minPlayers || !!place?.maxPlayers;
+  const haveAverageRating = !!place?.averageRating;
+
   return (
     <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "flex-start",
-        gap: 5,
-      }}
+      style={styles.wrap}
     >
       <View style={{}}>
         <Typography size={22} font="m" align="left">
@@ -60,56 +61,58 @@ const PlaceInfo = ({
           alignItems: "center",
         }}
       >
+        {
+          !mentor ?
+            haveAverageRating &&
+            <View
+              style={styles.card}
+            >
+              <BlurView
+                intensity={30}
+                tint="light"
+                style={styles.cardInner}
+              >
+                {!mentor && <Star size={15} />}
+                <Typography > {place?.averageRating?.toFixed(1)}</Typography>
+              </BlurView>
+            </View>
+            :
+            <View
+              style={styles.card}
+            >
+              <BlurView
+                intensity={30}
+                tint="light"
+                style={styles.cardInner}
+              >
+                <Typography>{dayjs(place?.openTime).format('H:mm')}</Typography>
+              </BlurView>
+            </View>
+        }
         <View
-          style={{
-            borderRadius: 100,
-            overflow: "hidden",
-          }}
-        >
-          <BlurView
-            intensity={30}
-            tint="light"
-            style={{
-              backgroundColor: "rgba(0, 0, 0, 0.07)",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "row",
-              padding: 5,
-              paddingHorizontal: 10,
-            }}
-          >
-            {!mentor && <Star size={15} />}
-            {!mentor ? (
-              <Typography>{place?.averageRating.toFixed(1)}</Typography>
-            ) : (
-              <Typography>{dayjs(place?.openTime).format('H:mm')}</Typography>
-            )}
-          </BlurView>
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 5,
-          }}
+          style={styles.distance}
         >
           {!mentor ? (
+            haveDistance &&
             <Marker size={15} fill={colors.light + "fffCC"} />
           ) : (
+            haveMinMaxPlayers &&
             <ProfileSvg size={15} fill={colors.light + "fffCC"} />
           )}
           {!mentor ? (
+            haveDistance &&
             <Typography size={15} styles={{ color: colors.light + "fffCC" }}>
-              {Math.round(place?.distanceInM || 0)} m
+              {Math.round(place?.distanceInM || place?.distance?.meters || 0)} m
             </Typography>
           ) : (
+            haveMinMaxPlayers &&
             <Typography size={15} styles={{ color: colors.light + "fffCC" }}>
               {place?.minPlayers} - {place?.maxPlayers}
             </Typography>
           )}
         </View>
       </View>
-    </View>
+    </View >
   );
 };
 

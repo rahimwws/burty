@@ -1,5 +1,5 @@
 import { View, Image, Dimensions } from "react-native";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { colors } from "@/shared/lib/theme";
 import {
   PlaceHeader,
@@ -16,12 +16,15 @@ import { useAppNavigation } from "@/shared/lib/navigation";
 import { useSpaceDetails } from "@/features/spaces";
 import dayjs from 'dayjs';
 import { toast } from "@/shared/ui/Toast";
+import useBooking from "@/features/booking/lib/hooks/useBooking";
+import useCancelBooking from "@/features/booking/lib/hooks/useCancelBooking";
 
 type RouteParams = {
   MyScreen: {
     reserved: boolean;
     finished: boolean;
-    placeId: string
+    placeId?: string
+    bookingId?: string
   };
 };
 
@@ -29,7 +32,7 @@ type MyScreenRouteProp = RouteProp<RouteParams, "MyScreen">;
 const PlaceDetail = () => {
   const route = useRoute<MyScreenRouteProp>();
 
-  const { reserved: check, finished, placeId } = route.params;
+  const { reserved: check, finished, placeId, bookingId } = route.params;
 
   const { height, width } = Dimensions.get("window");
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -38,21 +41,53 @@ const PlaceDetail = () => {
   const {
     data,
     isLoading,
-    isPending,
   } = useSpaceDetails(placeId);
+  const {
+    data: booking,
+    isLoading: bookingLoading,
+  } = useBooking(bookingId);
+  const {
+    mutate: cancelBooking
+  } = useCancelBooking();
 
   useEffect(() => {
-    if (!Object.keys(data?.data || {}).length && !isLoading) {
+    if (placeId && !Object.keys(data?.data || {}).length && !isLoading) {
       toast.show({
         type: 'error',
         description: 'No place details data'
       })
     }
-  }, [data?.data]);
+  }, [placeId, data?.data, isLoading]);
+  useEffect(() => {
+    if (bookingId && !Object.keys(booking?.data || {}).length && !bookingLoading) {
+      toast.show({
+        type: 'error',
+        description: 'No workout data'
+      })
+    }
+  }, [bookingId, booking?.data, bookingLoading]);
 
-  if (!isLoading && isPending) {
-    return null;
-  }
+  const handleCancelBooking = useCallback((bookingId?: string) => {
+    setModalVisible(false);
+    if (bookingId)
+      cancelBooking(bookingId, {
+        onSuccess: () => {
+          toast.show({
+            type: 'success',
+            description: "Successfully canceled reservation"
+          });
+          navigation.goBack();
+        },
+        onError: () => {
+          toast.show({
+            type: "error",
+            description: "Cannot cancel reservation"
+          })
+        }
+      })
+  }, []);
+
+  const spaceDetail = booking?.data.spaces || data?.data
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -63,11 +98,11 @@ const PlaceDetail = () => {
         }}
         headerImage={
           <>
-            <PlaceHeader link={data?.data.site || ''} />
+            <PlaceHeader link={spaceDetail?.site || ''} />
             <Image
               source={
-                data?.data.medias?.[0].filePath ?
-                  { uri: data?.data.medias?.[0].filePath }
+                spaceDetail?.medias?.[0].filePath ?
+                  { uri: spaceDetail?.medias?.[0].filePath }
                   :
                   require("@/shared/assets/images/bg-card.png")
               }
@@ -94,14 +129,22 @@ const PlaceDetail = () => {
         >
           <PlaceInfo
             reserved={check}
-            place={data?.data}
+            place={spaceDetail}
           />
-          {/* {check && <WorkoutDetail />} */}
+          {
+            check &&
+            <WorkoutDetail
+              date={booking?.data.startDate}
+              passType={booking?.data.passType}
+              price={booking?.data.price}
+              status={booking?.data.status}
+            />
+          }
           <PlaceLinks
-            address={data?.data.address}
-            link={data?.data.site}
-            phoneNumber={data?.data.phoneNumber}
-            workTime={`${dayjs(data?.data.openTime).format('h:mm A')} - ${dayjs(data?.data.endTime).format('h:mm A')}`}
+            address={spaceDetail?.address}
+            link={spaceDetail?.site}
+            phoneNumber={spaceDetail?.phoneNumber}
+            workTime={`${dayjs(spaceDetail?.openTime).format('h:mm A')} - ${dayjs(spaceDetail?.endTime).format('h:mm A')}`}
           />
           {!check && <PlaceReview spaceId={placeId} />}
         </View>
@@ -148,7 +191,7 @@ const PlaceDetail = () => {
         description="Are you sure you want to cancel your workout session ? This action cannot be undone."
         rightText="Cancel workout"
         visible={modalVisible}
-        rightAction={() => { }}
+        rightAction={() => handleCancelBooking(booking?.data.id)}
         leftAction={() => setModalVisible(false)}
         leftText="Back"
       />
