@@ -14,11 +14,17 @@ import { LinearGradient } from "expo-linear-gradient";
 import Star from "@/shared/assets/icons/interface/Star";
 import { BlurView } from "expo-blur";
 import { PlaceT } from "@/shared/model/types";
+import { Booking } from "@/features/booking/model/types";
 import { useAppNavigation } from "@/shared/lib/navigation";
+import Time from "@/shared/assets/icons/interface/Time";
+import Calendar from "@/shared/assets/icons/interface/Calendar";
+import dayjs from "dayjs";
 
 const PlaceCard = ({
   item,
   type = "default",
+  startDate,
+  startTime,
   reserved = false,
   used = false,
 }: {
@@ -26,6 +32,8 @@ const PlaceCard = ({
   type?: "default" | "large" | "small";
   reserved?: boolean;
   used?: boolean;
+  startDate?: string
+  startTime?: string
 }) => {
   const { width, height } = Dimensions.get("window");
   const navigation = useAppNavigation();
@@ -92,6 +100,58 @@ const PlaceCard = ({
 
         <View
           style={{
+            flexDirection: 'column',
+            alignItems:'flex-start',
+            position: "absolute",
+            top: "5%",
+            left: "5%",
+            gap: 5
+          }}
+        >
+          {
+            !!startTime &&
+            <View
+              style={{
+                borderRadius: 100,
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                padding: 5,
+                paddingHorizontal: 10,
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 4
+              }}
+            >
+              <Time fill={colors.light} size={14} />
+              <Typography styles={{ color: colors.light }}>
+                {startTime}
+              </Typography>
+            </View>
+          }
+          {
+            !!startDate &&
+            <View
+              style={{
+                borderRadius: 100,
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                padding: 5,
+                paddingHorizontal: 10,
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 4
+              }}
+            >
+              <Calendar fill={colors.light} size={14} />
+              <Typography styles={{ color: colors.light }}>
+                {dayjs(startDate).format('DD.MM.YYYY')}
+              </Typography>
+            </View>
+          }
+        </View>
+
+        <View
+          style={{
             position: "absolute",
             bottom: "3%",
             left: "5%",
@@ -113,29 +173,32 @@ const PlaceCard = ({
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "space-between",
+              justifyContent: !!item?.distanceInM || !!item?.distance?.meters ? "space-between" : 'flex-end',
               alignItems: "center",
               marginVertical: "3%",
             }}
           >
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 5,
-              }}
-            >
-              <Marker
-                size={15}
-                fill={used ? "#A0A0A0" : colors.light + "fffCC"}
-              />
-              <Typography
-                size={15}
-                styles={{ color: used ? "#A0A0A0" : colors.light + "fffCC" }}
+            {
+              !!item?.distanceInM || !!item?.distance?.meters &&
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 5,
+                }}
               >
-                {300} m
-              </Typography>
-            </View>
+                <Marker
+                  size={15}
+                  fill={used ? "#A0A0A0" : colors.light + "fffCC"}
+                />
+                <Typography
+                  size={15}
+                  styles={{ color: used ? "#A0A0A0" : colors.light + "fffCC" }}
+                >
+                  {Math.round(item?.distanceInM || item?.distance?.meters)} m
+                </Typography>
+              </View>
+            }
 
             <Typography
               font="b"

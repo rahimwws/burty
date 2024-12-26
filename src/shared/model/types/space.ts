@@ -24,9 +24,13 @@ export interface PlaceT {
   minPrice: number;
   openTime: Date;
   phoneNumber: string;
-  averageRating: number;
+  averageRating?: number;
   site: string;
   medias: PlaceMediaT[]
-  distanceInM: number
-  distanceInKm: number
+  distance?: {
+    kilometers: number,
+    meters: number
+  }
+  distanceInM?: number
+  distanceInKm?: number
 }

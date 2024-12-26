@@ -1,43 +1,33 @@
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
-import React, { useState } from "react";
+import { View, ScrollView, ActivityIndicator } from "react-native";
+import React, { useEffect, useState } from "react";
 import { Header } from "@/components/header";
 import ScreenLayout from "@/shared/ui/Layout";
-import Typography from "@/shared/ui/Typography";
-import { colors } from "@/shared/lib/theme";
 import { MentorPlace, PlaceCard } from "@/components/card";
 import useRoleStore from "@/shared/store/role";
+import { Type } from "@/features/workout/ui";
+import { useBookings } from "@/features/booking";
+import { toast } from "@/shared/ui/Toast";
+import { colors } from "@/shared/lib/theme";
 
-const Type = ({
-  text,
-  active,
-  onPress,
-}: {
-  text: string;
-  active: boolean;
-  onPress: () => void;
-}) => {
-  return (
-    <TouchableOpacity
-      style={{
-        backgroundColor: active ? colors.primary : colors.dark,
-        borderRadius: 5,
-        alignItems: "center",
-        justifyContent: "center",
-        width: "31%",
-        height: 40,
-      }}
-      onPress={onPress}
-    >
-      <Typography font="m" color={active ? "background" : "light"}>
-        {text}
-      </Typography>
-    </TouchableOpacity>
-  );
-};
 
 const Workouts = () => {
-  const [active, setActive] = useState("This week");
+  const [time, setTime] = useState<7 | 30 | 90>(7);
   const role = useRoleStore((store) => store.role);
+
+  const {
+    data: bookings,
+    isLoading: bookginsLoading,
+  } = useBookings(time);
+
+  useEffect(() => {
+    if (!bookings?.data.length && !bookginsLoading) {
+      toast.show({
+        type: 'error',
+        description: 'No workouts data'
+      })
+    }
+  }, [bookings?.data.length]);
+
   return (
     <ScreenLayout>
       <ScrollView
@@ -61,18 +51,18 @@ const Workouts = () => {
           >
             <Type
               text="This week"
-              active={active === "This week"}
-              onPress={() => setActive("This week")}
+              active={time === 7}
+              onPress={() => setTime(7)}
             />
             <Type
-              text="This months"
-              active={active === "This months"}
-              onPress={() => setActive("This months")}
+              text="This month"
+              active={time === 30}
+              onPress={() => setTime(30)}
             />
             <Type
-              text="This year"
-              active={active === "This year"}
-              onPress={() => setActive("This year")}
+              text="Last 3 months"
+              active={time === 90}
+              onPress={() => setTime(90)}
             />
           </View>
         )}
@@ -91,16 +81,25 @@ const Workouts = () => {
               <MentorPlace type="large" used />
             </>
           ) : (
-            <>
-              <PlaceCard type="large" reserved />
-              <PlaceCard type="large" reserved />
-              <PlaceCard type="large" reserved />
-              <PlaceCard type="large" reserved used />
-            </>
+            bookginsLoading ?
+              <ActivityIndicator color={colors.primary} />
+              :
+              bookings?.data.map(item => {
+                return (
+                  <PlaceCard
+                    key={item.id}
+                    type="large"
+                    item={item.spaces}
+                    startDate={item.startDate}
+                    startTime={item.startTime}
+                    reserved
+                  />
+                )
+              })
           )}
         </View>
       </ScrollView>
-    </ScreenLayout>
+    </ScreenLayout >
   );
 };
 

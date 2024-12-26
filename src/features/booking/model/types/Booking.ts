@@ -4,6 +4,34 @@ type Booking = {
    playersCount: number
    price: number
    spaceId: string
+   spaces: {
+      id: string
+      name: string
+      address: string
+      site: string
+      categoryId: string
+      phoneNumber: string
+      openTime: Date
+      endTime: Date
+      longitude: number
+      latitude: number
+      minPrice: number
+      maxPrice: number
+      minPlayers: number
+      maxPlayers: number
+      medias: {
+         id: string
+         fileName: string
+         filePath: string
+         size: string
+         mimeType: string
+         originalName: string
+         spaceId: string
+         mediaType: string
+         createdAt: string
+         updatedAt: string
+      }[]
+   }
    isArchived: boolean
    startDate: string
    status: string
