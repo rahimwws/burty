@@ -146,7 +146,7 @@ const PlaceDetail = () => {
             phoneNumber={spaceDetail?.phoneNumber}
             workTime={`${dayjs(spaceDetail?.openTime).format('h:mm A')} - ${dayjs(spaceDetail?.endTime).format('h:mm A')}`}
           />
-          {!check && <PlaceReview spaceId={placeId} />}
+          {!check && <PlaceReview reviews={data?.data?.reviews} spaceId={spaceDetail?.id} />}
         </View>
       </ParallaxScrollView>
       <View

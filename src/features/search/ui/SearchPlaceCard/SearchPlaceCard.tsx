@@ -14,13 +14,13 @@ type SearchPlaceCardProps = {
   /** @default false */
   reserved?: boolean
   /** @default false */
-  used?: boolean
+  finished?: boolean
 }
 
 const SearchPlaceCard = ({
   place,
   reserved = false,
-  used = false,
+  finished = false,
 }: SearchPlaceCardProps) => {
   const navigation = useAppNavigation();
   return (
@@ -28,7 +28,7 @@ const SearchPlaceCard = ({
       style={styles.card}
       onPress={() => {
         LightHeptic();
-        navigation.navigate("PlaceDetail", { reserved, finished: used, placeId: place?.id });
+        navigation.navigate("PlaceDetail", { reserved, finished: finished, placeId: place?.id });
       }}
     >
       <View
@@ -52,16 +52,20 @@ const SearchPlaceCard = ({
           >
             {place.name}
           </Typography>
-          <View style={styles.distance}>
-            <Marker fill={colors.light} size={12} />
-            <Typography
-              align='left'
-              font='r'
-              styles={{marginLeft: 4}}
-            >
-              {Math.round(place.distanceInM)}m
-            </Typography>
-          </View>
+          {
+
+            !!place?.distanceInM || !!place?.distance?.meters &&
+            <View style={styles.distance}>
+              <Marker fill={colors.light} size={12} />
+              <Typography
+                align='left'
+                font='r'
+                styles={{ marginLeft: 4 }}
+              >
+                {Math.round(place?.distanceInM || place?.distance?.meters)} m
+              </Typography>
+            </View>
+          }
         </View>
       </View>
       <ArrowUp fill={colors.light} size={12} />

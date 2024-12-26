@@ -6,10 +6,9 @@ import { LargeButton } from "@/shared/ui/Button";
 import { colors } from "@/shared/lib/theme";
 import ReviewCard from "@/components/card/ReviewCard";
 import { useReviews } from "@/features/reviews";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { toast } from "@/shared/ui/Toast";
 import { useAppNavigation } from "@/shared/lib/navigation";
-import { useBookings } from "@/features/booking";
 
 type RouteParams = {
   MyScreen: {
@@ -25,9 +24,6 @@ const Review = () => {
     data,
     isLoading,
   } = useReviews(route.params?.spaceId);
-  const {
-    data: bookings,
-  } = useBookings(90);
 
   useEffect(() => {
     if (!data?.data.length && !isLoading) {
@@ -67,21 +63,17 @@ const Review = () => {
           }
         </View>
       </ScrollView>
-      {
-        bookings?.data.length ?
-          <LargeButton
-            bg={colors.light}
-            text="Add Review"
-            type="rounded"
-            theme="outline"
-            textColor="light"
-            isRoute={false}
-            action={() => navigator.navigate("CreateReview", {
-              bookingId: bookings.data.find(item => item.spaceId == route.params?.spaceId)?.id
-            })}
-          />
-          : null
-      }
+      <LargeButton
+        bg={colors.light}
+        text="Add Review"
+        type="rounded"
+        theme="outline"
+        textColor="light"
+        isRoute={false}
+        action={() => navigator.navigate("CreateReview", {
+          spaceId: route.params?.spaceId
+        })}
+      />
     </ScreenLayout>
   );
 };

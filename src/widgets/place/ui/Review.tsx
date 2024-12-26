@@ -1,28 +1,12 @@
-import { View, TouchableOpacity, ActivityIndicator } from "react-native";
-import React, { useEffect } from "react";
+import { View, TouchableOpacity } from "react-native";
+import React from "react";
 import Typography from "@/shared/ui/Typography";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import ReviewCard from "@/components/card/ReviewCard";
-import { useReviews } from "@/features/reviews";
-import { colors } from "@/shared/lib/theme";
-import { toast } from "@/shared/ui/Toast";
+import ReviewT from "@/features/reviews/model/types/Review";
 
-const Review = ({ spaceId }: { spaceId?: string }) => {
+const Review = ({ reviews, spaceId }: { reviews?: ReviewT[], spaceId?: string }) => {
   const navigation = useAppNavigation();
-
-  const {
-    data,
-    isLoading,
-  } = useReviews(spaceId);
-
-  useEffect(() => {
-    if (!data?.data.length && !isLoading) {
-      toast.show({
-        type: 'error',
-        description: 'No reviews data'
-      })
-    }
-  }, [data?.data.length, isLoading]);
 
   return (
     <View style={{ marginTop: "3%" }}>
@@ -40,17 +24,15 @@ const Review = ({ spaceId }: { spaceId?: string }) => {
         }}
       >
         {
-          isLoading ?
-            <ActivityIndicator color={colors.primary} />
-            : data?.data.map(item => {
-              return (
-                <ReviewCard review={item} key={item.id} />
-              )
-            })
+          reviews?.map(item => {
+            return (
+              <ReviewCard review={item} key={item.id} />
+            )
+          })
         }
         <TouchableOpacity
           style={{ marginVertical: "3%" }}
-          onPress={() => navigation.navigate("Review")}
+          onPress={() => navigation.navigate("Review", { spaceId })}
         >
           <Typography>Show more</Typography>
         </TouchableOpacity>

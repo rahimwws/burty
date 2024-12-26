@@ -1,3 +1,5 @@
+import ReviewT from "@/features/reviews/model/types/Review"
+
 export interface PlaceMediaT {
   id: string
   fileName: string
@@ -33,4 +35,5 @@ export interface PlaceT {
   }
   distanceInM?: number
   distanceInKm?: number
+  reviews?: ReviewT[]
 }

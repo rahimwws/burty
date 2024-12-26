@@ -18,7 +18,7 @@ import { toast } from "@/shared/ui/Toast";
 
 type RouteParams = {
   MyScreen: {
-    bookingId: string
+    spaceId: string
   };
 };
 
@@ -52,7 +52,7 @@ const CreateReview = () => {
       return;
     }
     mutate({
-      bookingId: route.params.bookingId,
+      spaceId: route.params.spaceId,
       comment: comment,
       rating: rating
     }, {
