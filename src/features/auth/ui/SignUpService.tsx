@@ -27,7 +27,7 @@ const SignUpService: FC = () => {
   const [status, setStatus] = useState<StatusType>(null);
   const [isChecked, setIsChecked] = useState(false);
 
-  const { mutate, isSuccess, errorMessage, setError, isPending,  } = useRegister(
+  const { mutate, isSuccess, errorMessage, setError, isPending, } = useRegister(
     email,
     password,
     role === "mentor" ? "MENTOR" : "USER"
@@ -51,11 +51,22 @@ const SignUpService: FC = () => {
       setError("Agree to the user agreement and confirm that you are 18 years of age or older")
       return;
     }
-    mutate();
+    mutate({} as any, {
+      onSuccess: () => {
+        handleConfirmation()
+      }
+    });
+  };
+
+  const handleConfirmation = () => {
+    setStatus(null);
+    navigation.navigate("Otp", { fromPageName: "Sign Up" })
   };
 
   useEffect(() => {
-    if (isSuccess) setStatus('success');
+    if (isSuccess) {
+      setStatus('success');
+    };
     if (errorMessage) setStatus("error");
   }, [isSuccess, errorMessage, navigation]);
 
@@ -115,12 +126,9 @@ const SignUpService: FC = () => {
         description="A confirmation has been sent to your email. Please check your inbox and follow the instructions to complete your registration."
         rightText="Ok"
         visible={status === "success"}
-        rightAction={() => {
-          setStatus(null);
-          navigation.navigate("Otp", {fromPageName: "Sign Up"})
-        }}
-        // leftAction={() => setStatus(null)}
-        // leftText="Back"
+        rightAction={handleConfirmation}
+      // leftAction={() => setStatus(null)}
+      // leftText="Back"
       />
     </>
   );
