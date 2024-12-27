@@ -1,28 +1,10 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import React from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import { Header } from "@/components/header";
 import Typography from "@/shared/ui/Typography";
-import { colors } from "@/shared/lib/theme";
-const WorkComment = () => {
-  return (
-    <View
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        paddingHorizontal: 10,
-        paddingVertical: 10,
-        backgroundColor: colors.dark,
-        justifyContent: "space-between",
-        borderRadius: 5,
-        marginVertical: 5,
-      }}
-    >
-      <Typography>Comment</Typography>
-      <Typography>9:15</Typography>
-    </View>
-  );
-};
+import { Comment } from "@/entities/workout/ui";
+
 const WorkoutDetail = () => {
   return (
     <ScreenLayout>
@@ -50,7 +32,7 @@ const WorkoutDetail = () => {
           }}
         >
           {[1, 2, 3, 4, 5, 6, 6, 6, 7, 7, 7, 7, 7].map((item, index) => {
-            return <WorkComment key={index} />;
+            return <Comment comment="adf" time="05:10" key={index} />;
           })}
         </View>
       </ScrollView>
