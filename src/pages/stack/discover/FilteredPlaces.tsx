@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
-import React from "react";
+import { View, Text, TouchableOpacity, FlatList, DeviceEventEmitter, BackHandler } from "react-native";
+import React, { useCallback, useEffect } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import { Header } from "@/components/header";
 import { colors } from "@/shared/lib/theme";
@@ -28,10 +28,17 @@ const FilteredPlaces = () => {
     fromPrice,
     toPrice,
     passType,
-    onGoBack
   } = route.params;
 
   const tags = [`${distance} km+-`, passType, toPrice ? `${toPrice}$` : null];
+
+  const onBackPress = useCallback(() => {
+    if (navigation.canGoBack()) {
+      // Emit the event with the selectedCategories
+      DeviceEventEmitter.emit("onPressClear");
+      navigation.goBack();
+    }
+  }, []);
 
   return (
     <ScreenLayout pb={0}>
@@ -68,8 +75,7 @@ const FilteredPlaces = () => {
           })}
         </View>
         <TouchableOpacity onPress={() => {
-          onGoBack?.();
-          navigation.goBack()
+          onBackPress()
         }}>
           <Typography color="primary" font="m">
             Clear All

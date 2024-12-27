@@ -77,16 +77,16 @@ export const spaces = {
               maxDistance,
               minPrice,
               maxPrice,
-              passType: passType?.toLowerCase(),
+              // passType: passType?.toLowerCase(),
               q: search
             })
           }
         );
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          alert(error.response?.data);
+          console.log(JSON.stringify(error.response?.data, null, 2));
         } else {
-          alert(error);
+          console.log(JSON.stringify(error, null, 2));
         }
       }
     } else {

@@ -3,8 +3,10 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Keyboard,
+  BackHandler,
+  DeviceEventEmitter,
 } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import Typography from "@/shared/ui/Typography";
 import { Header } from "@/components/header";
@@ -23,6 +25,19 @@ const Filter = () => {
   const [type, setType] = useState("Single");
   const filterPriceRef = useRef<PriceFromToRefT | null>(null);
   const distanceRef = useRef<DistanceBarRef>(null);
+
+  useEffect(() => { // subcribe to onPressClear event
+    const subscription = DeviceEventEmitter.addListener(
+      "onPressClear",
+      () => {
+        setType("Single");
+        filterPriceRef.current?.clearValues();
+        distanceRef.current?.clearValue();
+      }
+    );
+
+    return () => subscription.remove();
+  }, []);
 
   return (
     <ScreenLayout>
@@ -95,11 +110,6 @@ const Filter = () => {
                 passType: type,
                 fromPrice: fromValue ? Number(fromValue) : undefined,
                 toPrice: toValue ? Number(toValue) : undefined,
-                onGoBack: () => {
-                  setType("Single");
-                  filterPriceRef.current?.clearValues();
-                  distanceRef.current?.clearValue();
-                }
               });
               Keyboard.dismiss();
             }}
