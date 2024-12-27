@@ -4,6 +4,7 @@ import Filter from "@/pages/stack/discover/Filter";
 import FilteredPlaces from "@/pages/stack/discover/FilteredPlaces";
 import Tabs from "../Tabs";
 import PlaceDetail from "@/pages/stack/place/PlaceDetail";
+import WorkoutPlaceDetail from "@/pages/stack/place/WorkoutPlaceDetail";
 import Review from "@/pages/stack/place/Review";
 import CreateReview from "@/pages/stack/place/CreateReview";
 import BookPass from "@/pages/stack/place/BookPass";
@@ -43,6 +44,7 @@ const StackScreens = () => {
       <Stack.Screen name="Filter" component={Filter} />
       <Stack.Screen name="FilteredPlaces" component={FilteredPlaces} />
       <Stack.Screen name="PlaceDetail" component={PlaceDetail} />
+      <Stack.Screen name="WorkoutPlaceDetail" component={WorkoutPlaceDetail} />
       <Stack.Screen name="Review" component={Review} />
       <Stack.Screen name="CreateReview" component={CreateReview} />
       <Stack.Screen name="BookPass" component={BookPass} />

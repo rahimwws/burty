@@ -96,8 +96,6 @@ const Workouts = () => {
                     startTime={item.startTime}
                     bookingId={item.id}
                     used={isTimeOver({ startDate: item.startDate, endTime: item.endTime })}
-                    canceled={item.status == 'cancelled'}
-                    reserved
                   />
                 )
               })

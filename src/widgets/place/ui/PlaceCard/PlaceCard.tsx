@@ -22,20 +22,14 @@ const PlaceCard = ({
   type = "default",
   startDate,
   startTime,
-  reserved = false,
   used = false,
-  canceled = false,
   bookingId,
 }: {
   item?: PlaceT;
   /** @default "default" */
   type?: "default" | "large";
   /** @default false */
-  reserved?: boolean;
-  /** @default false */
   used?: boolean;
-  /** @default false */
-  canceled?: boolean
   startDate?: string
   startTime?: string
   bookingId?: string
@@ -45,12 +39,15 @@ const PlaceCard = ({
 
   const handlePress = () => {
     LightHeptic();
-    navigation.navigate("PlaceDetail", {
-      reserved,
-      finished: canceled,
-      placeId: !bookingId ? item?.id : undefined,
-      bookingId
-    });
+    if (bookingId)
+      navigation.navigate("WorkoutPlaceDetail", {
+        finished: used,
+        bookingId
+      });
+    else
+      navigation.navigate("PlaceDetail", {
+        placeId: item?.id,
+      });
   }
   const haveDistance = !!item?.distanceInM || !!item?.distance?.meters;
   const haveImage = !!item?.medias?.[0]?.filePath;
