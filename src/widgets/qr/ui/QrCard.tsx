@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import React from "react";
 import { colors } from "@/shared/lib/theme";
 import { WorkoutDetail } from "@/widgets/place";
-import { MentorPlace } from "@/components/card";
+import { MentorPlaceCard } from "@/widgets/place";
 
 const QrCard = () => {
   return (
@@ -14,7 +14,7 @@ const QrCard = () => {
         borderRadius: 15,
       }}
     >
-      <MentorPlace
+      <MentorPlaceCard
         type="large"
         style={{
           width: "100%",

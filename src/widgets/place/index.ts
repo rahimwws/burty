@@ -5,6 +5,7 @@ import PlaceLinks from "./ui/Links";
 import Review from "./ui/Review";
 import Workout from "./ui/Workout";
 import PlaceCard from "./ui/PlaceCard";
+import MentorPlaceCard from "./ui/MentorPlaceCard";
 
 export {
   PlaceHeader,
@@ -14,4 +15,5 @@ export {
   Workout as WorkoutDetail,
   Comments as MentorComments,
   PlaceCard,
+  MentorPlaceCard,
 };

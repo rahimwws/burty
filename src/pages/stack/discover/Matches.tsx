@@ -2,7 +2,7 @@ import { View, Text, FlatList } from "react-native";
 import React from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import { Header } from "@/components/header";
-import { MentorPlace } from "@/components/card";
+import { MentorPlaceCard } from "@/widgets/place";
 import Line from "@/shared/ui/Lines";
 
 const Matches = () => {
@@ -13,7 +13,7 @@ const Matches = () => {
       <FlatList
         data={[1, 2, 3]}
         renderItem={() => {
-          return <MentorPlace type="large" />;
+          return <MentorPlaceCard type="large" />;
         }}
         contentContainerStyle={{
           gap: 20,

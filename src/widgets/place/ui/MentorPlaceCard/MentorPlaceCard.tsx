@@ -18,15 +18,19 @@ import { PlaceT } from "@/shared/model/types";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import ProfileSvg from "@/shared/assets/icons/tabs/ProfileSvg";
 import BottomLinearGradient from "@/shared/ui/BottomLinearGradient";
+import Overlay from "@/shared/ui/Overlay";
+import styles from "./styles";
 
-const MentorPlace = ({
-  item,
+const MentorPlaceCard = ({
+  place,
   type = "default",
   used = false,
   style,
 }: {
-  item?: PlaceT;
-  type?: "default" | "large" | "small";
+  place?: PlaceT;
+  /** @default "default" */
+  type?: "default" | "large";
+  /** @default false */
   used?: boolean;
   style?: StyleProp<ViewStyle>;
 }) => {
@@ -38,7 +42,7 @@ const MentorPlace = ({
       style={[
         {
           width:
-            type === "large" || type === "small" ? width * 0.95 : width / 1.5,
+            type === "large" ? width * 0.95 : width / 1.5,
           height: height / 4,
           borderRadius: 15,
           opacity: used ? 0.95 : 1,
@@ -56,15 +60,9 @@ const MentorPlace = ({
         resizeMode="cover"
         borderRadius={15}
       >
-        {used && <View style={styles.overlay} />}
+        {used && <Overlay />}
         <View
-          style={{
-            position: "absolute",
-            bottom: "3%",
-            left: "5%",
-            width: "90%",
-            zIndex: 1,
-          }}
+          style={styles.content}
         >
           <Typography
             size={18}
@@ -78,19 +76,10 @@ const MentorPlace = ({
           </Typography>
 
           <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginVertical: "3%",
-            }}
+            style={styles.bottomRow}
           >
             <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 5,
-              }}
+              style={styles.playerCount}
             >
               <ProfileSvg
                 size={15}
@@ -119,12 +108,4 @@ const MentorPlace = ({
   );
 };
 
-const styles = StyleSheet.create({
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(100, 100, 100, 0.6)",
-    borderRadius: 15,
-  },
-});
-
-export default MentorPlace;
+export default MentorPlaceCard;

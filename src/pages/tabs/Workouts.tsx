@@ -2,7 +2,7 @@ import { View, ScrollView, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Header } from "@/components/header";
 import ScreenLayout from "@/shared/ui/Layout";
-import { MentorPlace } from "@/components/card";
+import { MentorPlaceCard } from "@/widgets/place";
 import useRoleStore from "@/shared/store/role";
 import { Type } from "@/features/workout/ui";
 import { useBookings } from "@/features/booking";
@@ -77,10 +77,10 @@ const Workouts = () => {
         >
           {role === "mentor" ? (
             <>
-              <MentorPlace type="large" />
-              <MentorPlace type="large" />
-              <MentorPlace type="large" used />
-              <MentorPlace type="large" used />
+              <MentorPlaceCard type="large" />
+              <MentorPlaceCard type="large" />
+              <MentorPlaceCard type="large" used />
+              <MentorPlaceCard type="large" used />
             </>
           ) : (
             bookginsLoading ?
