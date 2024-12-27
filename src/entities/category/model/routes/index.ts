@@ -1,20 +1,11 @@
 import { client } from "@/shared/api";
-import { PlaceT } from "@/shared/model/types";
-
-interface Category {
-  id: string;
-  title: string;
-}
-
-interface CategoryDetail extends Category {
-  spaces: PlaceT[]
-}
+import { CategoryDetailT, CategoryT } from "../types";
 
 export const categories = {
   async getCategories() {
-    return await client.get<Category[]>("/category");
+    return await client.get<CategoryT[]>("/category");
   },
   async getCategoriesById(id: string) {
-    return await client.get<CategoryDetail>(`/category/${id}`);
+    return await client.get<CategoryDetailT>(`/category/${id}`);
   },
 };

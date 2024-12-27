@@ -1,17 +1,24 @@
-import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
-import React, { useEffect } from "react";
+import { View, TouchableOpacity, ActivityIndicator, DeviceEventEmitter } from "react-native";
+import React, { useEffect, useState } from "react";
 import Button from "./Button";
 import Typography from "@/shared/ui/Typography";
 import { useAppNavigation } from "@/shared/lib/navigation";
-import { useQuery } from "@tanstack/react-query";
-import { categories } from "../model/routes";
 import { toast } from "@/shared/ui/Toast";
 import { colors } from "@/shared/lib/theme";
 import { useCategories } from "../lib/hooks/useCategories";
+import { CategoryT } from "../model/types";
 
 const List = () => {
   const navigation = useAppNavigation();
-  const { data, isSuccess, isPending, isLoading } = useCategories();
+  const { data, isLoading } = useCategories();
+
+  const [categories, setCategoies] = useState<CategoryT[]>([]);
+
+  useEffect(() => {
+    if (!isLoading && data?.data.length) {
+      setCategoies(data.data)
+    }
+  }, [isLoading, data?.data.length])
 
   useEffect(() => {
     if (!data?.data.length && !isLoading) {
@@ -21,6 +28,20 @@ const List = () => {
       })
     }
   }, [data?.data.length, isLoading]);
+
+  useEffect(() => { // subcribe to onGoBack event
+    const subscription = DeviceEventEmitter.addListener(
+      "onGoBack",
+      (categoiesList: CategoryT[]) => {
+        if (categoiesList.length)
+          setCategoies(categoiesList);
+        else
+          setCategoies(data?.data || [])
+      }
+    );
+
+    return () => subscription.remove();
+  }, [data?.data.length]);
 
   return (
     <>
@@ -55,7 +76,7 @@ const List = () => {
               gap: 10,
             }}
           >
-            {data?.data.slice(0, 5).map((item, index) => {
+            {categories.slice(0, 5).map((item, index) => {
               return <Button
                 title={item.title}
                 key={item.id}
@@ -64,7 +85,12 @@ const List = () => {
                 }}
               />;
             })}
-            {/* <Button title="Other" route="Categories" /> */}
+            <Button
+              title="Other"
+              onPress={() => {
+                navigation.navigate("Categories")
+              }}
+            />
           </View>
       }
     </>

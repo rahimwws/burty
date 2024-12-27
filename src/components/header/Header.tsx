@@ -19,12 +19,14 @@ const Header = ({
   styles,
   right = false,
   action,
+  onBackPress
 }: {
   type: "default" | "stack";
   title: string;
   styles?: StyleProp<ViewStyle>;
   right?: boolean;
   action?: () => void;
+  onBackPress?: Function;
 }) => {
   const navigation = useAppNavigation();
   return (
@@ -53,7 +55,7 @@ const Header = ({
           }}
           onPress={() => {
             LightHeptic();
-            navigation.goBack();
+            onBackPress ? onBackPress() : navigation.goBack();
           }}
         >
           <ArrowLeft size={20} fill={colors.background} />
