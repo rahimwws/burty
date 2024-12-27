@@ -9,9 +9,6 @@ const useCreateReview = () => {
       onSuccess: () => queryClient.invalidateQueries({
          queryKey: ["reviews"]
       }),
-      onError: (err) => {
-         alert(JSON.stringify(err, null, 2))
-      }
    });
 
    return { ...mutation };

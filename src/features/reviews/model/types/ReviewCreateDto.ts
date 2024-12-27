@@ -1,5 +1,5 @@
 type ReviewCreateDto = {
-   bookingId: string
+   spaceId: string
    comment: string
    rating: number
 }

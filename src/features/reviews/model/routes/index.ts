@@ -17,9 +17,9 @@ export const reviews = {
          }
       }
    },
-   async createReview({ bookingId, comment, rating }: ReviewCreateDto) {
+   async createReview({ spaceId, comment, rating }: ReviewCreateDto) {
       return await client.post(
-         `/reviews/${bookingId}`,
+         `/reviews/${spaceId}`,
          {
             comment,
             rating
