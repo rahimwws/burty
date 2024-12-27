@@ -12,7 +12,7 @@ import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import BottomSheet from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet";
 import { Sheet } from "@/shared/ui/Sheets";
 import Typography from "@/shared/ui/Typography";
-import { PlaceCard } from "@/components/card";
+import { PlaceCard } from "@/widgets/place";
 import { useNearbySpaces } from "@/features/spaces/";
 import { PlaceT } from "@/shared/model/types";
 import { OnPressEvent } from "@rnmapbox/maps/lib/typescript/src/types/OnPressEvent";

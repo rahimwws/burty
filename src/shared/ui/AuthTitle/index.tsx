@@ -1,9 +1,9 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import React from 'react'
-import { LinearGradient } from 'expo-linear-gradient'
 import Typography from '../Typography'
 import styles from './styles'
 import { colors } from '@/shared/lib/theme'
+import BottomLinearGradient from '../BottomLinearGradient'
 
 type AuthTitleProps = {
   title: string
@@ -19,17 +19,9 @@ const AuthTitle = (props: AuthTitleProps) => {
           {title}
         </Typography>
 
-        <LinearGradient
+        <BottomLinearGradient
           colors={["rgba(0, 0, 0, 0.1)", colors.primary + "50"]}
-          style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: 25,
-          }}
-          start={{ x: 0.5, y: 0 }}
-          end={{ x: 0.5, y: 1 }}
+          height={25}
         />
       </View>
     </View>

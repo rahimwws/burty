@@ -1,6 +1,6 @@
 import { View, Text, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
 import React, { useEffect } from "react";
-import { PlaceCard } from "@/components/card";
+import { PlaceCard } from "@/widgets/place";
 import Typography from "@/shared/ui/Typography";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { useNearbySpaces } from "@/features/spaces/";

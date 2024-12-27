@@ -1,7 +1,7 @@
 import { ActivityIndicator, FlatList, View } from "react-native";
 import { useFilteredSpaces } from "@/features/spaces";
 import Typography from "@/shared/ui/Typography";
-import { PlaceCard } from "@/components/card";
+import { PlaceCard } from "@/widgets/place";
 import { useEffect } from "react";
 import { toast } from "@/shared/ui/Toast";
 import FilterParamsDto from "@/features/spaces/model/types/FilterParamsDto";

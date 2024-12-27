@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import { Header } from "@/components/header";
 import { useAppNavigation } from "@/shared/lib/navigation";
-import { PlaceCard } from "@/components/card";
+import { PlaceCard } from "@/widgets/place";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { PlaceT } from "@/shared/model/types";
 import { useCategory } from "@/entities/category/lib/hooks/useCategory";

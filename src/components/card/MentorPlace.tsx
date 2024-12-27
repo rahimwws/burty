@@ -12,12 +12,12 @@ import Typography from "@/shared/ui/Typography";
 import { LightHeptic } from "@/shared/lib/heptics";
 import Marker from "@/shared/assets/icons/interface/Marker";
 import { colors } from "@/shared/lib/theme";
-import { LinearGradient } from "expo-linear-gradient";
 import Star from "@/shared/assets/icons/interface/Star";
 import { BlurView } from "expo-blur";
 import { PlaceT } from "@/shared/model/types";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import ProfileSvg from "@/shared/assets/icons/tabs/ProfileSvg";
+import BottomLinearGradient from "@/shared/ui/BottomLinearGradient";
 
 const MentorPlace = ({
   item,
@@ -113,18 +113,7 @@ const MentorPlace = ({
           </View>
         </View>
 
-        <LinearGradient
-          colors={["rgba(0, 0, 0, 0.2)", "#020202"]}
-          style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: 50,
-          }}
-          start={{ x: 0.5, y: 0 }}
-          end={{ x: 0.5, y: 1 }}
-        />
+        <BottomLinearGradient />
       </ImageBackground>
     </TouchableOpacity>
   );

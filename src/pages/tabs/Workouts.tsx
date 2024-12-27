@@ -2,13 +2,14 @@ import { View, ScrollView, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Header } from "@/components/header";
 import ScreenLayout from "@/shared/ui/Layout";
-import { MentorPlace, PlaceCard } from "@/components/card";
+import { MentorPlace } from "@/components/card";
 import useRoleStore from "@/shared/store/role";
 import { Type } from "@/features/workout/ui";
 import { useBookings } from "@/features/booking";
 import { toast } from "@/shared/ui/Toast";
 import { colors } from "@/shared/lib/theme";
 import isTimeOver from "@/shared/lib/utils/isTimeOver";
+import { PlaceCard } from "@/widgets/place";
 
 
 const Workouts = () => {
