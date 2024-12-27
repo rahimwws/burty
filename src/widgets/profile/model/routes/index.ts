@@ -27,9 +27,8 @@ export const user = {
       },
     });
   },
-  async changeProfile(email: string, firstName: string, lastName: string, password?: string) {
+  async changeProfile(firstName: string, lastName: string, password?: string) {
     return client.patch("/users", {
-      email,
       firstName,
       lastName,
       password,

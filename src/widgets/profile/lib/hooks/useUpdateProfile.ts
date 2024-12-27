@@ -7,7 +7,6 @@ import { removeTokens } from "@/shared/api/token/storage";
 export const useUpdateProfile = () => {
   return useMutation({
     mutationFn: ({
-      email,
       firstName,
       lastName,
       password,
@@ -16,7 +15,7 @@ export const useUpdateProfile = () => {
       firstName: string;
       lastName: string;
       password?: string;
-    }) => user.changeProfile(email, firstName, lastName, password),
+    }) => user.changeProfile(firstName, lastName, password),
     onError: (err) => {
       if (isAxiosError(err)) {
         alert(err.response?.data.message);
