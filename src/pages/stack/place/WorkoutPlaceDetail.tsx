@@ -154,7 +154,11 @@ const WorkoutPlaceDetail = () => {
                      textColor="primary"
                      isRoute={false}
                      theme="outline"
-                     action={() => navigation.navigate("WorkoutDetail")}
+                     action={() => navigation.navigate("WorkoutDetail", {
+                        bookingId,
+                        placeName: booking?.data.spaces.name,
+                        startTime: booking?.data.startTime
+                     })}
                   />
                )
             }

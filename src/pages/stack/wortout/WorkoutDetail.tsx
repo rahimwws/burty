@@ -1,11 +1,41 @@
 import { View, ScrollView } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import { Header } from "@/components/header";
 import Typography from "@/shared/ui/Typography";
 import { Comment } from "@/entities/workout/ui";
+import useComments from "@/features/workout/lib/hooks/useComments";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import dayjs from "dayjs";
+import { toast } from "@/shared/ui/Toast";
+
+type RouteParams = {
+  MyScreen: {
+    bookingId?: string
+    startTime?: string
+    placeName?: string
+  };
+};
+
+type MyScreenRouteProp = RouteProp<RouteParams, "MyScreen">;
 
 const WorkoutDetail = () => {
+  const { params: { bookingId, startTime, placeName } } = useRoute<MyScreenRouteProp>();
+  const {
+    data: comments,
+    isLoading: commentsLoading,
+  } = useComments(bookingId);
+
+
+  useEffect(() => {
+    if (!comments?.data.length && !commentsLoading) {
+      toast.show({
+        type: 'error',
+        description: 'No comments data'
+      })
+    }
+  }, [comments?.data.length, commentsLoading]);
+
   return (
     <ScreenLayout>
       <ScrollView
@@ -23,17 +53,23 @@ const WorkoutDetail = () => {
             marginBottom: 10,
           }}
         >
-          Place name
+          {placeName}
         </Typography>
-        <Typography>Start at 12:00</Typography>
+        <Typography>Start at {startTime}</Typography>
         <View
           style={{
             marginTop: "3%",
           }}
         >
-          {[1, 2, 3, 4, 5, 6, 6, 6, 7, 7, 7, 7, 7].map((item, index) => {
-            return <Comment comment="adf" time="05:10" key={index} />;
-          })}
+          {
+            comments?.data.map((item, index) => {
+              return <Comment
+                key={item.id}
+                comment={item.comment}
+                time={dayjs(item.createdAt).format("HH:mm")}
+              />;
+            })
+          }
         </View>
       </ScrollView>
     </ScreenLayout>
