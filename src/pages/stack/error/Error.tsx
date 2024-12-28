@@ -1,4 +1,4 @@
-import { View, ScrollView } from 'react-native'
+import { View, ScrollView, Image } from 'react-native'
 import React from 'react'
 import ScreenLayout from '@/shared/ui/Layout'
 import Typography from '@/shared/ui/Typography'
@@ -14,7 +14,17 @@ const Error = () => {
           justifyContent: 'center',
         }}
       >
-        <View style={{ height: 267, backgroundColor: '#ccc' }} />
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+          <Image
+            style={{ width: '100%', maxWidth: 400, maxHeight: 400, }}
+            resizeMode="contain"
+            source={require("@/shared/assets/images/error-img.png")}
+          />
+        </View>
         <View style={{ marginTop: '8%' }}>
           <Typography size={20} font='b'>
             Oops! Something went wrong.
