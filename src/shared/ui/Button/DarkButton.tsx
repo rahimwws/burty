@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import React from "react";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { ColorsT, colors } from "@/shared/lib/theme";
@@ -14,6 +14,7 @@ const DarkButton = ({
   type = "default",
   bg,
   textColor,
+  isLoading = false,
 }: {
   text: string;
   isRoute?: boolean;
@@ -24,6 +25,8 @@ const DarkButton = ({
   type?: "default" | "rounded";
   bg?: keyof ColorsT;
   textColor?: keyof ColorsT;
+  /** @default false */
+  isLoading?: boolean
 }) => {
   const navigation = useAppNavigation();
   const HandleClick = () => {
@@ -38,28 +41,34 @@ const DarkButton = ({
         backgroundColor: bg
           ? colors[bg]
           : disabled
-          ? colors.light + "FFF1A"
-          : colors.light,
+            ? colors.light + "FFF1A"
+            : colors.light,
         height: 45,
         alignItems: "center",
         justifyContent: "center",
         borderRadius: type === "default" ? 5 : 100,
       }}
+      disabled={isLoading}
       activeOpacity={0.7}
       onPress={HandleClick}
     >
-      <Typography
-        size={18}
-        styles={{
-          color: textColor
-            ? colors[textColor]
-            : disabled
-            ? colors.light + "fff80"
-            : colors.background,
-        }}
-      >
-        {text}
-      </Typography>
+      {
+        isLoading ?
+          <ActivityIndicator color={textColor ?? colors.light} />
+          :
+          <Typography
+            size={18}
+            styles={{
+              color: textColor
+                ? colors[textColor]
+                : disabled
+                  ? colors.light + "fff80"
+                  : colors.background,
+            }}
+          >
+            {text}
+          </Typography>
+      }
     </TouchableOpacity>
   );
 };

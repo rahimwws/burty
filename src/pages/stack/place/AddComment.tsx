@@ -1,15 +1,42 @@
-import { View, Text, ScrollView } from "react-native";
-import React, { useState } from "react";
+import { View, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import { Header } from "@/components/header";
 import Typography from "@/shared/ui/Typography";
-import CommentCard from "@/components/card/CommentCard";
-import Modal from "@/shared/ui/Modal";
-import { DarkButton } from "@/shared/ui/Button";
 import ModalComment from "@/widgets/comments/ui";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import useComments from "@/features/workout/lib/hooks/useComments";
+import { toast } from "@/shared/ui/Toast";
+import { Comment } from "@/entities/workout/ui";
+import dayjs from "dayjs";
+
+type RouteParams = {
+  MyScreen: {
+    bookingId?: string
+    startTime?: string
+    placeName?: string
+  };
+};
+
+type MyScreenRouteProp = RouteProp<RouteParams, "MyScreen">;
 
 const AddComment = () => {
+  const { params: { bookingId, startTime, placeName } } = useRoute<MyScreenRouteProp>();
   const [showModal, setShowModal] = useState<boolean>(false);
+  const {
+    data: comments,
+    isLoading: commentsLoading,
+  } = useComments(bookingId);
+
+  useEffect(() => {
+    if (!comments?.data.length && !commentsLoading) {
+      toast.show({
+        type: 'error',
+        description: 'No comments data'
+      })
+    }
+  }, [comments?.data.length, commentsLoading]);
+
   return (
     <ScreenLayout>
       <Header
@@ -29,9 +56,9 @@ const AddComment = () => {
           }}
         >
           <Typography size={22} font="b">
-            Place name
+            {placeName}
           </Typography>
-          <Typography>Start 15:00</Typography>
+          <Typography>Start {startTime}</Typography>
         </View>
 
         <View
@@ -40,12 +67,22 @@ const AddComment = () => {
             gap: 10,
           }}
         >
-          {[1, 2, 3, 4, 5, 6, 7].map((item, index) => {
-            return <CommentCard key={index} />;
-          })}
+          {
+            comments?.data.map((item, index) => {
+              return <Comment
+                key={item.id}
+                comment={item.comment}
+                time={dayjs(item.createdAt).format("HH:mm")}
+              />;
+            })
+          }
         </View>
       </ScrollView>
-      <ModalComment visible={showModal} setVisible={setShowModal} />
+      <ModalComment
+        visible={showModal}
+        setVisible={setShowModal}
+        bookingId={bookingId}
+      />
     </ScreenLayout>
   );
 };

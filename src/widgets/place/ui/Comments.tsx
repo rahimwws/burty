@@ -2,9 +2,11 @@ import { View } from "react-native";
 import React from "react";
 import Typography from "@/shared/ui/Typography";
 import { useAppNavigation } from "@/shared/lib/navigation";
-import CommentCard from "@/components/card/CommentCard";
+import { CommentT } from "@/features/workout/model/types";
+import { Comment } from "@/entities/workout/ui";
+import dayjs from "dayjs";
 
-const Comments = () => {
+const Comments = ({ comments }: { comments?: CommentT[] }) => {
   const navigation = useAppNavigation();
   return (
     <View style={{ marginTop: "3%" }}>
@@ -21,10 +23,16 @@ const Comments = () => {
           gap: 10,
         }}
       >
-        <CommentCard />
-        <CommentCard />
-        <CommentCard />
-        <CommentCard />
+        {
+          comments?.slice(0, 5)?.map(comment => {
+            return (
+              <Comment
+                comment={comment.comment}
+                time={dayjs(comment.createdAt).format('HH:mm')}
+              />
+            )
+          })
+        }
       </View>
     </View>
   );

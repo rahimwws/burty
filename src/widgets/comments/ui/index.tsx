@@ -1,32 +1,75 @@
-import { View, Text, Keyboard } from "react-native";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import { Keyboard } from "react-native";
+import React, { Dispatch, SetStateAction, useCallback, useState, } from "react";
 import Modal from "@/shared/ui/Modal";
 import Typography from "@/shared/ui/Typography";
 import { DarkButton } from "@/shared/ui/Button";
 import { TextInput } from "react-native-gesture-handler";
 import { colors } from "@/shared/lib/theme";
+import useCreateComment from "@/features/workout/lib/hooks/useCreateComment";
+import styles from "./style";
+import { toast } from "@/shared/ui/Toast";
 
 const ModalComment = ({
   visible = false,
   setVisible,
+  bookingId
 }: {
-  visible: boolean;
-  setVisible: Dispatch<SetStateAction<boolean>>;
+  visible: boolean
+  setVisible: Dispatch<SetStateAction<boolean>>
+  bookingId?: string
 }) => {
-  const [user, setUser] = useState<number>(1);
-  const [step, setStep] = useState<1 | 2>(1);
+  const [comment, setComment] = useState('');
+  // const [user, setUser] = useState<number>(1);
+  // const [step, setStep] = useState<1 | 2>(1);
+
+  const {
+    mutate: createComment,
+    isPending: creatingComment,
+  } = useCreateComment();
+
+  const handleCreateComment = useCallback((comment: string, bookingId?: string) => {
+    if (bookingId)
+      createComment({ bookingId, comment }, {
+        onSuccess: () => {
+          toast.show({
+            description: "Comment created",
+            type: "success"
+          });
+          setVisible(false);
+        },
+        onError: () => {
+          toast.show({
+            type: "error",
+            description: "Comment create error"
+          })
+          setVisible(false);
+        }
+      });
+    else
+      toast.show({
+        description: "Space is not booked yet",
+        type: "error"
+      })
+  }, []);
+
   return (
     <Modal
       visible={visible}
-      custom={{
-        width: "100%",
-        height: step === 1 ? "auto" : "30%",
-      }}
+      custom={[
+        styles.modal,
+        { height: "auto" }
+        // {
+        //   height: step === 1 ? "auto" : "30%",
+        // }
+      ]}
     >
-      <Typography size={22} font="black">
+      {/* <Typography size={22} font="black">
         {step === 2 ? "Create comment" : "Select a Person"}
+      </Typography> */}
+      <Typography size={22} font="black">
+        Create comment
       </Typography>
-      {step === 1 ? (
+      {/* {step === 1 ? (
         <View
           style={{
             width: "100%",
@@ -46,43 +89,35 @@ const ModalComment = ({
             );
           })}
         </View>
-      ) : (
-        <TextInput
-          style={{
-            backgroundColor: colors.dark,
-            fontSize: 18,
-            padding: 10,
-            borderRadius: 8,
-            color: colors.light,
-            fontFamily: "m",
-            borderWidth: 1,
-            borderColor: colors.gray,
-            width: "100%",
-            height: "60%",
-            marginVertical: "5%",
-          }}
-          multiline={true}
-          returnKeyType="done"
-          onSubmitEditing={Keyboard.dismiss}
-          placeholder="Text you message here..."
-          placeholderTextColor={colors.gray}
-        />
-      )}
+      ) : ( */}
+      <TextInput
+        style={styles.input}
+        multiline={true}
+        returnKeyType="done"
+        onSubmitEditing={Keyboard.dismiss}
+        placeholder="Text comment"
+        placeholderTextColor={colors.gray}
+        value={comment}
+        onChangeText={txt => setComment(txt)}
+      />
+      {/* )} */}
       <DarkButton
         isRoute={false}
         text="Choose"
         disabled={false}
-        action={() => {
-          if (step === 1) setStep(2);
-          else {
-            setVisible(!visible);
-            setTimeout(() => {
-              setStep(1);
-            }, 500);
-          }
-        }}
+        // action={() => {
+        //   if (step === 1) setStep(2);
+        //   else {
+        //     setVisible(!visible);
+        //     setTimeout(() => {
+        //       setStep(1);
+        //     }, 500);
+        //   }
+        // }}
+        action={() => handleCreateComment(comment, bookingId)}
         bg="blue"
         textColor="light"
+        isLoading={creatingComment}
       />
     </Modal>
   );
