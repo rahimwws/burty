@@ -1,5 +1,5 @@
-import { View, Text, Dimensions, Image } from "react-native";
-import React from "react";
+import { View, Dimensions, Image } from "react-native";
+import React, { useEffect } from "react";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import ParallaxScrollView from "@/shared/ui/Animation/ParallaxView";
@@ -11,9 +11,13 @@ import {
   PlaceLinks,
 } from "@/widgets/place";
 import { LargeButton } from "@/shared/ui/Button";
+import useLinkedSpace from "@/features/mentor/lib/hooks/useLinkedSpace";
+import { toast } from "@/shared/ui/Toast";
+
 type RouteParams = {
   MyScreen: {
     finished: boolean;
+    spaceId: string
   };
 };
 
@@ -21,10 +25,27 @@ type MyScreenRouteProp = RouteProp<RouteParams, "MyScreen">;
 const MentorDetail = () => {
   const route = useRoute<MyScreenRouteProp>();
 
-  const { finished } = route.params;
+  const { finished, spaceId } = route.params;
 
   const { height, width } = Dimensions.get("window");
   const navigation = useAppNavigation();
+
+  const {
+    data: linkedSpace,
+    isLoading: linkedSpaceLoading
+  } = useLinkedSpace(spaceId);
+
+  useEffect(() => {
+    if (!Object.keys(linkedSpace?.data || {}).length && !linkedSpaceLoading) {
+      toast.show({
+        type: 'error',
+        description: 'No linked place details data'
+      })
+    }
+  }, [spaceId, linkedSpace?.data, linkedSpaceLoading]);
+
+  const spaceDetail = linkedSpace?.data;
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       <ParallaxScrollView
@@ -34,9 +55,14 @@ const MentorDetail = () => {
         }}
         headerImage={
           <>
-            <PlaceHeader role="mentor" />
+            <PlaceHeader role="mentor" link="" />
             <Image
-              source={require("@/shared/assets/images/bg-card.png")}
+              source={
+                linkedSpace?.data?.medias?.[0].filePath ?
+                  { uri: linkedSpace?.data?.medias?.[0].filePath }
+                  :
+                  require("@/shared/assets/images/bg-card.png")
+              }
               style={{
                 width,
                 height: height / 3,
@@ -60,7 +86,9 @@ const MentorDetail = () => {
           }}
         >
           <PlaceInfo reserved={true} mentor />
-          <PlaceLinks />
+          <PlaceLinks
+          // link={`${linkedSpace?.data.}`}
+          />
           <MentorComments />
         </View>
       </ParallaxScrollView>

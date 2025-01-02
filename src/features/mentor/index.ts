@@ -1,0 +1,1 @@
+export { default as useLinkedSpaces } from './lib/hooks/useLinkedSpaces';

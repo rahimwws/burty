@@ -13,8 +13,8 @@ type Booking = {
       site: string
       categoryId: string
       phoneNumber: string
-      openTime: Date
-      endTime: Date
+      openTime: string
+      endTime: string
       longitude: number
       latitude: number
       minPrice: number

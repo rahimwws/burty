@@ -20,6 +20,7 @@ import ProfileSvg from "@/shared/assets/icons/tabs/ProfileSvg";
 import BottomLinearGradient from "@/shared/ui/BottomLinearGradient";
 import Overlay from "@/shared/ui/Overlay";
 import styles from "./styles";
+import dayjs from "dayjs";
 
 const MentorPlaceCard = ({
   place,
@@ -51,7 +52,7 @@ const MentorPlaceCard = ({
       ]}
       onPress={() => {
         LightHeptic();
-        navigation.navigate("MentorDetail", { finished: used });
+        navigation.navigate("MentorDetail", { finished: used, spaceId: place?.id });
       }}
     >
       <ImageBackground
@@ -72,7 +73,7 @@ const MentorPlaceCard = ({
               color: used ? "#A0A0A0" : colors.light,
             }}
           >
-            27.08.2024
+            {dayjs(place?.openTime).format('DD.MM.YYYY')}
           </Typography>
 
           <View
@@ -89,7 +90,7 @@ const MentorPlaceCard = ({
                 size={15}
                 styles={{ color: used ? "#A0A0A0" : colors.light + "fffCC" }}
               >
-                Number of players
+                {place?.maxPlayers || 0}
               </Typography>
             </View>
 
@@ -97,7 +98,7 @@ const MentorPlaceCard = ({
               font="b"
               styles={{ color: used ? "#A0A0A0" : colors.light }}
             >
-              19:00
+              {dayjs(place?.openTime).format('HH:mm')}
             </Typography>
           </View>
         </View>

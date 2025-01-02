@@ -17,14 +17,14 @@ export interface PlaceT {
   id: string;
   name: string;
   address: string;
-  endTime: Date;
+  endTime: string;
   latitude: number;
   longitude: number;
   maxPlayers: number;
   maxPrice: number;
   minPlayers: number;
   minPrice: number;
-  openTime: Date;
+  openTime: string;
   phoneNumber: string;
   averageRating?: number;
   site: string;
