@@ -1,14 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import { Header } from "@/components/header";
 import StepIndicator from "@/components/pagination/StepIndicator";
 import { Calendar } from "@/widgets/calendar";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View, ScrollView } from "react-native";
 import { LargeButton } from "@/shared/ui/Button";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { useCreateBooking } from "@/features/booking";
+import { useAppNavigation } from "@/shared/lib/navigation";
+import { CalendarRef } from "@/widgets/calendar/ui/CalendarComponent";
+import dayjs from "dayjs";
+import Input from "@/shared/ui/Input";
+import { toast } from "@/shared/ui/Toast";
+import { useBookingIDStore } from "@/shared/store/booking";
+
+type RouteParams = {
+  MyScreen: {
+    spaceId: string
+    price: string | number
+  };
+};
+
+type MyScreenRouteProp = RouteProp<RouteParams, "MyScreen">;
 
 const BookTime = () => {
+  const { params: { price, spaceId } } = useRoute<MyScreenRouteProp>();
+  const navigation = useAppNavigation();
+  const { addBookingID, } = useBookingIDStore();
+  const calendarRef = useRef<CalendarRef | null>(null);
+  const [playersCount, setPlayersCount] = useState("");
+
   const times = [
     "14:00-15:00",
     "16:00-17:00",
@@ -17,6 +40,42 @@ const BookTime = () => {
     "21:00-22:00",
   ];
   const [time, setTime] = useState<string>("14:00-15:00");
+
+  const {
+    mutate: createBooking,
+    isPending: creatingBooking,
+  } = useCreateBooking();
+
+  const handleCreateBooking = useCallback(() => {
+    const date = calendarRef.current?.getDate();
+
+    if (!date)
+      return;
+
+    if (!playersCount.length) {
+      toast.show({
+        type: "error",
+        description: "Enter players count",
+      })
+      return;
+    }
+
+    createBooking({
+      playersCount: Number(playersCount),
+      spaceId,
+      startDate: dayjs(date, "YYYY-MM-DD").format("DD.MM.YYYY"),
+      visitTime: time
+    }, {
+      onSuccess: (res) => {
+        addBookingID(res.data.id);
+        navigation.navigate("BookBuy", {
+          price: price,
+          bookingId: res.data.id
+        })
+      }
+    })
+  }, [time, spaceId, playersCount]);
+
   return (
     <ScreenLayout>
       <View
@@ -25,41 +84,60 @@ const BookTime = () => {
         }}
       >
         <Header title="Book workout" type="stack" />
-        <StepIndicator currentStep={1} steps={3} />
-        <Calendar />
-        <Typography
-          styles={{ marginTop: "3%", marginBottom: "1%" }}
-          align="left"
-          size={18}
-          font="b"
+        <StepIndicator currentStep={0} steps={2} />
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
         >
-          Time
-        </Typography>
-        <View
-          style={{
-            flexDirection: "row",
-            flexWrap: "wrap",
-            gap: 10,
-          }}
-        >
-          {times.map((tag, index) => {
-            return (
-              <TouchableOpacity
-                style={{
-                  backgroundColor: time === tag ? colors.light : colors.dark,
-                  padding: 10,
-                  borderRadius: 5,
-                }}
-                key={index}
-                onPress={() => setTime(tag)}
-              >
-                <Typography color={time === tag ? "background" : "gray"}>
-                  {tag}
-                </Typography>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
+          <Typography
+            styles={{ marginTop: "3%", marginBottom: "1%" }}
+            align="left"
+            size={18}
+            font="b"
+          >
+            Players count
+          </Typography>
+          <Input
+            value={playersCount}
+            onChangeText={(txt) => setPlayersCount(txt)}
+            type="numeric"
+            placeholder=""
+          />
+          <Calendar ref={calendarRef} />
+          <Typography
+            styles={{ marginTop: "3%", marginBottom: "1%" }}
+            align="left"
+            size={18}
+            font="b"
+          >
+            Time
+          </Typography>
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              gap: 10,
+            }}
+          >
+            {times.map((tag, index) => {
+              return (
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: time === tag ? colors.light : colors.dark,
+                    padding: 10,
+                    borderRadius: 5,
+                  }}
+                  key={index}
+                  onPress={() => setTime(tag)}
+                >
+                  <Typography color={time === tag ? "background" : "gray"}>
+                    {tag}
+                  </Typography>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </ScrollView>
       </View>
       <View>
         <View
@@ -74,16 +152,16 @@ const BookTime = () => {
             Total
           </Typography>
           <Typography align="right" size={22} font="black">
-            $100
+            ${price}
           </Typography>
         </View>
         <LargeButton
           text="Select days/time"
-          isRoute
-          route="BookBuy"
           type="rounded"
           bg={colors.blue}
           textColor="light"
+          action={() => handleCreateBooking()}
+          isLoading={creatingBooking}
         />
       </View>
     </ScreenLayout>

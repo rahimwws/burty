@@ -1,11 +1,15 @@
-import { View, Text } from "react-native";
-import React, { useState } from "react";
+import { View } from "react-native";
+import React, { useState, forwardRef, useImperativeHandle } from "react";
 import { Calendar, DateData } from "react-native-calendars";
 import { formatDate } from "../model";
 import { colors } from "@/shared/lib/theme";
 import { LightHeptic } from "@/shared/lib/heptics";
 
-const CalendarComponent = () => {
+export type CalendarRef = {
+  getDate: () => string
+}
+
+const CalendarComponent = forwardRef<CalendarRef>(({ }, ref) => {
   const [currentDate, setCurrentDate] = useState<string>(
     formatDate(new Date())
   );
@@ -14,6 +18,14 @@ const CalendarComponent = () => {
     const dateString = day.dateString;
     setCurrentDate(dateString);
   };
+
+  useImperativeHandle(ref, () => {
+    return {
+      getDate() {
+        return currentDate;
+      }
+    }
+  })
 
   return (
     <View>
@@ -55,6 +67,6 @@ const CalendarComponent = () => {
       />
     </View>
   );
-};
+});
 
 export default CalendarComponent;

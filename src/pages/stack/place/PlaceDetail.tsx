@@ -1,4 +1,4 @@
-import { View, Image, Dimensions } from "react-native";
+import { View, Image, Dimensions, ActivityIndicator } from "react-native";
 import React, { useEffect } from "react";
 import { colors } from "@/shared/lib/theme";
 import {
@@ -13,6 +13,8 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSpaceDetails } from "@/features/spaces";
 import dayjs from 'dayjs';
 import { toast } from "@/shared/ui/Toast";
+import { useAppNavigation } from "@/shared/lib/navigation";
+import { useBookingIDStore } from "@/shared/store/booking";
 
 type RouteParams = {
   MyScreen: {
@@ -23,6 +25,8 @@ type RouteParams = {
 type MyScreenRouteProp = RouteProp<RouteParams, "MyScreen">;
 const PlaceDetail = () => {
   const route = useRoute<MyScreenRouteProp>();
+  const navigation = useAppNavigation();
+  const { bookingIDs } = useBookingIDStore();
 
   const { placeId } = route.params;
   const { height, width } = Dimensions.get("window");
@@ -81,33 +85,52 @@ const PlaceDetail = () => {
             paddingVertical: "5%",
           }}
         >
-          <PlaceInfo
-            place={spaceDetail}
-          />
-          <PlaceLinks
-            address={spaceDetail?.address}
-            link={spaceDetail?.site}
-            phoneNumber={spaceDetail?.phoneNumber}
-            workTime={`${dayjs(spaceDetail?.openTime).format('h:mm A')} - ${dayjs(spaceDetail?.endTime).format('h:mm A')}`}
-          />
-          <PlaceReview reviews={data?.data?.reviews} spaceId={spaceDetail?.id} />
+          {
+            isLoading ?
+              <View style={{
+                marginVertical: '5%'
+              }}>
+                <ActivityIndicator color={colors.primary} />
+              </View>
+              :
+              <>
+                <PlaceInfo
+                  place={spaceDetail}
+                />
+                <PlaceLinks
+                  address={spaceDetail?.address}
+                  link={spaceDetail?.site}
+                  phoneNumber={spaceDetail?.phoneNumber}
+                  workTime={`${dayjs(spaceDetail?.openTime).format('h:mm A')} - ${dayjs(spaceDetail?.endTime).format('h:mm A')}`}
+                />
+                <PlaceReview reviews={data?.data?.reviews} spaceId={spaceDetail?.id} />
+              </>
+          }
         </View>
       </ParallaxScrollView>
-      <View
-        style={{
-          marginBottom: "5%",
-          paddingHorizontal: 20,
-        }}
-      >
-        <LargeButton
-          bg={colors.blue}
-          text="Book Place"
-          type="rounded"
-          textColor="light"
-          isRoute
-          route="BookPass"
-        />
-      </View>
+      {
+        !!spaceDetail &&
+        <View
+          style={{
+            marginBottom: "5%",
+            paddingHorizontal: 20,
+          }}
+        >
+          <LargeButton
+            bg={colors.blue}
+            // text={"Continue book place" : "Book Place"}
+            text={"Continue book place"}
+            type="rounded"
+            textColor="light"
+            action={() => {
+              navigation.navigate("BookTime", {
+                spaceId: spaceDetail.id,
+                price: spaceDetail.maxPrice,
+              })
+            }}
+          />
+        </View>
+      }
     </View>
   );
 };

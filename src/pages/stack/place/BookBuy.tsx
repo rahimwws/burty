@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React, { useState } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import { Header } from "@/components/header";
@@ -9,15 +9,27 @@ import { LargeButton } from "@/shared/ui/Button";
 import { colors } from "@/shared/lib/theme";
 import Modal from "@/shared/ui/Modal";
 import { useAppNavigation } from "@/shared/lib/navigation";
+import { RouteProp, useRoute } from "@react-navigation/native";
+
+type RouteParams = {
+  MyScreen: {
+    bookingId: string
+    price: string | number
+  };
+};
+
+type MyScreenRouteProp = RouteProp<RouteParams, "MyScreen">;
 
 const BookBuy = () => {
+  const { params: { price, bookingId } } = useRoute<MyScreenRouteProp>();
   const navigation = useAppNavigation();
   const [status, setStatus] = useState<"error" | "success" | null>();
+console.log(bookingId, price)
   return (
     <ScreenLayout>
       <View style={{ flex: 1 }}>
         <Header title="Book workout" type="stack" />
-        <StepIndicator currentStep={2} steps={3} />
+        <StepIndicator currentStep={1} steps={2} />
         <PaymentService />
       </View>
 
@@ -34,7 +46,7 @@ const BookBuy = () => {
             Total
           </Typography>
           <Typography align="right" size={22} font="black">
-            $100
+            ${price}
           </Typography>
         </View>
         <LargeButton

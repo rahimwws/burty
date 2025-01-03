@@ -1,5 +1,6 @@
 import { client } from "@/shared/api";
 import Booking from "../types/Booking";
+import BookingCreateDto from "../types/BookingCreateDto";
 
 export const booking = {
    async getBookings(time: 7 | 30 | 90) {
@@ -20,6 +21,21 @@ export const booking = {
    async cancelBooking(bookingId: string) {
       return await client.patch(
          `/bookings/${bookingId}/cancel`,
+      );
+   },
+   async createBooking({
+      spaceId,
+      playersCount,
+      startDate,
+      visitTime
+   }: BookingCreateDto) {
+      return await client.post<BookingCreatedRes>(
+         `/bookings/${spaceId}`,
+         {
+            playersCount,
+            startDate,
+            visitTime
+         }
       );
    }
 };
