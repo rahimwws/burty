@@ -7,7 +7,7 @@ import { useAppNavigation } from "@/shared/lib/navigation";
 import { User } from "@/shared/model/types/user";
 import styles from "./style";
 
-const ProfileView = ({ qr = false, item }: { qr?: boolean; item: User }) => {
+const ProfileView = ({ qr = false, item }: { qr?: boolean; item: Partial<User> }) => {
   const navigation = useAppNavigation();
   return (
     <View

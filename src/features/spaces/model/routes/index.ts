@@ -55,17 +55,15 @@ export const spaces = {
     latitude: number | null
     longitude: number | null
   }) {
-    console.log({
-      params: removeFalsyFields({
-        latitude,
-        longitude,
-        maxDistance,
-        minPrice,
-        maxPrice,
-        passType: passType?.toLowerCase(),
-        search
-      })
-    })
+    console.log(JSON.stringify(removeFalsyFields({
+      latitude,
+      longitude,
+      maxDistance,
+      minPrice,
+      maxPrice,
+      // passType: passType?.toLowerCase(),
+      q: search
+    }), null, 2))
     if (latitude && longitude) {
       try {
         return await client.get<PlaceT[]>(
