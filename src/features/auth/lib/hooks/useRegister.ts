@@ -1,5 +1,5 @@
 import { auth } from "../../model/routes";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { useState } from "react";
 import useUserIdStore from "../../model/stores/userId";
@@ -9,11 +9,15 @@ export const useRegister = (
   password: string,
   role: "MENTOR" | "USER"
 ) => {
+  const queryClient = useQueryClient();
   const [errorMessage, setError] = useState<string | null>(null);
   const setUserId = useUserIdStore((store) => store.setId);
   const mutation = useMutation({
     mutationFn: () => auth.register(email, password, role),
     onSuccess: async (data) => {
+      queryClient.invalidateQueries({
+        queryKey: ["profile"]
+      });
       await getLocation();
       console.log(data.data.user.id);
       setUserId(data.data.user.id);

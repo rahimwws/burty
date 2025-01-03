@@ -40,7 +40,7 @@ const StackScreens = () => {
         headerShown: false,
       }}
     >
-      {/* <Stack.Screen name="Tabs" component={Tabs} />
+      <Stack.Screen name="Tabs" component={Tabs} />
       <Stack.Screen name="Filter" component={Filter} />
       <Stack.Screen name="FilteredPlaces" component={FilteredPlaces} />
       <Stack.Screen name="PlaceDetail" component={PlaceDetail} />
@@ -55,7 +55,7 @@ const StackScreens = () => {
       <Stack.Screen name="EditProfile" component={EditProfile} />
       <Stack.Screen name="Support" component={Support} />
       <Stack.Screen name="MentorDetail" component={MentorDetail} />
-      <Stack.Screen name="QrDetail" component={QrDetail} /> */}
+      <Stack.Screen name="QrDetail" component={QrDetail} />
       <Stack.Screen name="AddComment" component={AddComment} />
       <Stack.Screen name="Error" component={Error} />
     </Stack.Navigator>

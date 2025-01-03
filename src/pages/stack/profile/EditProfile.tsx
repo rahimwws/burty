@@ -26,13 +26,15 @@ const EditProfile: React.FC = () => {
 
   const [surname, setSurname] = useState(user.lastName ?? "");
 
-  const [email, setEmail] = useState(user.email ?? "");
   const [imageUri, setImageUri] = useState<string | null>(
     user.media?.filePath ?? null
   );
 
   const { mutate: changeAvatar } = useChangeAvatar();
-  const { mutate: updateProfile } = useUpdateProfile();
+  const {
+    mutate: updateProfile,
+    isPending: updatingProfile
+  } = useUpdateProfile();
 
   const handleChangeAvatar = useCallback(async () => {
     const result = await pickImageAsync();
@@ -44,12 +46,12 @@ const EditProfile: React.FC = () => {
 
   const handleUpdateProfile = useCallback(() => {
     updateProfile(
-      { email, firstName: name, lastName: surname },
+      { firstName: name, lastName: surname },
       {
         onSuccess: () => navigation.goBack(),
       }
     );
-  }, [updateProfile, email, name, surname, navigation]);
+  }, [updateProfile, name, surname, navigation]);
 
   return (
     <ScreenLayout>
@@ -68,18 +70,13 @@ const EditProfile: React.FC = () => {
           value={surname}
           onChangeText={setSurname}
         />
-        <FormField
-          label="Email"
-          placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
-        />
       </View>
       <LargeButton
         text="Save"
         isRoute={false}
         action={handleUpdateProfile}
         type="rounded"
+        isLoading={updatingProfile}
       />
     </ScreenLayout>
   );

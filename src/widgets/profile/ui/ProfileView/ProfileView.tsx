@@ -1,37 +1,37 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
 import Edit from "@/shared/assets/icons/interface/Edit";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { User } from "@/shared/model/types/user";
+import styles from "./style";
 
 const ProfileView = ({ qr = false, item }: { qr?: boolean; item: User }) => {
   const navigation = useAppNavigation();
   return (
     <View
-      style={{
-        marginVertical: "3%",
-        alignItems: "center",
-        justifyContent: "space-between",
-        flexDirection: "row",
-      }}
+      style={styles.wrap}
     >
       <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 10,
-        }}
+        style={styles.content}
       >
-        <View
-          style={{
-            width: 70,
-            height: 70,
-            borderRadius: 45,
-            backgroundColor: colors.dark,
-          }}
-        ></View>
+        {
+          item?.media ?
+            <Image
+              style={styles.profileImg}
+              source={{
+                uri: item.media.filePath
+              }}
+            />
+            :
+            <View
+              style={[
+                styles.profileImg,
+                styles.bgDark,
+              ]}
+            />
+        }
         <View>
           <Typography size={22} font="black" align="left">
             {item?.firstName ?? "Name"} {item?.lastName ?? "Surname"}
@@ -43,13 +43,7 @@ const ProfileView = ({ qr = false, item }: { qr?: boolean; item: User }) => {
       </View>
       {!qr && (
         <TouchableOpacity
-          style={{
-            width: 50,
-            height: 50,
-            borderRadius: 50,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          style={styles.editBtn}
           onPress={() => navigation.navigate("EditProfile", { user: item })}
         >
           <Edit size={20} />
