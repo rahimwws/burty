@@ -6,7 +6,7 @@ export const useSpaceDetails = (spaceId?: string) => {
    const { latitude, longitude } = useLocationStore.getState();
 
    return useQuery({
-      queryKey: ["spaceDetails"],
+      queryKey: ["spaceDetails", spaceId],
       queryFn: () => spaces.getSpaceDetails(latitude, longitude, spaceId!),
       enabled: !!spaceId,
       staleTime: 5 * 60 * 1000,

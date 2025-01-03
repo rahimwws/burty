@@ -43,6 +43,7 @@ const Search = () => {
             places.data : []
         }
         itemsLoading={placesLoading}
+        isSearching={!!searchValue.length}
         onPress={(searchValue) => setSearchValue(searchValue)}
       />
     </ScreenLayout>
