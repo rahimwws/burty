@@ -9,11 +9,14 @@ import { colors } from '@/shared/lib/theme'
 type RatingBadgeProps = {
    rating: number
    isUsed: boolean
+   /** @default false */
+   isStatisticsList?: boolean
 }
 
 const RatingBadge = ({
    isUsed,
-   rating
+   rating,
+   isStatisticsList = false
 }: RatingBadgeProps) => {
 
    return (
@@ -25,10 +28,17 @@ const RatingBadge = ({
             tint="light"
             style={styles.ratingInner}
          >
-            <Star size={15} fill={isUsed ? "#A0A0A0" : colors.primary} />
+            {
+               !isStatisticsList &&
+               <Star size={15} fill={isUsed ? "#A0A0A0" : colors.primary} />
+            }
             <Typography styles={{ color: isUsed ? "#A0A0A0" : colors.light }}>
-               {rating.toFixed(1)}
+               {Number(rating?.toFixed(1))}
             </Typography>
+            {
+               isStatisticsList &&
+               <Star size={15} fill={isUsed ? "#A0A0A0" : colors.primary} />
+            }
          </BlurView>
       </View>
    )

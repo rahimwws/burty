@@ -6,7 +6,6 @@ import Animated, {
   useAnimatedStyle,
   useScrollViewOffset,
 } from "react-native-reanimated";
-import ScreenLayout from "../Layout";
 import { colors } from "@/shared/lib/theme";
 
 const HEADER_HEIGHT = 250;

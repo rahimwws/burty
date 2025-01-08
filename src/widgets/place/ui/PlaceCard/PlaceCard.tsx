@@ -24,6 +24,7 @@ const PlaceCard = ({
   startTime,
   used = false,
   bookingId,
+  personalScore,
 }: {
   item?: PlaceT;
   /** @default "default" */
@@ -33,6 +34,7 @@ const PlaceCard = ({
   startDate?: string
   startTime?: string
   bookingId?: string
+  personalScore?: number
 }) => {
   const { width, height } = Dimensions.get("window");
   const navigation = useAppNavigation();
@@ -44,6 +46,8 @@ const PlaceCard = ({
         finished: used,
         bookingId
       });
+    else if (personalScore)
+      navigation.navigate("StatisticsDetails");
     else
       navigation.navigate("PlaceDetail", {
         placeId: item?.id,
@@ -77,14 +81,26 @@ const PlaceCard = ({
       >
         {used && <Overlay />}
 
-        {
-          typeof item?.averageRating == 'number' ?
-            <RatingBadge
-              isUsed={used}
-              rating={item.averageRating}
-            />
-            : null
-        }
+        <View style={styles.rating}>
+          <Typography size={16} font="m" styles={{ marginRight: 10, }}>
+            Personal score
+          </Typography>
+          {
+            !personalScore ?
+              typeof item?.averageRating == 'number' ?
+                <RatingBadge
+                  isUsed={used}
+                  rating={item.averageRating}
+                />
+                : null
+              :
+              <RatingBadge
+                isUsed={used}
+                rating={personalScore}
+                isStatisticsList
+              />
+          }
+        </View>
 
         <View
           style={styles.timeWrap}

@@ -2,9 +2,6 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
    rating: {
-      position: "absolute",
-      top: "5%",
-      right: "5%",
       borderRadius: 100,
       overflow: "hidden",
    },

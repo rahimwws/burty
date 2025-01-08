@@ -30,6 +30,13 @@ const styles = StyleSheet.create({
    justifyEnd: {
       justifyContent: 'flex-end'
    },
+   rating: {
+      flexDirection: "row",
+      alignItems: "center",
+      position: "absolute",
+      top: "5%",
+      right: "5%",
+   }
 });
 
 export default styles;

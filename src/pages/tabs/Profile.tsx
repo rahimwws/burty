@@ -89,6 +89,7 @@ const Profile = () => {
             text="Personal Statistics"
             bg={colors.light}
             type="rounded"
+            action={() => navigation.navigate("StatisticsList")}
           />
         </View>
 

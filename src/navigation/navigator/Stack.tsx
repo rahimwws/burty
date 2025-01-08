@@ -19,6 +19,8 @@ import QrDetail from "@/pages/stack/scan/QrDetail";
 import AddComment from "@/pages/stack/place/AddComment";
 import Error from "@/pages/stack/error/Error";
 import { getLocation } from "@/utils/user/getLocation";
+import StatisticsList from "@/pages/stack/profile/StatisticsList";
+import StatisticsDetails from "@/pages/stack/profile/StatisticsDetails";
 
 const StackScreens = () => {
   const Stack = createNativeStackNavigator();
@@ -53,6 +55,8 @@ const StackScreens = () => {
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="WorkoutDetail" component={WorkoutDetail} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
+      <Stack.Screen name="StatisticsList" component={StatisticsList} />
+      <Stack.Screen name="StatisticsDetails" component={StatisticsDetails} />
       <Stack.Screen name="Support" component={Support} />
       <Stack.Screen name="MentorDetail" component={MentorDetail} />
       <Stack.Screen name="QrDetail" component={QrDetail} />
