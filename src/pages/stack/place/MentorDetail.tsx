@@ -14,37 +14,37 @@ import { LargeButton } from "@/shared/ui/Button";
 import useLinkedSpace from "@/features/mentor/lib/hooks/useLinkedSpace";
 import { toast } from "@/shared/ui/Toast";
 
-type RouteParams = {
-  MyScreen: {
-    finished: boolean;
-    spaceId: string
-  };
-};
+// type RouteParams = {
+//   MyScreen: {
+//     finished: boolean;
+//     spaceId: string
+//   };
+// };
 
-type MyScreenRouteProp = RouteProp<RouteParams, "MyScreen">;
+// type MyScreenRouteProp = RouteProp<RouteParams, "MyScreen">;
 const MentorDetail = () => {
-  const route = useRoute<MyScreenRouteProp>();
+  // const route = useRoute<MyScreenRouteProp>();
 
-  const { finished, spaceId } = route.params;
+  // const { finished, spaceId } = route.params;
 
   const { height, width } = Dimensions.get("window");
   const navigation = useAppNavigation();
 
-  const {
-    data: linkedSpace,
-    isLoading: linkedSpaceLoading
-  } = useLinkedSpace(spaceId);
+  // const {
+  //   data: linkedSpace,
+  //   isLoading: linkedSpaceLoading
+  // } = useLinkedSpace(spaceId);
 
-  useEffect(() => {
-    if (!Object.keys(linkedSpace?.data || {}).length && !linkedSpaceLoading) {
-      toast.show({
-        type: 'error',
-        description: 'No linked place details data'
-      })
-    }
-  }, [spaceId, linkedSpace?.data, linkedSpaceLoading]);
+  // useEffect(() => {
+  //   if (!Object.keys(linkedSpace?.data || {}).length && !linkedSpaceLoading) {
+  //     toast.show({
+  //       type: 'error',
+  //       description: 'No linked place details data'
+  //     })
+  //   }
+  // }, [spaceId, linkedSpace?.data, linkedSpaceLoading]);
 
-  const spaceDetail = linkedSpace?.data;
+  // const spaceDetail = linkedSpace?.data;
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -58,10 +58,10 @@ const MentorDetail = () => {
             <PlaceHeader role="mentor" link="" />
             <Image
               source={
-                linkedSpace?.data?.medias?.[0].filePath ?
-                  { uri: linkedSpace?.data?.medias?.[0].filePath }
-                  :
-                  require("@/shared/assets/images/bg-card.png")
+                // linkedSpace?.data?.medias?.[0].filePath ?
+                //   { uri: linkedSpace?.data?.medias?.[0].filePath }
+                //   :
+                require("@/shared/assets/images/bg-card.png")
               }
               style={{
                 width,
@@ -98,7 +98,7 @@ const MentorDetail = () => {
           paddingHorizontal: 20,
         }}
       >
-        {!finished && (
+        {/* {!finished && (
           <LargeButton
             bg={colors.blue}
             text="Add comment"
@@ -107,7 +107,26 @@ const MentorDetail = () => {
             isRoute={false}
             action={() => navigation.navigate("AddComment")}
           />
-        )}
+        )} */}
+        <View style={{ flexDirection: 'column', gap: 8 }}>
+          <LargeButton
+            bg={colors.blue}
+            text="Finish Statistics"
+            type="rounded"
+            textColor="light"
+            theme="outline"
+            isRoute={false}
+            action={() => navigation.goBack()}
+          />
+          <LargeButton
+            bg={colors.blue}
+            text="Add statistic"
+            type="rounded"
+            textColor="light"
+            isRoute={false}
+            action={() => navigation.navigate("AddStatistic")}
+          />
+        </View>
       </View>
       {/* <Modal
         title="Cancel Workout"
