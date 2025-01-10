@@ -1,5 +1,5 @@
 import { TouchableOpacity, View, ScrollView } from "react-native";
-import React, { Dispatch, SetStateAction, useState, } from "react";
+import React, { useState, } from "react";
 import Modal from "@/shared/ui/Modal";
 import Typography from "@/shared/ui/Typography";
 import { DarkButton, LargeButton } from "@/shared/ui/Button";
@@ -21,15 +21,15 @@ const players = [
   { id: 11, name: "Player 11" },
 ]
 
-type ModalSelectGoalkeeperProps = {
+type ModalSelectAssistendPlayerProps = {
   visible: boolean
-  setVisible: Dispatch<SetStateAction<boolean>>
+  onClose?: () => void
 }
 
-const ModalSelectGoalkeeper = ({
+const ModalSelectAssistendPlayer = ({
   visible = false,
-  setVisible,
-}: ModalSelectGoalkeeperProps) => {
+  onClose,
+}: ModalSelectAssistendPlayerProps) => {
   const [player, setPlayer] = useState<number | null>(null);
 
   return (
@@ -46,13 +46,13 @@ const ModalSelectGoalkeeper = ({
       ]}>
         <TouchableOpacity
           style={styles.closeBtn}
-          onPress={() => setVisible(false)}
+          onPress={() => onClose?.()}
         >
           <Cross fill={colors.light} size={10} />
         </TouchableOpacity>
       </View>
       <Typography size={22} font="black" styles={{ marginBottom: '3%' }}>
-        Select Goalkeeper
+        Assistance player
       </Typography>
       <ScrollView
         style={{ maxHeight: '85%', width: '100%' }}
@@ -83,7 +83,7 @@ const ModalSelectGoalkeeper = ({
         <View style={{ width: '35%' }}>
           <LargeButton
             text="Cancel"
-            action={() => setVisible(false)}
+            action={() => onClose?.()}
             bg={colors.input}
             textColor="light"
           />
@@ -91,7 +91,7 @@ const ModalSelectGoalkeeper = ({
         <View style={{ width: '65%' }}>
           <LargeButton
             text="Cofirm"
-            action={() => setVisible(false)}
+            action={() => onClose?.()}
             bg={colors.blue}
             textColor="light"
           />
@@ -101,4 +101,4 @@ const ModalSelectGoalkeeper = ({
   );
 };
 
-export default ModalSelectGoalkeeper;
+export default ModalSelectAssistendPlayer;

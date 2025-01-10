@@ -15,6 +15,8 @@ const DarkButton = ({
   bg,
   textColor,
   isLoading = false,
+  customBg,
+  customBgDisabled
 }: {
   text: string;
   isRoute?: boolean;
@@ -24,6 +26,8 @@ const DarkButton = ({
   disabled?: boolean;
   type?: "default" | "rounded";
   bg?: keyof ColorsT;
+  customBg?: string;
+  customBgDisabled?: string;
   textColor?: keyof ColorsT;
   /** @default false */
   isLoading?: boolean
@@ -38,11 +42,13 @@ const DarkButton = ({
     <TouchableOpacity
       style={{
         width: "100%",
-        backgroundColor: bg
-          ? colors[bg]
-          : disabled
-            ? colors.light + "FFF1A"
-            : colors.light,
+        backgroundColor: customBgDisabled && disabled ?
+          customBgDisabled : customBg
+            ? customBg : bg
+              ? colors[bg]
+              : disabled
+                ? colors.light + "FFF1A"
+                : colors.light,
         height: 45,
         alignItems: "center",
         justifyContent: "center",

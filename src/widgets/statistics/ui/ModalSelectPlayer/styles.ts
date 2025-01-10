@@ -12,6 +12,9 @@ const styles = StyleSheet.create({
   justifyEnd: {
     justifyContent: 'flex-end'
   },
+  justifyCenter: {
+    justifyContent: 'space-between'
+  },
   wfull: {
     width: "100%",
   },
