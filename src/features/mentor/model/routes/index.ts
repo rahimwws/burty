@@ -1,5 +1,6 @@
 import { client } from "@/shared/api";
 import { PlaceT } from "@/shared/model/types";
+import { User } from "@/shared/model/types/user";
 
 const mentor = {
    async getLinkedSpaces() {
@@ -12,6 +13,11 @@ const mentor = {
          `/mentor/linked-spaces/${spaceId}`
       );
    },
+   async getMentorInfo() {
+      return await client.get<User>(
+         `/mentor/me`
+      )
+   }
 };
 
 export default mentor;

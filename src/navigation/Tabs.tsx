@@ -12,6 +12,7 @@ import Spaces from "@/pages/stack/map/Spaces";
 import { WorkoutScreen } from "@/pages/tabs/Workouts";
 import MyPass from "@/pages/tabs/MyPass";
 import Profile from "@/pages/tabs/Profile";
+import MentorProfile from "@/pages/tabs/MentorProfile";
 import Typography from "@/shared/ui/Typography";
 import Scan from "@/pages/stack/scan/Scan";
 import ScanSvg from "@/shared/assets/icons/interface/ScanSvg";
@@ -169,7 +170,14 @@ const Tabs = () => {
       {role === "user" && (
         <Tab.Screen name="MyPass" component={MyPass} options={{}} />
       )}
-      <Tab.Screen name="Profile" component={Profile} options={{}} />
+      <Tab.Screen
+        name="Profile"
+        component={
+          role === "user" ?
+            Profile : MentorProfile
+        }
+        options={{}}
+      />
     </Tab.Navigator>
   );
 };
