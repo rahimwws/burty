@@ -2,8 +2,7 @@ import { View } from 'react-native'
 import React from 'react'
 import styles from './styles'
 import Typography from '@/shared/ui/Typography'
-import Time from '@/shared/assets/icons/interface/Time'
-import { colors } from '@/shared/lib/theme'
+import Timer from '@/shared/ui/Timer'
 
 type ScoreTabloProps = {
 }
@@ -14,7 +13,7 @@ const ScoreTablo = ({
   return (
     <View style={[
       styles.col,
-      {gap: 10}
+      { gap: 10 }
     ]}>
       <View style={[
         styles.row,
@@ -44,18 +43,10 @@ const ScoreTablo = ({
       <View
         style={[
           styles.row,
-          styles.itemsCenter,
           styles.justifyCenter,
         ]}
       >
-        <Time fill={colors.light} size={16} />
-        <Typography
-          color='light'
-          size={18}
-          styles={{ marginLeft: 10 }}
-        >
-          00:05
-        </Typography>
+        <Timer />
       </View>
     </View>
   )

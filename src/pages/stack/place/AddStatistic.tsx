@@ -3,19 +3,18 @@ import React, { useEffect, useState } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import { Header } from "@/components/header";
 import Typography from "@/shared/ui/Typography";
-import ModalComment from "@/widgets/comments/ui";
-import { RouteProp, useRoute } from "@react-navigation/native";
-import useComments from "@/features/workout/lib/hooks/useComments";
-import { toast } from "@/shared/ui/Toast";
-import { Comment } from "@/entities/workout/ui";
-import dayjs from "dayjs";
 import PlayersTableList from "@/widgets/statistics/ui/PlayersTableList";
 import { LargeButton } from "@/shared/ui/Button";
 import { colors } from "@/shared/lib/theme";
-import { ScoreTablo } from "@/widgets/statistics/ui";
+import { ModalSelectAssistendPlayer, ModalSelectFoulCard, ModalSelectPlayer, ModalSelectTeam, ScoreTablo } from "@/widgets/statistics/ui";
 
 const AddStatistic = () => {
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [showSelectGoalPlayer, setShowSelectGoalPlayer] = useState(false);
+  const [showAssistancePlayer, setShowAssistancePlayer] = useState(false);
+  const [showSelectFoulCard, setShowSelectFoulCard] = useState(false);
+  const [showSelectTeam, setShowSelectTeam] = useState(false);
+
 
   return (
     <ScreenLayout>
@@ -68,36 +67,49 @@ const AddStatistic = () => {
               bg={colors.light}
               textColor="dark"
               type="rounded"
-              action={() => setIsGameStarted(true)}
+              action={() => setShowSelectTeam(true)}
             />
             <LargeButton
               text="Card"
               bg={colors.light}
               textColor="dark"
               type="rounded"
-              action={() => setIsGameStarted(true)}
+              action={() => setShowSelectFoulCard(true)}
             />
             <LargeButton
               text="Save"
               bg={colors.light}
               textColor="dark"
               type="rounded"
-              action={() => setIsGameStarted(true)}
+              action={() => setShowSelectGoalPlayer(true)}
             />
             <LargeButton
               text="Corner"
               bg={colors.light}
               textColor="dark"
               type="rounded"
-              action={() => setIsGameStarted(true)}
+              action={() => { setShowAssistancePlayer(true) }}
             />
           </View>
       }
-      {/* <ModalComment
-        visible={showModal}
-        setVisible={setShowModal}
-        bookingId={bookingId}
-      /> */}
+      <ModalSelectTeam
+        visible={showSelectTeam}
+        onClose={() => setShowSelectTeam(false)}
+      />
+      <ModalSelectFoulCard
+        visible={showSelectFoulCard}
+        onClose={() => setShowSelectFoulCard(false)}
+      />
+      <ModalSelectPlayer
+        visible={showSelectGoalPlayer}
+        onClose={() => setShowSelectGoalPlayer(false)}
+        onPressGoalPass={() => { }}
+        onPressMarkAsOwnGoal={() => { }}
+      />
+      <ModalSelectAssistendPlayer
+        visible={showAssistancePlayer}
+        onClose={() => setShowAssistancePlayer(false)}
+      />
     </ScreenLayout>
   );
 };

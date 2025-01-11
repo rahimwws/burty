@@ -4,4 +4,8 @@ export { default as ScoreStatistics } from './ScoreStatistics';
 export { default as PersonalDetails } from './PersonalDetails';
 export { default as PlayersTableList } from './PlayersTableList';
 export { default as ModalSelectGoalkeeper } from './ModalSelectGoalkeeper';
+export { default as ModalSelectTeam } from './ModalSelectTeam';
+export { default as ModalSelectFoulCard } from './ModalSelectFoulCard';
+export { default as ModalSelectPlayer } from './ModalSelectPlayer';
+export { default as ModalSelectAssistendPlayer } from './ModalSelectAssistendPlayer';
 export { default as ScoreTablo } from './ScoreTablo';

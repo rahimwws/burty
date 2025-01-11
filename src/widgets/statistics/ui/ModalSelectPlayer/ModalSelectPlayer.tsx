@@ -6,6 +6,7 @@ import { DarkButton, LargeButton } from "@/shared/ui/Button";
 import styles from "./styles";
 import { colors } from "@/shared/lib/theme";
 import Cross from "@/shared/assets/icons/interface/Cross";
+import { CheckboxWithText } from "@/shared/ui/CheckBox/CheckBoxWithText";
 
 const players = [
   { id: 1, name: "Player 1" },
@@ -21,16 +22,22 @@ const players = [
   { id: 11, name: "Player 11" },
 ]
 
-type ModalSelectGoalkeeperProps = {
+type ModalSelectPlayerProps = {
   visible: boolean
-  setVisible: Dispatch<SetStateAction<boolean>>
+  onClose?: () => void
+  onPressMarkAsOwnGoal?: () => void
+  onPressGoalPass?: () => void
 }
 
-const ModalSelectGoalkeeper = ({
+const ModalSelectPlayer = ({
   visible = false,
-  setVisible,
-}: ModalSelectGoalkeeperProps) => {
+  onClose,
+  onPressMarkAsOwnGoal,
+  onPressGoalPass
+}: ModalSelectPlayerProps) => {
   const [player, setPlayer] = useState<number | null>(null);
+  const [isOwnGoal, setIsOwnGoal] = useState(false);
+  const [isGoalAssisted, setIsGoalAssisted] = useState(false);
 
   return (
     <Modal
@@ -46,13 +53,13 @@ const ModalSelectGoalkeeper = ({
       ]}>
         <TouchableOpacity
           style={styles.closeBtn}
-          onPress={() => setVisible(false)}
+          onPress={() => onClose?.()}
         >
           <Cross fill={colors.light} size={10} />
         </TouchableOpacity>
       </View>
       <Typography size={22} font="black" styles={{ marginBottom: '3%' }}>
-        Select Goalkeeper
+        Select Player
       </Typography>
       <ScrollView
         style={{ maxHeight: '85%', width: '100%' }}
@@ -76,6 +83,37 @@ const ModalSelectGoalkeeper = ({
           })
         }
       </ScrollView>
+      {
+        !!onPressMarkAsOwnGoal && !!onPressGoalPass &&
+        <View style={[
+          styles.row,
+          styles.justifyCenter,
+          { gap: 10 }
+        ]}>
+          {
+            !!onPressMarkAsOwnGoal &&
+            <CheckboxWithText
+              onValueChange={() => {
+                setIsOwnGoal(prev => !prev)
+                onPressMarkAsOwnGoal?.()
+              }}
+              text="Mark as own goal"
+              value={isOwnGoal}
+            />
+          }
+          {
+            !!onPressGoalPass &&
+            <CheckboxWithText
+              onValueChange={() => {
+                setIsGoalAssisted(prev => !prev)
+                onPressGoalPass?.()
+              }}
+              text="There was a goal pass"
+              value={isGoalAssisted}
+            />
+          }
+        </View>
+      }
       <View style={[
         styles.row,
         { gap: 10 }
@@ -83,7 +121,7 @@ const ModalSelectGoalkeeper = ({
         <View style={{ width: '35%' }}>
           <LargeButton
             text="Cancel"
-            action={() => setVisible(false)}
+            action={() => onClose?.()}
             bg={colors.input}
             textColor="light"
           />
@@ -91,7 +129,7 @@ const ModalSelectGoalkeeper = ({
         <View style={{ width: '65%' }}>
           <LargeButton
             text="Cofirm"
-            action={() => setVisible(false)}
+            action={() => onClose?.()}
             bg={colors.blue}
             textColor="light"
           />
@@ -101,4 +139,4 @@ const ModalSelectGoalkeeper = ({
   );
 };
 
-export default ModalSelectGoalkeeper;
+export default ModalSelectPlayer;
