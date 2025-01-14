@@ -7,8 +7,18 @@ import { useAppNavigation } from "@/shared/lib/navigation";
 import { User } from "@/shared/model/types/user";
 import styles from "./style";
 
-const ProfileView = ({ qr = false, item }: { qr?: boolean; item: Partial<User> }) => {
-  const navigation = useAppNavigation();
+type ProfileViewProps = {
+  qr?: boolean;
+  item: Partial<User>
+  isMentor?: boolean
+}
+
+const ProfileView = ({
+  qr = false,
+  item,
+  isMentor = false
+}: ProfileViewProps) => {  
+  const navigation = useAppNavigation();  
   return (
     <View
       style={styles.wrap}
@@ -44,7 +54,10 @@ const ProfileView = ({ qr = false, item }: { qr?: boolean; item: Partial<User> }
       {!qr && (
         <TouchableOpacity
           style={styles.editBtn}
-          onPress={() => navigation.navigate("EditProfile", { user: item })}
+          onPress={() => navigation.navigate(
+            isMentor ? "MentorEditProfile" : "EditProfile",
+            { user: item }
+          )}
         >
           <Edit size={20} />
         </TouchableOpacity>

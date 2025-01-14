@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Typography from "@/shared/ui/Typography";
 import Exit from "@/shared/assets/icons/interface/Exit";
 import { colors } from "@/shared/lib/theme";
@@ -9,12 +9,26 @@ import { getModalConfigs } from "../lib/config";
 import type { ModalConfigType } from "../model/types";
 import Modal from "@/shared/ui/Modal";
 
-const ProfileActions = () => {
+type ProfileActionsProps = {
+  /** @default false */
+  isMentor?: boolean
+}
+
+const ProfileActions = ({isMentor}: ProfileActionsProps) => {
   const { mutate: mutateDeleteAccount } = useDeleteAccount();
   const { mutate: mutateLogOut } = useLogOut();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [modalConfig, setModalConfig] = useState<ModalConfigType | null>(null);
-  const modalConfigs = getModalConfigs(mutateDeleteAccount, mutateLogOut);
+ 
+  const handleDeleteAccount = useCallback(() => {
+    mutateDeleteAccount(isMentor)
+  }, [isMentor]);
+
+  const handleLogout = useCallback(() => {
+    mutateLogOut()
+  }, []);
+ 
+  const modalConfigs = getModalConfigs(handleDeleteAccount, handleLogout);
 
   const handleShowModal = (
     config: typeof modalConfigs.logOut | typeof modalConfigs.deleteAccount

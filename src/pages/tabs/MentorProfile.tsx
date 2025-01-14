@@ -14,8 +14,6 @@ import ArrowRight from "@/shared/assets/icons/interface/ArrowRight";
 import Help from "@/shared/assets/icons/interface/Help";
 import { colors } from "@/shared/lib/theme";
 import { useAppNavigation } from "@/shared/lib/navigation";
-import { useQuery } from "@tanstack/react-query";
-import { user } from "@/widgets/profile/model/routes";
 import { useUserStore } from "@/shared/store/user";
 import { useLocationStore } from "@/shared/store/location";
 import { toast } from "@/shared/ui/Toast";
@@ -79,7 +77,7 @@ const MentorProfile = () => {
           />
         }
       >
-        <ProfileView item={data?.data} />
+        <ProfileView item={data?.data} isMentor />
 
         <View style={{ marginTop: '2%' }}>
           <LargeButton
@@ -134,7 +132,7 @@ const MentorProfile = () => {
           <ArrowRight size={15} fill={colors.light} />
         </TouchableOpacity>
 
-        <ProfileActions />
+        <ProfileActions isMentor />
       </ScrollView>
     </ScreenLayout>
   );

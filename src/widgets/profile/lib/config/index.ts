@@ -1,9 +1,6 @@
-import { UseMutateFunction } from '@tanstack/react-query';
-import { AxiosResponse } from 'axios';
-
 export const getModalConfigs = (
-    mutateDeleteAccount: UseMutateFunction<AxiosResponse<any>, Error, void>,
-    mutateLogOut: UseMutateFunction<AxiosResponse<any>, Error, void>
+  mutateDeleteAccount: Function,
+  mutateLogOut: Function
 ) => {
   return {
     logOut: {

@@ -22,6 +22,7 @@ import { getLocation } from "@/utils/user/getLocation";
 import StatisticsList from "@/pages/stack/profile/StatisticsList";
 import StatisticsDetails from "@/pages/stack/profile/StatisticsDetails";
 import AddStatistic from "@/pages/stack/place/AddStatistic";
+import MentorEditProfile from "@/pages/stack/profile/MentorEditProfile";
 
 const StackScreens = () => {
   const Stack = createNativeStackNavigator();
@@ -56,6 +57,7 @@ const StackScreens = () => {
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="WorkoutDetail" component={WorkoutDetail} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
+      <Stack.Screen name="MentorEditProfile" component={MentorEditProfile} />
       <Stack.Screen name="StatisticsList" component={StatisticsList} />
       <Stack.Screen name="StatisticsDetails" component={StatisticsDetails} />
       <Stack.Screen name="Support" component={Support} />

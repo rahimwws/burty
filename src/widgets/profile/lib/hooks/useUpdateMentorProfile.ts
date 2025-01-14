@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { user } from "../../model/routes";
 import { isAxiosError } from "axios";
+import mentor from "@/features/mentor/model/routes";
 
-export const useUpdateProfile = () => {
+export const useUpdateMentorProfile = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({
@@ -13,10 +13,10 @@ export const useUpdateProfile = () => {
       firstName: string;
       lastName: string;
       password?: string;
-    }) => user.changeProfile(firstName, lastName, password),
+    }) => mentor.changeProfile(firstName, lastName, password),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['profile']
+        queryKey: ['mentorInfo']
       })
     },
     onError: (err) => {
