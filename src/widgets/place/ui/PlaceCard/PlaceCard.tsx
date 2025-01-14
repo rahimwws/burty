@@ -25,6 +25,7 @@ const PlaceCard = ({
   used = false,
   bookingId,
   personalScore,
+  isStatistics =false
 }: {
   item?: PlaceT;
   /** @default "default" */
@@ -35,6 +36,8 @@ const PlaceCard = ({
   startTime?: string
   bookingId?: string
   personalScore?: number
+  /** @default false */
+  isStatistics?: boolean
 }) => {
   const { width, height } = Dimensions.get("window");
   const navigation = useAppNavigation();
@@ -82,9 +85,12 @@ const PlaceCard = ({
         {used && <Overlay />}
 
         <View style={styles.rating}>
-          <Typography size={16} font="m" styles={{ marginRight: 10, }}>
-            Personal score
-          </Typography>
+          {
+            isStatistics &&
+            <Typography size={16} font="m" styles={{ marginRight: 10, }}>
+              Personal score
+            </Typography>
+          }
           {
             !personalScore ?
               typeof item?.averageRating == 'number' ?

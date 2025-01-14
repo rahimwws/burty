@@ -33,6 +33,7 @@ const StatisticsList = () => {
               startDate="12.02.2024"
               startTime="13:00"
               personalScore={8}
+              isStatistics
             />
           );
         }}

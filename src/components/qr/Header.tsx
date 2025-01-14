@@ -43,8 +43,7 @@ const Header = ({
         </Typography>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("QrDetail");
-            // setFacing(facing === "back" ? "front" : "back");
+            setFacing(facing === "back" ? "front" : "back");
           }}
         >
           <Camera size={30} fill={colors.light} />
