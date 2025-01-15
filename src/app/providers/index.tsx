@@ -11,6 +11,7 @@ import { configureMapbox } from "../config/mapbox";
 import { ToastProvider } from "@/shared/ui/Toast";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { navigationRef } from "@/shared/lib/navigation";
+import { StripeProvider } from "@stripe/stripe-react-native";
 
 interface AppProviderProps {
   children: ReactNode;
@@ -34,15 +35,21 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   if (!fontsLoaded) return null;
 
   return (
-    <SafeAreaProvider>
-      <QueryClientProvider client={queryClient}>
-        <GestureHandlerRootView>
-          <NavigationContainer theme={theme} ref={navigationRef}>
-            <ToastProvider />
-            {children}
-          </NavigationContainer>
-        </GestureHandlerRootView>
-      </QueryClientProvider>
-    </SafeAreaProvider>
+    <StripeProvider
+      publishableKey="pk_test_51QU6EmFAEI8CtSzf1o3Ad6YFizTfYPDhmpqy5xiWJ68Xi0nLc76BELHH7lEdR37EkCylQITFp9SbjKEGAaPJg9x400nUB8B0mB"
+      merchantIdentifier="merchant.identifier" // required for Apple Pay
+      urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
+    >
+      <SafeAreaProvider>
+        <QueryClientProvider client={queryClient}>
+          <GestureHandlerRootView>
+            <NavigationContainer theme={theme} ref={navigationRef}>
+              <ToastProvider />
+              {children}
+            </NavigationContainer>
+          </GestureHandlerRootView>
+        </QueryClientProvider>
+      </SafeAreaProvider>
+    </StripeProvider>
   );
 };

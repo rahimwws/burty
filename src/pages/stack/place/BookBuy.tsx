@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import { Header } from "@/components/header";
 import StepIndicator from "@/components/pagination/StepIndicator";
-import { PaymentService } from "@/features/payment";
+import {PaymentServiceInputs, PaymentServices} from "@/features/payment";
 import Typography from "@/shared/ui/Typography";
 import { LargeButton } from "@/shared/ui/Button";
 import { colors } from "@/shared/lib/theme";
@@ -24,13 +24,14 @@ const BookBuy = () => {
   const { params: { price, bookingId } } = useRoute<MyScreenRouteProp>();
   const navigation = useAppNavigation();
   const [status, setStatus] = useState<"error" | "success" | null>();
-console.log(bookingId, price)
+
   return (
     <ScreenLayout>
       <View style={{ flex: 1 }}>
         <Header title="Book workout" type="stack" />
         <StepIndicator currentStep={1} steps={2} />
-        <PaymentService />
+        <PaymentServiceInputs />
+        <PaymentServices price={Number(price)}  />
       </View>
 
       <View>

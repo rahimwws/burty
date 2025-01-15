@@ -5,8 +5,9 @@ import { colors } from "@/shared/lib/theme";
 import PaymentSvg from "@/shared/assets/icons/interface/PaymentSvg";
 import Calendar from "@/shared/assets/icons/interface/Calendar";
 import Protect from "@/shared/assets/icons/interface/Protect";
+import styles from "./styles";
 
-const PaymentService = () => {
+const PaymentServiceInputs = () => {
   const [cardNumber, setCardNumber] = useState<string>("");
   const [expiryDate, setExpiryDate] = useState<string>("");
   const [cvv, setCvv] = useState<string>("");
@@ -41,16 +42,10 @@ const PaymentService = () => {
 
       {/* Card Number Input (Visa Format) */}
       <View
-        style={{
-          width: "100%",
-          height: 55,
-          borderWidth: 1,
-          borderColor: colors.dark,
-          borderRadius: 10,
-          alignItems: "center",
-          flexDirection: "row",
-          paddingLeft: 10,
-        }}
+        style={[
+          { width: "100%" },
+          styles.inputWrap
+        ]}
       >
         <PaymentSvg size={20} fill={colors.light} />
         <TextInput
@@ -60,39 +55,27 @@ const PaymentService = () => {
           placeholder="Card Number"
           maxLength={19} // 16 digits + 3 spaces
           placeholderTextColor={colors.gray}
-          style={{
-            width: "70%",
-            paddingHorizontal: 10,
-            fontSize: 16,
-            fontFamily: "b",
-            color: colors.light,
-          }}
+          style={[
+            { width: "70%", },
+            styles.input
+          ]}
           returnKeyType="done"
         />
       </View>
 
       {/* Expiry Date and CVV */}
       <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginVertical: "2%",
-          width: "100%",
-        }}
+        style={[
+          { width: "100%", },
+          styles.row
+        ]}
       >
         {/* Expiry Date Input (MM/YY) */}
         <View
-          style={{
-            width: "49%",
-            height: 55,
-            borderWidth: 1,
-            borderColor: colors.dark,
-            borderRadius: 10,
-            alignItems: "center",
-            flexDirection: "row",
-            paddingLeft: 10,
-          }}
+          style={[
+            { width: "49%", },
+            styles.inputWrap
+          ]}
         >
           <Calendar size={20} fill={colors.light} />
           <TextInput
@@ -102,29 +85,20 @@ const PaymentService = () => {
             placeholder="MM/YY"
             maxLength={5} // MM/YY format
             placeholderTextColor={colors.gray}
-            style={{
-              width: "70%",
-              paddingHorizontal: 10,
-              fontSize: 16,
-              fontFamily: "b",
-              color: colors.light,
-            }}
+            style={[
+              { width: "70%", },
+              styles.input
+            ]}
             returnKeyType="done"
           />
         </View>
 
         {/* CVV Input (3 digits) */}
         <View
-          style={{
-            width: "49%",
-            height: 55,
-            borderWidth: 1,
-            borderColor: colors.dark,
-            borderRadius: 10,
-            alignItems: "center",
-            flexDirection: "row",
-            paddingLeft: 10,
-          }}
+          style={[
+            {  width: "49%", },
+            styles.inputWrap
+          ]}
         >
           <Protect size={20} fill={colors.light} />
           <TextInput
@@ -134,13 +108,10 @@ const PaymentService = () => {
             placeholder="CVV"
             maxLength={3} // CVV is typically 3 digits
             placeholderTextColor={colors.gray}
-            style={{
-              width: "70%",
-              paddingHorizontal: 10,
-              fontSize: 16,
-              fontFamily: "b",
-              color: colors.light,
-            }}
+            style={[
+              {     width: "70%", },
+              styles.input
+            ]}
             returnKeyType="done"
           />
         </View>
@@ -149,4 +120,4 @@ const PaymentService = () => {
   );
 };
 
-export default PaymentService;
+export default PaymentServiceInputs;

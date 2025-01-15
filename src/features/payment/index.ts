@@ -1,3 +1,2 @@
-import PaymentService from "./ui/PaymentService";
-
-export { PaymentService };
+export {default as PaymentServiceInputs} from './ui/PaymentServiceInputs';
+export {default as PaymentServices} from './ui/PaymentServices';

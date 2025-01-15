@@ -84,14 +84,15 @@ client.interceptors.response.use(
       }
     }
 
-    if(error.response?.status > 403) {
+    if (error.response?.status > 403) {
       navigate("Error")
     }
 
-    toast.show({ // show in any error
-      type: "error",
-      description: "External service error",
-    })
+    if (error.response?.status >= 500)
+      toast.show({ // show in any error
+        type: "error",
+        description: "External service error",
+      })
 
     return Promise.reject(error);
   }

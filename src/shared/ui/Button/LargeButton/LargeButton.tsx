@@ -58,7 +58,7 @@ const LargeButton = ({
     >
       {
         isLoading ?
-          <ActivityIndicator color={textColor ?? colors.dark} />
+          <ActivityIndicator color={textColor ? colors[textColor] : colors.dark} />
           :
           <View style={styles.verticalCenter}>
             {startIcon}
