@@ -27,10 +27,10 @@ const FilteredPlaces = () => {
     distance,
     fromPrice,
     toPrice,
-    passType,
+    // passType,
   } = route.params;
 
-  const tags = [`${distance} km+-`, passType, toPrice ? `${toPrice}$` : null];
+  const tags = [`${distance} km+-`, toPrice ? `${toPrice}$` : null];
 
   const onBackPress = useCallback(() => {
     if (navigation.canGoBack()) {
@@ -86,7 +86,6 @@ const FilteredPlaces = () => {
         maxDistance={distance}
         minPrice={fromPrice}
         maxPrice={toPrice}
-        passType={passType}
       />
     </ScreenLayout>
   );

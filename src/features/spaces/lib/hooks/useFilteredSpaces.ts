@@ -7,20 +7,18 @@ export const useFilteredSpaces = ({
   maxDistance,
   maxPrice,
   minPrice,
-  passType,
   search,
 }: FilterParamsDto) => {
   const { latitude, longitude } = useLocationStore.getState();
 
   return useQuery({
-    queryKey: ["filtered", maxDistance, maxPrice, minPrice, passType, search],
+    queryKey: ["filtered", maxDistance, maxPrice, minPrice, search],
     queryFn: () => spaces.getFilteredSpaces({
       latitude,
       longitude,
       maxDistance,
       maxPrice,
       minPrice,
-      passType,
       search
     }),
     enabled: !!latitude && !!longitude,

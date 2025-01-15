@@ -49,7 +49,6 @@ export const spaces = {
     maxDistance,
     minPrice,
     maxPrice,
-    passType,
     search
   }: FilterParamsDto & {
     latitude: number | null

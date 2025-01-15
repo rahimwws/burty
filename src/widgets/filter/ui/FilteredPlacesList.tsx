@@ -13,13 +13,11 @@ const FilteredPlacesList = ({
   maxDistance,
   maxPrice,
   minPrice,
-  passType,
 }: FilteredPlacesListProps) => {
   const { data, isPending, isLoading } = useFilteredSpaces({
     maxDistance,
     maxPrice,
     minPrice,
-    passType,
   });
 
   useEffect(() => {

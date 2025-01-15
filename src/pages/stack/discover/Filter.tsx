@@ -60,7 +60,7 @@ const Filter = () => {
           </View>
 
           {/* Pass Type */}
-          <Typography
+          {/* <Typography
             styles={{ marginTop: "10%", marginBottom: "3%" }}
             align="left"
             size={18}
@@ -84,7 +84,7 @@ const Filter = () => {
                 />
               );
             })}
-          </View>
+          </View> */}
 
           <FilterPrice
             ref={filterPriceRef}
@@ -107,7 +107,7 @@ const Filter = () => {
 
               navigation.navigate("FilteredPlaces", {
                 distance: distance,
-                passType: type,
+                // passType: type,
                 fromPrice: fromValue ? Number(fromValue) : undefined,
                 toPrice: toValue ? Number(toValue) : undefined,
               });
