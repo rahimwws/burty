@@ -1,4 +1,5 @@
 import { client, clientWithoutToken } from "@/shared/api";
+import LoginResponseDto from "../types/LoginResponseDto";
 export const auth = {
   async register(email: string, password: string, role: "MENTOR" | "USER") {
     return await clientWithoutToken.post("/auth/registration", {
@@ -35,6 +36,13 @@ export const auth = {
   async newPassword(password: string) {
     return await client.post("/auth/reset-password", {
       password,
+    });
+  },
+  async googleAuth(code: string) {
+    return await client.get<LoginResponseDto>("/google/auth/callback", {
+      params: {
+        code
+      }
     });
   },
 };

@@ -2,8 +2,6 @@ import { View, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import Typography from "@/shared/ui/Typography";
 import { LargeButton } from "@/shared/ui/Button";
-import Google from "@/shared/assets/icons/social/Google";
-import Facebook from "@/shared/assets/icons/social/Facebook";
 import AuthError from "@/shared/ui/Error/AuthError";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { useLogin } from "../../lib/hooks/useLogin";
@@ -11,6 +9,7 @@ import { FormField } from "@/shared/ui/FormField";
 import styles from "./styles";
 import isEmail from "@/utils/validators/isEmail";
 import AuthTitle from "@/shared/ui/AuthTitle";
+import GoogleAuth from "../GoogleAuthService";
 
 const LoginService = () => {
   const navigation = useAppNavigation();
@@ -49,7 +48,7 @@ const LoginService = () => {
         <View style={{ height: 25 }}></View>
       )}
       <AuthTitle title="Login" />
-      
+
       <FormField
         label="Email"
         placeholder="example@example.com"
@@ -84,16 +83,12 @@ const LoginService = () => {
       <View
         style={styles.externalSignContainer}
       >
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.externalSignBtn}
         >
           <Google />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.externalSignBtn}
-        >
-          <Facebook />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+        <GoogleAuth />
       </View>
       <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
         <Typography styles={{ marginTop: 10 }}>

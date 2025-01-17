@@ -9,7 +9,7 @@ import {
 import { toast } from "@/shared/ui/Toast";
 import { navigate } from "@/shared/lib/navigation";
 
-const API_URL: string = process?.env?.EXPO_PUBLIC_API_URL || 'https://burty-api.ru/api/';
+export const API_URL: string = process?.env?.EXPO_PUBLIC_API_URL || 'https://burty-api.ru/api/';
 
 const client = axios.create({
   baseURL: API_URL,
