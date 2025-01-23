@@ -25,9 +25,9 @@ const PlaceCard = ({
   used = false,
   bookingId,
   personalScore,
-  isStatistics =false
+  isStatistics = false
 }: {
-  item?: PlaceT;
+  item?: Partial<PlaceT>;
   /** @default "default" */
   type?: "default" | "large";
   /** @default false */
@@ -49,7 +49,7 @@ const PlaceCard = ({
         finished: used,
         bookingId
       });
-    else if (personalScore)
+    else if (isStatistics)
       navigation.navigate("StatisticsDetails");
     else
       navigation.navigate("PlaceDetail", {
@@ -74,7 +74,7 @@ const PlaceCard = ({
       <ImageBackground
         source={
           haveImage ?
-            { uri: item.medias[0].filePath }
+            { uri: item?.medias?.[0].filePath }
             :
             require("@/shared/assets/images/bg-card.png")
         }
@@ -96,7 +96,7 @@ const PlaceCard = ({
               typeof item?.averageRating == 'number' ?
                 <RatingBadge
                   isUsed={used}
-                  rating={item.averageRating}
+                  rating={item?.averageRating}
                 />
                 : null
               :

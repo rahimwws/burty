@@ -5,10 +5,12 @@ import { saveTokens } from "@/shared/api/token/storage";
 import { useState } from "react";
 import useRoleStore from "@/shared/store/role";
 import { getLocation } from "@/utils/user/getLocation";
+import useUserIdStore from "../../model/stores/userId";
 export const useLogin = (email: string, password: string) => {
   const queryClient = useQueryClient();
   const [errorMessage, setError] = useState<string | null>(null);
   const setRole = useRoleStore((store) => store.setRole);
+  const setUserId = useUserIdStore((store) => store.setId);
   const mutation = useMutation({
     mutationFn: () => auth.login(email, password),
     onSuccess: async (data) => {
@@ -16,6 +18,7 @@ export const useLogin = (email: string, password: string) => {
       console.log(data.data);
       setError(null);
       setRole(data.data.user.role === "USER" ? "user" : "mentor");
+      setUserId(data.data.user.id);
       queryClient.invalidateQueries({
         queryKey: ["profile"]
       });
