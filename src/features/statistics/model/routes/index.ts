@@ -1,5 +1,6 @@
 import { client } from "@/shared/api";
 import StatisticsParamsDto from "../types/StatisticsParamsDto";
+import StatisticParamsDto from "../types/StatisticParamsDto";
 import StatisticT from "../types/StatisticT";
 
 export const statistics = {
@@ -13,6 +14,13 @@ export const statistics = {
                page, take
             }
          }
+      );
+   },
+   async getUserStatisticDetails({
+      userId, matchId
+   }: StatisticParamsDto) {
+      return await client.get<StatisticT>(
+         `/user-statistics/${userId}/matches/${matchId}`,
       );
    },
 };

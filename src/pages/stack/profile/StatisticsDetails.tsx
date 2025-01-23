@@ -1,5 +1,5 @@
 import { View, Image, Dimensions, TextInput, Keyboard } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { colors } from "@/shared/lib/theme";
 import { LargeButton } from "@/shared/ui/Button";
 import ParallaxScrollView from "@/shared/ui/Animation/ParallaxView";
@@ -7,6 +7,10 @@ import { useAppNavigation } from "@/shared/lib/navigation";
 import { PersonalDetails, PlaceName, ScoreStatistics, StatisticsHeader } from "@/widgets/statistics/ui";
 import Typography from "@/shared/ui/Typography";
 import { RouteProp, useRoute } from "@react-navigation/native";
+import { MatchAction, getStringByMatchAction, useStatisticDetails } from "@/features/statistics";
+import useUserIdStore from "@/features/auth/model/stores/userId";
+import { toast } from "@/shared/ui/Toast";
+import getTimeOnly from "@/shared/lib/utils/getTimeOnly";
 
 type ScreenRouteProp = RouteProp<
   { screen: { matchId: string } },
@@ -16,12 +20,58 @@ type ScreenRouteProp = RouteProp<
 const StatisticsDetails = () => {
   const { params: { matchId } } = useRoute<ScreenRouteProp>();
   const navigation = useAppNavigation();
+  const { id: userId } = useUserIdStore()
   const { height, width } = Dimensions.get("window");
-  const [comment, setComment] = useState("");
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   };
+
+  const {
+    data,
+    isLoading
+  } = useStatisticDetails({
+    matchId, userId
+  })
+  const details = data?.data;
+
+  useEffect(() => {
+    if (!Object.keys(data?.data || {}).length && !isLoading) {
+      toast.show({
+        type: 'error',
+        description: 'No profile data'
+      })
+    }
+  }, [data?.data]);
+
+  const personalDetails = useMemo(() => { // TODO need to optimize this code
+    const personalStatistics: Record<MatchAction, {
+      type: string
+      score: number
+      timing: string
+    } | null> = {
+      "ASSIST": null,
+      "GOAL": null,
+      "RED_CARD": null,
+      "YELLOW_CARD": null,
+      "SAVE": null,
+    }
+    details?.statistics.forEach(statistic => {
+      if (personalStatistics?.[statistic.action]?.score) {//@ts-ignore
+        personalStatistics[statistic.action] = {
+          ...personalStatistics[statistic.action], // @ts-ignore
+          score: personalStatistics?.[statistic.action]?.score + 1,
+        }
+      } else {
+        personalStatistics[statistic.action] = {
+          score: 1,
+          timing: getTimeOnly(statistic.timestamp, "HH:ss"),
+          type: getStringByMatchAction(statistic.action)
+        }
+      }
+    })
+    return Object.values(personalStatistics).filter(item=> !item)
+  }, [details])
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -39,10 +89,12 @@ const StatisticsDetails = () => {
               shareLink=""
             />
             <PlaceName>
-              Place name
+              {details?.space.name}
             </PlaceName>
             <Image
               source={
+                details?.space.medias?.[0].filePath
+                ??
                 require("@/shared/assets/images/bg-card.png")
               }
               style={{
@@ -67,7 +119,7 @@ const StatisticsDetails = () => {
             paddingBottom: "15%",
           }}
         >
-          <Typography font="b" size={16} align="left" styles={{ marginTop: '5%' }}>
+          {/* <Typography font="b" size={16} align="left" styles={{ marginTop: '5%' }}>
             Match Statistics
           </Typography>
           <View style={{ marginVertical: '4%' }}>
@@ -90,21 +142,10 @@ const StatisticsDetails = () => {
               team1={{ name: "Team 1", score: 1 }}
               team2={{ name: "Team 2", score: 3 }}
             />
-          </View>
+          </View> */}
           <View style={{ marginVertical: '4%' }}>
             <PersonalDetails
-              items={[
-                {
-                  type: "Scored a Goal",
-                  score: 1,
-                  timing: "12:41",
-                },
-                {
-                  type: "Scored a Goal",
-                  score: 1,
-                  timing: "12:41",
-                }
-              ]}
+              items={personalDetails}
             />
           </View>
           <View style={{ marginVertical: '2%' }}>
@@ -126,8 +167,7 @@ const StatisticsDetails = () => {
               onSubmitEditing={dismissKeyboard}
               placeholder="Text you comment here..."
               placeholderTextColor={colors.gray}
-              value={comment}
-              onChangeText={(text) => setComment(text)}
+              value={details?.evaluations[0]?.comments}
             />
           </View>
         </View>

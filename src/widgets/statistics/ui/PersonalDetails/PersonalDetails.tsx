@@ -4,11 +4,11 @@ import styles from './styles'
 import Typography from '@/shared/ui/Typography'
 
 type PersonalDetailsProps = {
-  items: {
+  items: ({
     type: string
     score: string | number
     timing: string
-  }[]
+  } | null)[]
 }
 
 const PersonalDetails = ({
@@ -41,29 +41,30 @@ const PersonalDetails = ({
       </View>
       {
         items.map((item, i) => {
-          return (
-            <View key={i} style={[
-              styles.row,
-              styles.tRow,
-              styles.tRowBg,
-            ]}>
-              <View style={styles.tCell50}>
-                <Typography font='b' color='border' align='left'>
-                  {item.type}
-                </Typography>
+          if (item)
+            return (
+              <View key={i} style={[
+                styles.row,
+                styles.tRow,
+                styles.tRowBg,
+              ]}>
+                <View style={styles.tCell50}>
+                  <Typography font='b' color='border' align='left'>
+                    {item.type}
+                  </Typography>
+                </View>
+                <View style={styles.tCell}>
+                  <Typography font='b' color='border' align='left'>
+                    {item.score}
+                  </Typography>
+                </View>
+                <View style={styles.tCell}>
+                  <Typography font='b' color='border' align='left'>
+                    {item.timing}
+                  </Typography>
+                </View>
               </View>
-              <View style={styles.tCell}>
-                <Typography font='b' color='border' align='left'>
-                  {item.score}
-                </Typography>
-              </View>
-              <View style={styles.tCell}>
-                <Typography font='b' color='border' align='left'>
-                  {item.timing}
-                </Typography>
-              </View>
-            </View>
-          )
+            )
         })
       }
     </View>

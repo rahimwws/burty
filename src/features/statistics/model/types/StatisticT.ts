@@ -1,3 +1,4 @@
+import { PlaceT } from "@/shared/model/types";
 import MatchAction from "./MatchAction";
 
 type StatisticT = {
@@ -5,7 +6,7 @@ type StatisticT = {
    bookingId: string
    endDate: string
    isCompleted: boolean
-   spaceId: string
+   space: PlaceT
    mentorId: string
    startDate: string
    createdAt: string
