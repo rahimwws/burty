@@ -1,12 +1,12 @@
 import { client } from "@/shared/api";
 import StatisticsParamsDto from "../types/StatisticsParamsDto";
-import Statistic from "../types/Statistic";
+import StatisticT from "../types/StatisticT";
 
 export const statistics = {
    async getUserStatisticsList({
       page, take, userId
    }: StatisticsParamsDto) {
-      return await client.get<Statistic[]>(
+      return await client.get<StatisticT[]>(
          `/user-statistics/${userId}/matches`,
          {
             params: {

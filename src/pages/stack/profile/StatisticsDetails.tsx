@@ -6,8 +6,15 @@ import ParallaxScrollView from "@/shared/ui/Animation/ParallaxView";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { PersonalDetails, PlaceName, ScoreStatistics, StatisticsHeader } from "@/widgets/statistics/ui";
 import Typography from "@/shared/ui/Typography";
+import { RouteProp, useRoute } from "@react-navigation/native";
+
+type ScreenRouteProp = RouteProp<
+  { screen: { matchId: string } },
+  "screen"
+>;
 
 const StatisticsDetails = () => {
+  const { params: { matchId } } = useRoute<ScreenRouteProp>();
   const navigation = useAppNavigation();
   const { height, width } = Dimensions.get("window");
   const [comment, setComment] = useState("");

@@ -11,8 +11,6 @@ import getDateOnly from "@/shared/lib/utils/getDateOnly";
 import getTimeOnly from "@/shared/lib/utils/getTimeOnly";
 import { colors } from "@/shared/lib/theme";
 
-
-
 const StatisticsList = () => {
   const navigation = useAppNavigation();
   const { id: userId } = useUserIdStore()
@@ -66,7 +64,7 @@ const StatisticsList = () => {
               type="large"
               startDate={getDateOnly(item.endDate, "DD.MM.YYYY")}
               startTime={getTimeOnly(item.endDate, "HH:ss")}
-              // personalScore={}
+              personalScore={item?.evaluations[0].skillRating ?? 0}
               isStatistics
             />
           );

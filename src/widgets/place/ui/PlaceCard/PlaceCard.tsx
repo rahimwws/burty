@@ -50,7 +50,7 @@ const PlaceCard = ({
         bookingId
       });
     else if (isStatistics)
-      navigation.navigate("StatisticsDetails");
+      navigation.navigate("StatisticsDetails", { matchId: item?.id });
     else
       navigation.navigate("PlaceDetail", {
         placeId: item?.id,

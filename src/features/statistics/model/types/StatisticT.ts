@@ -1,6 +1,6 @@
 import MatchAction from "./MatchAction";
 
-type Statistic = {
+type StatisticT = {
    id: string
    bookingId: string
    endDate: string
@@ -29,4 +29,4 @@ type Statistic = {
    }[]
 };
 
-export default Statistic;
+export default StatisticT;
