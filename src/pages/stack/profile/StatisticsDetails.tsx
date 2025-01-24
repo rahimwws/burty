@@ -67,9 +67,10 @@ const StatisticsDetails = () => {
             </PlaceName>
             <Image
               source={
-                details?.space.medias?.[0].filePath
-                ??
-                require("@/shared/assets/images/bg-card.png")
+                details?.space?.medias?.[0].filePath ?
+                  { uri: details?.space?.medias?.[0].filePath }
+                  :
+                  require("@/shared/assets/images/bg-card.png")
               }
               style={{
                 width,

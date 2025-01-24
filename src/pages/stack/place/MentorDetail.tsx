@@ -11,40 +11,40 @@ import {
   PlaceLinks,
 } from "@/widgets/place";
 import { LargeButton } from "@/shared/ui/Button";
-import useLinkedSpace from "@/features/mentor/lib/hooks/useLinkedSpace";
 import { toast } from "@/shared/ui/Toast";
+import { useMatch } from "@/features/mentor";
 
-// type RouteParams = {
-//   MyScreen: {
-//     finished: boolean;
-//     spaceId: string
-//   };
-// };
+type RouteParams = {
+  MyScreen: {
+    finished: boolean
+    matchId: string;
+  };
+};
 
-// type MyScreenRouteProp = RouteProp<RouteParams, "MyScreen">;
+type MyScreenRouteProp = RouteProp<RouteParams, "MyScreen">;
 const MentorDetail = () => {
-  // const route = useRoute<MyScreenRouteProp>();
+  const route = useRoute<MyScreenRouteProp>();
 
-  // const { finished, spaceId } = route.params;
+  const { finished, matchId } = route.params;
 
   const { height, width } = Dimensions.get("window");
   const navigation = useAppNavigation();
 
-  // const {
-  //   data: linkedSpace,
-  //   isLoading: linkedSpaceLoading
-  // } = useLinkedSpace(spaceId);
+  const {
+    data: match,
+    isLoading: matchLoading
+  } = useMatch(matchId);
 
-  // useEffect(() => {
-  //   if (!Object.keys(linkedSpace?.data || {}).length && !linkedSpaceLoading) {
-  //     toast.show({
-  //       type: 'error',
-  //       description: 'No linked place details data'
-  //     })
-  //   }
-  // }, [spaceId, linkedSpace?.data, linkedSpaceLoading]);
+  useEffect(() => {
+    if (!Object.keys(match?.data || {}).length && !matchLoading) {
+      toast.show({
+        type: 'error',
+        description: 'No linked place details data'
+      })
+    }
+  }, [matchId, match?.data, matchLoading]);
 
-  // const spaceDetail = linkedSpace?.data;
+  const matchDetails = match?.data;
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -58,10 +58,10 @@ const MentorDetail = () => {
             <PlaceHeader role="mentor" link="" />
             <Image
               source={
-                // linkedSpace?.data?.medias?.[0].filePath ?
-                //   { uri: linkedSpace?.data?.medias?.[0].filePath }
-                //   :
-                require("@/shared/assets/images/bg-card.png")
+                matchDetails?.space?.medias?.[0].filePath ?
+                  { uri: matchDetails?.space?.medias?.[0].filePath }
+                  :
+                  require("@/shared/assets/images/bg-card.png")
               }
               style={{
                 width,
@@ -85,9 +85,14 @@ const MentorDetail = () => {
             paddingVertical: "5%",
           }}
         >
-          <PlaceInfo reserved={true} mentor />
+          <PlaceInfo
+            place={matchDetails?.space}
+            reserved={true}
+            mentor
+          />
           <PlaceLinks
-          // link={`${linkedSpace?.data.}`}
+            isMentor
+          // link={`${matchDetails.goal}`}
           />
           <MentorComments />
         </View>
@@ -98,45 +103,29 @@ const MentorDetail = () => {
           paddingHorizontal: 20,
         }}
       >
-        {/* {!finished && (
-          <LargeButton
-            bg={colors.blue}
-            text="Add comment"
-            type="rounded"
-            textColor="light"
-            isRoute={false}
-            action={() => navigation.navigate("AddComment")}
-          />
-        )} */}
-        <View style={{ flexDirection: 'column', gap: 8 }}>
-          <LargeButton
-            bg={colors.blue}
-            text="Finish Statistics"
-            type="rounded"
-            textColor="light"
-            theme="outline"
-            isRoute={false}
-            action={() => navigation.goBack()}
-          />
-          <LargeButton
-            bg={colors.blue}
-            text="Add statistic"
-            type="rounded"
-            textColor="light"
-            isRoute={false}
-            action={() => navigation.navigate("AddStatistic")}
-          />
-        </View>
+        {
+          !finished &&
+          <View style={{ flexDirection: 'column', gap: 8 }}>
+            <LargeButton
+              bg={colors.blue}
+              text="Finish Statistics"
+              type="rounded"
+              textColor="light"
+              theme="outline"
+              isRoute={false}
+              action={() => navigation.goBack()}
+            />
+            <LargeButton
+              bg={colors.blue}
+              text="Add statistic"
+              type="rounded"
+              textColor="light"
+              isRoute={false}
+              action={() => navigation.navigate("AddStatistic")}
+            />
+          </View>
+        }
       </View>
-      {/* <Modal
-        title="Cancel Workout"
-        description="Are you sure you want to cancel your workout session ? This action cannot be undone."
-        rightText="Cancel workout"
-        visible={modalVisible}
-        rightAction={() => {}}
-        leftAction={() => setModalVisible(false)}
-        leftText="Back"
-      /> */}
     </View>
   );
 };

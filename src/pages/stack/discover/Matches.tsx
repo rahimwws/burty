@@ -1,40 +1,63 @@
-import { View, Text, FlatList } from "react-native";
-import React, { useEffect } from "react";
+import { View, Text, FlatList, RefreshControl } from "react-native";
+import React, { useEffect, useMemo } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import { Header } from "@/components/header";
 import { MentorPlaceCard } from "@/widgets/place";
 import Line from "@/shared/ui/Lines";
-import { useLinkedSpaces } from "@/features/mentor";
+import { useMatches } from "@/features/mentor";
 import { toast } from "@/shared/ui/Toast";
 import isTimeOver from "@/shared/lib/utils/isTimeOver";
+import { colors } from "@/shared/lib/theme";
 
 const Matches = () => {
   const {
-    data: matches,
+    data: matchesPages,
     isLoading: matchesLoading,
-  } = useLinkedSpaces();
+    fetchNextPage: matchesFetchNextPage,
+    isError: matchesError,
+    hasNextPage: matchesHasNextPage,
+    isFetchingNextPage: matchesFetchingNextPage,
+    refetch: matchesRefetch,
+    isRefetching: matchesRefetching
+  } = useMatches({
+    isCompleted: true,
+    page: 1,
+    take: 10,
+  });
 
   useEffect(() => {
-    if (!matches?.data?.length && !matchesLoading) {
+    if (!matchesPages?.pages[0].data.length && !matchesLoading) {
       toast.show({
         type: 'error',
         description: 'No matches data'
       })
     }
-  }, [matches?.data?.length, matchesLoading]);
+  }, [matchesPages?.pages[0]?.data?.length, matchesLoading]);
+
+  const matches = useMemo(() => {
+    return matchesPages?.pages.map(page => page.data).flat();
+  }, [matchesPages?.pages])
 
   return (
     <ScreenLayout>
       <Header title="Matches" type="default" />
       <Line color="primary" styles={{ opacity: 0.7, marginVertical: "3%" }} />
       <FlatList
-        data={matches?.data}
+        refreshControl={
+          <RefreshControl
+            colors={[colors.primary]}
+            tintColor={colors.primary}
+            refreshing={matchesRefetching}
+            onRefresh={matchesRefetch}
+          />
+        }
+        data={matches || []}
         renderItem={({ item }) => {
           return (
             <MentorPlaceCard
               type="large"
-              place={item}
-              used={isTimeOver({ startDate: item.openTime, endTime: item.endTime })}
+              place={item.space}
+              used={isTimeOver({ startDate: item.space.openTime, endTime: item.space.endTime })}
             />
           );
         }}
@@ -45,7 +68,16 @@ const Matches = () => {
         style={{
           marginVertical: "5%",
         }}
-        keyExtractor={(item, i) => item.id || i.toString()}
+        keyExtractor={(item, index) => item?.id ?? index?.toString()}
+        onEndReached={() => {
+          if (
+            (!matchesLoading || !matchesError) &&
+            !matchesFetchingNextPage && matchesHasNextPage
+          ) {
+            matchesFetchNextPage();
+          }
+        }}
+        onEndReachedThreshold={0.3}
       />
     </ScreenLayout>
   );
