@@ -11,6 +11,7 @@ import { MatchAction, getStringByMatchAction, useStatisticDetails } from "@/feat
 import useUserIdStore from "@/features/auth/model/stores/userId";
 import { toast } from "@/shared/ui/Toast";
 import getTimeOnly from "@/shared/lib/utils/getTimeOnly";
+import usePersonalDetails from "@/features/statistics/lib/hooks/usePersonalDetails";
 
 type ScreenRouteProp = RouteProp<
   { screen: { matchId: string } },
@@ -44,34 +45,7 @@ const StatisticsDetails = () => {
     }
   }, [data?.data]);
 
-  const personalDetails = useMemo(() => { // TODO need to optimize this code
-    const personalStatistics: Record<MatchAction, {
-      type: string
-      score: number
-      timing: string
-    } | null> = {
-      "ASSIST": null,
-      "GOAL": null,
-      "RED_CARD": null,
-      "YELLOW_CARD": null,
-      "SAVE": null,
-    }
-    details?.statistics.forEach(statistic => {
-      if (personalStatistics?.[statistic.action]?.score) {//@ts-ignore
-        personalStatistics[statistic.action] = {
-          ...personalStatistics[statistic.action], // @ts-ignore
-          score: personalStatistics?.[statistic.action]?.score + 1,
-        }
-      } else {
-        personalStatistics[statistic.action] = {
-          score: 1,
-          timing: getTimeOnly(statistic.timestamp, "HH:ss"),
-          type: getStringByMatchAction(statistic.action)
-        }
-      }
-    })
-    return Object.values(personalStatistics).filter(item=> !item)
-  }, [details])
+  const personalDetails = usePersonalDetails(details)
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
