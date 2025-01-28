@@ -14,7 +14,6 @@ import { CalendarRef } from "@/widgets/calendar/ui/CalendarComponent";
 import dayjs from "dayjs";
 import Input from "@/shared/ui/Input";
 import { toast } from "@/shared/ui/Toast";
-import { useBookingIDStore } from "@/shared/store/booking";
 
 type RouteParams = {
   MyScreen: {
@@ -28,7 +27,6 @@ type MyScreenRouteProp = RouteProp<RouteParams, "MyScreen">;
 const BookTime = () => {
   const { params: { price, spaceId } } = useRoute<MyScreenRouteProp>();
   const navigation = useAppNavigation();
-  const { addBookingID, } = useBookingIDStore();
   const calendarRef = useRef<CalendarRef | null>(null);
   const [playersCount, setPlayersCount] = useState("");
 
@@ -68,7 +66,6 @@ const BookTime = () => {
       visitTime: time
     }, {
       onSuccess: (res) => {
-        addBookingID(res.data.id);
         navigation.navigate("BookBuy", {
           price: price,
           bookingId: res.data.id

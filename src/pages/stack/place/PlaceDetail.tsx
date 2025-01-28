@@ -14,7 +14,6 @@ import { useSpaceDetails } from "@/features/spaces";
 import dayjs from 'dayjs';
 import { toast } from "@/shared/ui/Toast";
 import { useAppNavigation } from "@/shared/lib/navigation";
-import { useBookingIDStore } from "@/shared/store/booking";
 
 type RouteParams = {
   MyScreen: {
@@ -26,7 +25,6 @@ type MyScreenRouteProp = RouteProp<RouteParams, "MyScreen">;
 const PlaceDetail = () => {
   const route = useRoute<MyScreenRouteProp>();
   const navigation = useAppNavigation();
-  const { bookingIDs } = useBookingIDStore();
 
   const { placeId } = route.params;
   const { height, width } = Dimensions.get("window");
