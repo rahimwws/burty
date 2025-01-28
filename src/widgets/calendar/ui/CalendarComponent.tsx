@@ -1,34 +1,118 @@
 import { View } from "react-native";
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+import React, { useState, forwardRef, useImperativeHandle, useCallback, useMemo } from "react";
 import { Calendar, DateData } from "react-native-calendars";
 import { formatDate } from "../model";
 import { colors } from "@/shared/lib/theme";
 import { LightHeptic } from "@/shared/lib/heptics";
 
 export type CalendarRef = {
-  getDate: () => string
-}
+  getRange: () => { startDate: string | null; endDate: string | null };
+};
 
 const CalendarComponent = forwardRef<CalendarRef>(({ }, ref) => {
-  const [currentDate, setCurrentDate] = useState<string>(
-    formatDate(new Date())
-  );
+  const [startDate, setStartDate] = useState<string | null>(formatDate(new Date()));
+  const [endDate, setEndDate] = useState<string | null>(formatDate(new Date()));
+
   const handleDayPress = (day: DateData) => {
     LightHeptic();
     const dateString = day.dateString;
-    setCurrentDate(dateString);
+
+    if (!startDate || (startDate && endDate)) {
+      // Start a new range
+      setStartDate(dateString);
+      setEndDate(null);
+    } else if (!endDate) {
+      // Set the end date if it's after the start date
+      if (new Date(dateString) >= new Date(startDate)) {
+        setEndDate(dateString);
+      } else {
+        // If the end date is before the start date, reset the range
+        setStartDate(dateString);
+        setEndDate(null);
+      }
+    }
   };
 
   useImperativeHandle(ref, () => {
     return {
-      getDate() {
-        return currentDate;
+      getRange() {
+        return { startDate, endDate };
+      },
+    };
+  });
+
+  // Generate marked dates
+  const markedDates = useMemo(() => {
+    const marked: Record<string, any> = {};
+
+    if (startDate) {
+      const additionStyles = startDate !== endDate ? {
+        borderTopLeftRadius: 11,
+        borderBottomLeftRadius: 11,
+        borderRadius: 0,
+      } : {};
+      marked[startDate] = {
+        customStyles: {
+          container: {
+            backgroundColor: colors.primary,
+            borderRadius: 11,
+            width: '100%',
+            ...additionStyles
+          },
+          text: {
+            color: colors.background,
+          },
+        },
+      };
+    }
+
+    if (endDate) {
+      const additionStyles = startDate !== endDate ? {
+        borderTopRightRadius: 11,
+        borderBottomRightRadius: 11,
+        borderRadius: 0,
+      } : {};
+      marked[endDate] = {
+        customStyles: {
+          container: {
+            backgroundColor: colors.primary,
+            borderRadius: 11,
+            width: '100%',
+            ...additionStyles
+          },
+          text: {
+            color: colors.background,
+          },
+        },
+      };
+
+      // Highlight the range
+      const start = new Date(startDate!);
+      const end = new Date(endDate);
+      for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
+        const dateString = formatDate(date);
+        if (dateString !== startDate && dateString !== endDate) {
+          marked[dateString] = {
+            customStyles: {
+              container: {
+                backgroundColor: colors.primary,
+                borderRadius: 0,
+                width: '100%',
+              },
+              text: {
+                color: colors.background,
+              },
+            },
+          };
+        }
       }
     }
-  })
+
+    return marked;
+  }, [startDate, endDate]);
 
   return (
-    <View>
+    <View style={{}}>
       <Calendar
         style={{
           height: 350,
@@ -36,7 +120,7 @@ const CalendarComponent = forwardRef<CalendarRef>(({ }, ref) => {
           backgroundColor: colors.dark,
           borderRadius: 25,
         }}
-        current={currentDate}
+        current={startDate || formatDate(new Date())}
         onDayPress={handleDayPress}
         markingType={"custom"}
         theme={{
@@ -51,19 +135,7 @@ const CalendarComponent = forwardRef<CalendarRef>(({ }, ref) => {
           selectedDayBackgroundColor: colors.primary,
           textMonthFontSize: 18,
         }}
-        markedDates={{
-          [currentDate]: {
-            customStyles: {
-              container: {
-                backgroundColor: colors.primary,
-                borderRadius: 11,
-              },
-              text: {
-                color: colors.background,
-              },
-            },
-          },
-        }}
+        markedDates={markedDates}
       />
     </View>
   );

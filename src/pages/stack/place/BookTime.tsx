@@ -47,7 +47,7 @@ const BookTime = () => {
   } = useCreateBooking();
 
   const handleCreateBooking = useCallback(() => {
-    const date = calendarRef.current?.getDate();
+    const date = calendarRef.current?.getRange();
 
     if (!date)
       return;
@@ -63,7 +63,8 @@ const BookTime = () => {
     createBooking({
       playersCount: Number(playersCount),
       spaceId,
-      startDate: dayjs(date, "YYYY-MM-DD").format("DD.MM.YYYY"),
+      startDate: dayjs(date.startDate, "YYYY-MM-DD").format("DD.MM.YYYY"),
+      endDate: dayjs(date.endDate, "YYYY-MM-DD").format("DD.MM.YYYY"),
       visitTime: time
     }, {
       onSuccess: (res) => {

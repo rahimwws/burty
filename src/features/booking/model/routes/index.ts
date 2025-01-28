@@ -28,6 +28,7 @@ export const booking = {
       spaceId,
       playersCount,
       startDate,
+      endDate,
       visitTime
    }: BookingCreateDto) {
       return await client.post<BookingCreatedRes>(
@@ -35,6 +36,7 @@ export const booking = {
          {
             playersCount,
             startDate,
+            endDate,
             visitTime
          }
       );
