@@ -2,6 +2,7 @@ import { client } from "@/shared/api";
 import StatisticsParamsDto from "../types/StatisticsParamsDto";
 import StatisticParamsDto from "../types/StatisticParamsDto";
 import StatisticT from "../types/StatisticT";
+import StatisticDetailsT from "../types/StatisticDetailsT";
 
 export const statistics = {
    async getUserStatisticsList({
@@ -19,7 +20,7 @@ export const statistics = {
    async getUserStatisticDetails({
       userId, matchId
    }: StatisticParamsDto) {
-      return await client.get<StatisticT>(
+      return await client.get<StatisticDetailsT>(
          `/user-statistics/${userId}/matches/${matchId}`,
       );
    },

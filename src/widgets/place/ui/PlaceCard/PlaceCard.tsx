@@ -50,7 +50,12 @@ const PlaceCard = ({
         bookingId
       });
     else if (isStatistics)
-      navigation.navigate("StatisticsDetails", { matchId: item?.id });
+      navigation.navigate("StatisticsDetails", {
+        matchId: item?.id,
+        personalScore: personalScore,
+        startTime: startTime,
+        startDate: dayjs(startDate).format('DD.MM.YYYY')
+      });
     else
       navigation.navigate("PlaceDetail", {
         placeId: item?.id,
