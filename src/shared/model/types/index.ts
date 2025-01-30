@@ -1,3 +1,3 @@
-import { User } from "./user";
-import { PlaceT } from "./space";
-export { User as UserT, PlaceT };
+export type { default as PassT } from './PassT';
+export type { PlaceT, PlaceMediaT } from './space';
+export type { User as UserT } from './user';

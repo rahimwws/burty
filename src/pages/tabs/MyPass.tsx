@@ -1,8 +1,8 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import { colors } from "@/shared/lib/theme";
-import { PassCard, PassDetail } from "@/widgets/pass";
+import { PassCard } from "@/widgets/pass";
 
 const MyPass = () => {
   return (
@@ -20,7 +20,7 @@ const MyPass = () => {
       >
         <PassCard />
       </View>
-      <PassDetail />
+      {/* <PassDetail /> */}
     </ScreenLayout>
   );
 };

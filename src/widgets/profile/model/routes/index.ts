@@ -1,10 +1,15 @@
 import { client } from "@/shared/api";
 import { getRefreshToken } from "@/shared/api/token/storage";
-import { UserT } from "@/shared/model/types";
+import { PassT, UserT } from "@/shared/model/types";
 import * as FileSystem from "expo-file-system";
 export const user = {
   async get() {
     return await client.get<UserT>("/users/me");
+  },
+  async getUserPass() {
+    return await client.get<PassT>(
+      "/users/qrcode"
+    )
   },
   async uploadAvatar(uri: string): Promise<void> {
     const formData = new FormData();
