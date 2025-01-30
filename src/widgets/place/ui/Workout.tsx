@@ -22,11 +22,7 @@ const Workout = ({
 }: WorkoutProps) => {
 
   return (
-    <View
-      style={{
-        marginVertical: "5%",
-      }}
-    >
+    <View>
       {showTitle && (
         <Typography
           size={22}
@@ -42,6 +38,7 @@ const Workout = ({
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
+          marginTop: "5%",
         }}
       >
         <Typography size={18} font="b">
@@ -51,26 +48,33 @@ const Workout = ({
           {dayjs(date).format('DD MMM, YYYY')}
         </Typography>
       </View>
+      {
+        passType ?
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginTop: "5%",
+            }}
+          >
+            <>
+              <Typography size={18} font="b">
+                Pass type
+              </Typography>
+              <Typography color="gray" font="m">
+                {passType} visit
+              </Typography>
+            </>
+          </View>
+          : null
+      }
       <View
         style={{
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
-          marginVertical: "5%",
-        }}
-      >
-        <Typography size={18} font="b">
-          Pass type
-        </Typography>
-        <Typography color="gray" font="m">
-          {passType} visit
-        </Typography>
-      </View>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
+          marginTop: "5%",
         }}
       >
         <Typography size={18} font="b">

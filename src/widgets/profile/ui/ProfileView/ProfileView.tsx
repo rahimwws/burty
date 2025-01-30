@@ -1,7 +1,6 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import Typography from "@/shared/ui/Typography";
-import { colors } from "@/shared/lib/theme";
 import Edit from "@/shared/assets/icons/interface/Edit";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { User } from "@/shared/model/types/user";
@@ -17,8 +16,8 @@ const ProfileView = ({
   qr = false,
   item,
   isMentor = false
-}: ProfileViewProps) => {  
-  const navigation = useAppNavigation();  
+}: ProfileViewProps) => {
+  const navigation = useAppNavigation();
   return (
     <View
       style={styles.wrap}

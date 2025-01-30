@@ -28,7 +28,11 @@ const MentorPlaceCard = ({
   used = false,
   style,
 }: {
-  place?: PlaceT;
+  place?: {
+    id: string
+    openTime: string
+    maxPlayers: string
+  };
   /** @default "default" */
   type?: "default" | "large";
   /** @default false */

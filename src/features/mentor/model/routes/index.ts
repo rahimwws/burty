@@ -20,7 +20,7 @@ const mentor = {
     );
   },
   async getUserPasses(userId?: string) {
-    return await client.get<UserPassT[]>(
+    return await client.get<UserPassT>(
       `/mentor/bookings/${userId}`
     );
   },

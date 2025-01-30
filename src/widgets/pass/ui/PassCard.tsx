@@ -6,7 +6,7 @@ import More from "@/shared/assets/icons/interface/More";
 import Modal from "@/shared/ui/Modal";
 import { DarkButton } from "@/shared/ui/Button";
 import QRCode from "react-native-qrcode-svg";
-import useUserPass from "@/widgets/profile/lib/hooks/useUserPasses";
+import useUserPass from "@/widgets/profile/lib/hooks/useUserPass";
 
 const PassCard = () => {
   const [showQr, setShowQr] = useState<boolean>(false);
