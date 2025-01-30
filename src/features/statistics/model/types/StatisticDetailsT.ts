@@ -1,4 +1,5 @@
 import MatchAction from "./MatchAction"
+import TeamT from "./TeamT"
 
 type StatisticDetailsT = {
    id: string
@@ -14,19 +15,7 @@ type StatisticDetailsT = {
       rating: number
       issuedBlackTicket: boolean
    }[]
-   team: {
-      teamName: string
-      matchStatistics: {
-         action: MatchAction
-         timestamp: string
-      }[]
-      matchPlayers: {
-         users: {
-            firstName: string
-            lastName: string
-         }[]
-      }[]
-   }[]
+   team: TeamT[]
    startDate: string
    endDate: string
    status: 0,

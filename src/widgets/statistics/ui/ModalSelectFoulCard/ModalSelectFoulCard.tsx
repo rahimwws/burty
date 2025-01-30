@@ -1,27 +1,28 @@
 import { TouchableOpacity, View, ScrollView } from "react-native";
-import React, { Dispatch, SetStateAction, useState, } from "react";
+import React, { useState, } from "react";
 import Modal from "@/shared/ui/Modal";
 import Typography from "@/shared/ui/Typography";
 import { DarkButton, LargeButton } from "@/shared/ui/Button";
 import styles from "./styles";
 import { colors } from "@/shared/lib/theme";
 import Cross from "@/shared/assets/icons/interface/Cross";
+import { MatchAction } from "@/features/statistics";
 
 const foulCards = [
-   { id: 1, name: "Yellow", color: "#D8C141", colorDisabled: '#D8C1411A' },
-   { id: 2, name: "Red", color: "#D84641", colorDisabled: '#D846411A' },
+   { name: "Yellow", action: "YELLOW_CARD", color: "#D8C141", colorDisabled: '#D8C1411A' } as const,
+   { name: "Red", action: "RED_CARD", color: "#D84641", colorDisabled: '#D846411A' } as const,
 ]
 
 type ModalSelectFoulCardProps = {
    visible: boolean
-   onClose?: (foulCard: string) => void
+   onClose?: (action: MatchAction) => void
 }
 
 const ModalSelectFoulCard = ({
    visible = false,
    onClose,
 }: ModalSelectFoulCardProps) => {
-   const [foulCard, setFoulCard] = useState<string>("");
+   const [foulCard, setFoulCard] = useState<MatchAction>("YELLOW_CARD");
 
    return (
       <Modal
@@ -53,14 +54,14 @@ const ModalSelectFoulCard = ({
                foulCards.map((item, index) => {
                   return (
                      <View
-                        key={item.id}
+                        key={item.action}
                         style={{ marginBottom: 10 }}
                      >
                         <DarkButton
                            isRoute={false}
                            text={item.name}
-                           disabled={item.name !== foulCard}
-                           action={() => setFoulCard(item.name)}
+                           disabled={item.action !== foulCard}
+                           action={() => setFoulCard(item.action)}
                            customBg={item.color}
                            customBgDisabled={item.colorDisabled}
                         />
@@ -87,6 +88,7 @@ const ModalSelectFoulCard = ({
                   action={() => onClose?.(foulCard)}
                   bg={colors.blue}
                   textColor="light"
+                  disabled={!foulCard}
                />
             </View>
          </View>

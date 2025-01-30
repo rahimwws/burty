@@ -79,16 +79,6 @@ const MentorProfile = () => {
       >
         <ProfileView item={data?.data} isMentor />
 
-        <View style={{ marginTop: '2%' }}>
-          <LargeButton
-            startIcon={<StatisticsIcon fill="#000" size={24} />}
-            text="Personal Statistics"
-            bg={colors.light}
-            type="rounded"
-            action={() => navigation.navigate("StatisticsList")}
-          />
-        </View>
-
         <Typography
           size={22}
           font="b"

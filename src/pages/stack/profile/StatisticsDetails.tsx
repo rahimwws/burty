@@ -50,7 +50,7 @@ const StatisticsDetails = () => {
     }
   }, [data?.data]);
 
-  const matchDetails = useMatchDetails(details)
+  const matchDetails = useMatchDetails(details?.team)
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>

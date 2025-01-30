@@ -5,10 +5,14 @@ import Typography from '@/shared/ui/Typography'
 import Timer from '@/shared/ui/Timer'
 
 type ScoreTabloProps = {
+  teams?: {
+    name: string
+    score: number
+  }[] | null
 }
 
 const ScoreTablo = ({
-
+  teams
 }: ScoreTabloProps) => {
   return (
     <View style={[
@@ -24,20 +28,20 @@ const ScoreTablo = ({
           align='left'
           color='gray'
         >
-          Team 1
+          {teams?.[0]?.name}
         </Typography>
         <Typography
           size={32}
           color='light'
           font='m'
         >
-          0 : 0
+          {teams?.[0]?.score} : {teams?.[1]?.score}
         </Typography>
         <Typography
           align='left'
           color='gray'
         >
-          Team 2
+          {teams?.[1]?.name}
         </Typography>
       </View>
       <View

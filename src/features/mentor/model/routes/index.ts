@@ -4,8 +4,9 @@ import { PlaceT } from "@/shared/model/types";
 import { User } from "@/shared/model/types/user";
 import * as FileSystem from "expo-file-system";
 import UserPassT from "../types/UserPassT";
-import { StatisticsParamsDto, StatisticT } from "@/features/statistics";
+import { MatchAction, StatisticsParamsDto, StatisticT } from "@/features/statistics";
 import MatchesParamsDto from "../types/MatchesParamsDto";
+import MatchDetails from "../types/MatchDetails";
 
 const mentor = {
   async getLinkedSpaces() {
@@ -48,9 +49,22 @@ const mentor = {
     );
   },
   async getMatch(matchId: string) {
-    return await client.get<StatisticT>(
+    return await client.get<MatchDetails>(
       `/matches/${matchId}`
     );
+  },
+  async createMatchAction(matchId: string, playerId: string, matchAction: MatchAction) {
+    return await client.post(
+      `/matches/${matchId}/action/${playerId}`,
+      {
+        matchAction
+      }
+    );
+  },
+  async completeMatch(matchId: string) {
+    return await client.patch(
+      `/matches/complete/${matchId}`
+    )
   },
   async uploadAvatar(uri: string): Promise<void> {
     const formData = new FormData();

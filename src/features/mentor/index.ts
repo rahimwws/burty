@@ -5,3 +5,4 @@ export { default as useMatch } from './lib/hooks/useMatch';
 
 export type { default as MatchesParamsDto } from './model/types/MatchesParamsDto';
 export type { default as UserPassT } from './model/types/UserPassT';
+export type { default as MatchDetails } from './model/types/MatchDetails';

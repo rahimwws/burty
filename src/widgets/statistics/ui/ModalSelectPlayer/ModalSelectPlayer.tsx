@@ -1,12 +1,12 @@
 import { TouchableOpacity, View, ScrollView } from "react-native";
-import React, { Dispatch, SetStateAction, useState, } from "react";
+import React, { useState, } from "react";
 import Modal from "@/shared/ui/Modal";
 import Typography from "@/shared/ui/Typography";
 import { DarkButton, LargeButton } from "@/shared/ui/Button";
 import styles from "./styles";
 import { colors } from "@/shared/lib/theme";
 import Cross from "@/shared/assets/icons/interface/Cross";
-import { CheckboxWithText } from "@/shared/ui/CheckBox/CheckBoxWithText";
+import TeamT from "@/features/statistics/model/types/TeamT";
 
 const players = [
   { id: 1, name: "Player 1" },
@@ -25,19 +25,15 @@ const players = [
 type ModalSelectPlayerProps = {
   visible: boolean
   onClose?: () => void
-  onPressMarkAsOwnGoal?: () => void
-  onPressGoalPass?: () => void
+  players?: TeamT["matchPlayers"]
+  onSelectPlayer?: (player: TeamT["matchPlayers"][number]) => void
 }
 
 const ModalSelectPlayer = ({
   visible = false,
   onClose,
-  onPressMarkAsOwnGoal,
-  onPressGoalPass
 }: ModalSelectPlayerProps) => {
   const [player, setPlayer] = useState<number | null>(null);
-  const [isOwnGoal, setIsOwnGoal] = useState(false);
-  const [isGoalAssisted, setIsGoalAssisted] = useState(false);
 
   return (
     <Modal
@@ -83,38 +79,7 @@ const ModalSelectPlayer = ({
           })
         }
       </ScrollView>
-      {
-        !!onPressMarkAsOwnGoal && !!onPressGoalPass &&
-        <View style={[
-          styles.row,
-          styles.justifyCenter,
-          { gap: 10 }
-        ]}>
-          {
-            !!onPressMarkAsOwnGoal &&
-            <CheckboxWithText
-              onValueChange={() => {
-                setIsOwnGoal(prev => !prev)
-                onPressMarkAsOwnGoal?.()
-              }}
-              text="Mark as own goal"
-              value={isOwnGoal}
-            />
-          }
-          {
-            !!onPressGoalPass &&
-            <CheckboxWithText
-              onValueChange={() => {
-                setIsGoalAssisted(prev => !prev)
-                onPressGoalPass?.()
-              }}
-              text="There was a goal pass"
-              value={isGoalAssisted}
-            />
-          }
-        </View>
-      }
-      <View style={[
+      {/* <View style={[
         styles.row,
         { gap: 10 }
       ]}>
@@ -134,7 +99,7 @@ const ModalSelectPlayer = ({
             textColor="light"
           />
         </View>
-      </View>
+      </View> */}
     </Modal>
   );
 };

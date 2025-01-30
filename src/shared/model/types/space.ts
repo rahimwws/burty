@@ -28,7 +28,7 @@ export interface PlaceT {
   phoneNumber: string;
   averageRating?: number;
   site: string;
-  medias: PlaceMediaT[]
+  medias?: PlaceMediaT[]
   distance?: {
     kilometers: number,
     meters: number

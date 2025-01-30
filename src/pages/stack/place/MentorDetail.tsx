@@ -90,10 +90,10 @@ const MentorDetail = () => {
             reserved={true}
             mentor
           />
-          <PlaceLinks
+          {/* <PlaceLinks
             isMentor
           // link={`${matchDetails.goal}`}
-          />
+          /> */}
           <MentorComments />
         </View>
       </ParallaxScrollView>
@@ -104,26 +104,28 @@ const MentorDetail = () => {
         }}
       >
         {
-          !finished &&
-          <View style={{ flexDirection: 'column', gap: 8 }}>
-            <LargeButton
-              bg={colors.blue}
-              text="Finish Statistics"
-              type="rounded"
-              textColor="light"
-              theme="outline"
-              isRoute={false}
-              action={() => navigation.goBack()}
-            />
-            <LargeButton
-              bg={colors.blue}
-              text="Add statistic"
-              type="rounded"
-              textColor="light"
-              isRoute={false}
-              action={() => navigation.navigate("AddStatistic")}
-            />
-          </View>
+          match?.data.id ?
+            !finished &&
+            <View style={{ flexDirection: 'column', gap: 8 }}>
+              <LargeButton
+                bg={colors.blue}
+                text="Finish Statistics"
+                type="rounded"
+                textColor="light"
+                theme="outline"
+                isRoute={false}
+                action={() => navigation.goBack()}
+              />
+              <LargeButton
+                bg={colors.blue}
+                text="Add statistic"
+                type="rounded"
+                textColor="light"
+                isRoute={false}
+                action={() => navigation.navigate("AddStatistic", { matchId: match?.data.id })}
+              />
+            </View>
+            : null
         }
       </View>
     </View>

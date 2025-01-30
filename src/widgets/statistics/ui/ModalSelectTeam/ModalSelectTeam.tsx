@@ -6,22 +6,21 @@ import { DarkButton, LargeButton } from "@/shared/ui/Button";
 import styles from "./styles";
 import { colors } from "@/shared/lib/theme";
 import Cross from "@/shared/assets/icons/interface/Cross";
-
-const teams = [
-   { id: 1, name: "Team 1" },
-   { id: 2, name: "Team 2" },
-]
+import TeamT from "@/features/statistics/model/types/TeamT";
 
 type ModalSelectTeamProps = {
    visible: boolean
    onClose?: () => void
+   onSelectTeam?: (team: TeamT) => void
+   teams?: TeamT[]
 }
 
 const ModalSelectTeam = ({
    visible = false,
    onClose,
+   onSelectTeam,
+   teams
 }: ModalSelectTeamProps) => {
-   const [team, setTeam] = useState<number | null>(null);
 
    return (
       <Modal
@@ -50,24 +49,23 @@ const ModalSelectTeam = ({
             showsVerticalScrollIndicator={false}
          >
             {
-               teams.map((item, index) => {
+               teams?.map((team, index) => {
                   return (
                      <View
-                        key={item.id}
+                        key={index}
                         style={{ marginBottom: 10 }}
                      >
                         <DarkButton
                            isRoute={false}
-                           text={item.name}
-                           disabled={item.id !== team}
-                           action={() => setTeam(item.id)}
+                           text={team.teamName}
+                           action={() => onSelectTeam?.(team)}
                         />
                      </View>
                   )
                })
             }
          </ScrollView>
-         <View style={[
+         {/* <View style={[
             styles.row,
             { gap: 10 }
          ]}>
@@ -87,7 +85,7 @@ const ModalSelectTeam = ({
                   textColor="light"
                />
             </View>
-         </View>
+         </View> */}
       </Modal>
    );
 };

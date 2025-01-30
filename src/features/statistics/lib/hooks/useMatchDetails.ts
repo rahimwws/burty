@@ -1,14 +1,14 @@
 import { useMemo } from "react";
-import StatisticDetailsT from "../../model/types/StatisticDetailsT";
 import convertToMatchDetails from "../utils/convertToMatchDetails";
 import TransformedMatchDetailsData from "../../model/types/TransformedMatchDetailsData";
+import TeamT from "../../model/types/TeamT";
 
-const useMatchDetails = (details?: StatisticDetailsT | null) => {
+const useMatchDetails = (teamData?: TeamT[] | null) => {
    const matchDetails = useMemo(() => {
-      if (!details?.matchStatistics) return { goal: [], foul: [] } as TransformedMatchDetailsData;
+      if (!teamData) return { goal: [], foul: [] } as TransformedMatchDetailsData;
 
-      return convertToMatchDetails(details);
-   }, [details]);
+      return convertToMatchDetails(teamData);
+   }, [teamData]);
 
    return matchDetails;
 };
