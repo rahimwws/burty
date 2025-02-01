@@ -62,7 +62,7 @@ const BookTime = () => {
       playersCount: Number(playersCount),
       spaceId,
       startDate: dayjs(date.startDate, "YYYY-MM-DD").format("DD.MM.YYYY"),
-      endDate: dayjs(date.endDate, "YYYY-MM-DD").format("DD.MM.YYYY"),
+      endDate: dayjs(date.endDate || date.startDate, "YYYY-MM-DD").format("DD.MM.YYYY"),
       visitTime: time
     }, {
       onSuccess: (res) => {
@@ -70,6 +70,9 @@ const BookTime = () => {
           price: price,
           bookingId: res.data.id
         })
+      },
+      onError: (err) => {
+        console.log(err)
       }
     })
   }, [time, spaceId, playersCount]);
