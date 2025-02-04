@@ -56,7 +56,14 @@ const CreateReview = () => {
       comment: comment,
       rating: rating
     }, {
-      onSuccess: () => navigator.goBack()
+      onSuccess: () => navigator.goBack(),
+      onError: (err: any) => {
+        toast.show({
+          type: 'error',
+          description: err?.response?.data?.message ?? "Something went wrong",
+          duration: 3000
+        })
+      }
     })
   }
 

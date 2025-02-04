@@ -117,7 +117,7 @@ const PlaceDetail = () => {
           <LargeButton
             bg={colors.blue}
             // text={"Continue book place" : "Book Place"}
-            text={"Continue book place"}
+            text={"Book Place"}
             type="rounded"
             textColor="light"
             action={() => {

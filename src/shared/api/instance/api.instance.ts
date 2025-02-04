@@ -84,7 +84,7 @@ client.interceptors.response.use(
       }
     }
 
-    if (error.response?.status > 403) {
+    if (error.response?.status > 409) {
       navigate("Error")
     }
 
