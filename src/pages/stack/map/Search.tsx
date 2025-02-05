@@ -15,7 +15,8 @@ const Search = () => {
     isLoading: placesLoading,
     isSuccess: placesGotSuccess,
   } = useFilteredSpaces({
-    search: searchValue
+    search: searchValue,
+    maxDistance: 100000
   });
 
   const handleEditingEnd = useCallback(() => {

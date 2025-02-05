@@ -37,7 +37,7 @@ const SearchPlaceCard = ({
         <Image
           source={
             place?.medias?.[0]?.filePath ?
-              { uri: place.medias[0].filePath }
+              { uri: place?.medias?.[0]?.filePath }
               :
               require("@/shared/assets/images/bg-card.png")
           }
