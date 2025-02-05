@@ -23,6 +23,7 @@ import StatisticsList from "@/pages/stack/profile/StatisticsList";
 import StatisticsDetails from "@/pages/stack/profile/StatisticsDetails";
 import AddStatistic from "@/pages/stack/place/AddStatistic";
 import MentorEditProfile from "@/pages/stack/profile/MentorEditProfile";
+import MentorLinkedSpaceDetail from "@/pages/stack/place/MentorLinkedSpaceDetail";
 
 const StackScreens = () => {
   const Stack = createNativeStackNavigator();
@@ -48,6 +49,7 @@ const StackScreens = () => {
       <Stack.Screen name="Filter" component={Filter} />
       <Stack.Screen name="FilteredPlaces" component={FilteredPlaces} />
       <Stack.Screen name="PlaceDetail" component={PlaceDetail} />
+      <Stack.Screen name="MentorLinkedSpaceDetail" component={MentorLinkedSpaceDetail} />
       <Stack.Screen name="WorkoutPlaceDetail" component={WorkoutPlaceDetail} />
       <Stack.Screen name="Review" component={Review} />
       <Stack.Screen name="CreateReview" component={CreateReview} />

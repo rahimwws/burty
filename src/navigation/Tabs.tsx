@@ -17,6 +17,8 @@ import Typography from "@/shared/ui/Typography";
 import Scan from "@/pages/stack/scan/Scan";
 import ScanSvg from "@/shared/assets/icons/interface/ScanSvg";
 import useRoleStore from "@/shared/store/role";
+import MatchesHistory from "@/pages/stack/wortout/MatchesHistory";
+
 const Tabs = () => {
   const Tab = createBottomTabNavigator();
   const { width } = Dimensions.get("window");
@@ -166,7 +168,13 @@ const Tabs = () => {
       {role === "mentor" && (
         <Tab.Screen name="Scan" component={Scan} options={{}} />
       )}
-      <Tab.Screen name="Workouts" component={WorkoutScreen} options={{}} />
+      <Tab.Screen
+        name="Workouts"
+        component={
+          role == 'user' ?
+            WorkoutScreen : MatchesHistory
+        }
+      />
       {role === "user" && (
         <Tab.Screen name="MyPass" component={MyPass} options={{}} />
       )}

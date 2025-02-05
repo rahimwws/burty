@@ -8,10 +8,10 @@ import {
   MentorComments,
   PlaceHeader,
   PlaceInfo,
-  PlaceLinks,
 } from "@/widgets/place";
 import { LargeButton } from "@/shared/ui/Button";
 import { toast } from "@/shared/ui/Toast";
+import useLinkedSpace from "@/features/mentor/lib/hooks/useLinkedSpace";
 import { useMatch } from "@/features/mentor";
 
 type RouteParams = {
