@@ -41,7 +41,7 @@ const StatisticsList = () => {
 
   const statistics = useMemo(() => {
     return statisticsPages?.pages.map(page => page.data).flat();
-  }, [statisticsPages?.pages])
+  }, [statisticsPages?.pages]);
 
   return (
     <ScreenLayout>
@@ -64,7 +64,7 @@ const StatisticsList = () => {
               type="large"
               startDate={getDateOnly(item.endDate, "DD.MM.YYYY")}
               startTime={getTimeOnly(item.endDate, "HH:ss")}
-              personalScore={item?.evaluations[0].skillRating ?? 0}
+              personalScore={item?.evaluations?.[0]?.skillRating ?? 0}
               isStatistics
             />
           );

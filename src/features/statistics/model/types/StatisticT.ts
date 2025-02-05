@@ -29,5 +29,4 @@ type StatisticT = {
       playerId: string
    }[]
 };
-
 export default StatisticT;

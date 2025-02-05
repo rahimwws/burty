@@ -10,6 +10,7 @@ import { toast } from "@/shared/ui/Toast";
 import { colors } from "@/shared/lib/theme";
 import isTimeOver from "@/shared/lib/utils/isTimeOver";
 import { PlaceCard } from "@/widgets/place";
+import getDateOnly from "@/shared/lib/utils/getDateOnly";
 
 
 const Workouts = () => {
@@ -92,7 +93,7 @@ const Workouts = () => {
                     key={item.id}
                     type="large"
                     item={item.spaces}
-                    startDate={item.startDate}
+                    startDate={getDateOnly(item.startDate, "DD.MM.YYYY")}
                     startTime={item.startTime}
                     bookingId={item.id}
                     used={isTimeOver({ startDate: item.startDate, endTime: item.endTime })}

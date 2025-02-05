@@ -7,7 +7,7 @@ import Typography from '@/shared/ui/Typography'
 import { colors } from '@/shared/lib/theme'
 
 type RatingBadgeProps = {
-   rating: number
+   rating: number | string
    isUsed: boolean
    /** @default false */
    isStatisticsList?: boolean
@@ -33,7 +33,7 @@ const RatingBadge = ({
                <Star size={15} fill={isUsed ? "#A0A0A0" : colors.primary} />
             }
             <Typography styles={{ color: isUsed ? "#A0A0A0" : colors.light }}>
-               {Number(rating?.toFixed(1))}
+               {typeof rating == 'number' ? Number(rating?.toFixed(1)) : rating}
             </Typography>
             {
                isStatisticsList &&

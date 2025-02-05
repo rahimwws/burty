@@ -24,7 +24,7 @@ type ScreenRouteProp = RouteProp<
 >;
 
 const StatisticsDetails = () => {
-  const { params: { matchId } } = useRoute<ScreenRouteProp>();
+  const { params: { matchId, personalScore, startDate, startTime } } = useRoute<ScreenRouteProp>();
   const navigation = useAppNavigation();
   const { id: userId } = useUserIdStore()
   const { height, width } = Dimensions.get("window");
@@ -45,7 +45,7 @@ const StatisticsDetails = () => {
     if (!Object.keys(data?.data || {}).length && !isLoading) {
       toast.show({
         type: 'error',
-        description: 'No profile data'
+        description: 'No statics data'
       })
     }
   }, [data?.data]);
@@ -62,9 +62,9 @@ const StatisticsDetails = () => {
         headerImage={
           <>
             <StatisticsHeader
-              personalScore={8}
-              startTime="13:00"
-              startDate="12.02.2024"
+              personalScore={personalScore}
+              startTime={startTime}
+              startDate={startDate}
               shareLink=""
             />
             <PlaceName>

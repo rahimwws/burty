@@ -1,8 +1,6 @@
-import dayjs from "dayjs";
-
 const getTimeOnly = (date: string, format?: string) => {
    if (typeof date == 'string')
-      return dayjs(date.split("T")[1]).format(format);
+      return date.split("T")[1].slice(0, 5);
    return date;
 }
 

@@ -54,7 +54,7 @@ const PlaceCard = ({
         matchId: item?.id,
         personalScore: personalScore,
         startTime: startTime,
-        startDate: dayjs(startDate).format('DD.MM.YYYY')
+        startDate: startDate
       });
     else
       navigation.navigate("PlaceDetail", {
@@ -91,7 +91,7 @@ const PlaceCard = ({
 
         <View style={styles.rating}>
           {
-            isStatistics &&
+           !!personalScore&& isStatistics &&
             <Typography size={16} font="m" styles={{ marginRight: 10, }}>
               Personal score
             </Typography>
@@ -122,7 +122,7 @@ const PlaceCard = ({
           }
           {
             !!startDate &&
-            <TimeBadge type="date" time={dayjs(startDate).format('DD.MM.YYYY')} />
+            <TimeBadge type="date" time={startDate} />
           }
         </View>
 

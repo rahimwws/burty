@@ -15,7 +15,7 @@ import { colors } from '@/shared/lib/theme'
 type StatisticsHeaderProps = {
   startDate: string
   startTime: string
-  personalScore: number
+  personalScore: number | string
   shareLink: string
 }
 
