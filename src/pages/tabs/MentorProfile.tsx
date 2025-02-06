@@ -64,6 +64,7 @@ const MentorProfile = () => {
       </ScreenLayout>
     );
   }
+console.log(JSON.stringify(data.data,null,2));
 
   return (
     <ScreenLayout>

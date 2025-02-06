@@ -158,7 +158,7 @@ const StatisticsDetails = () => {
           }
         </View>
       </ParallaxScrollView>
-      <View
+      {/* <View
         style={{
           marginBottom: "5%",
           paddingHorizontal: 20,
@@ -171,7 +171,7 @@ const StatisticsDetails = () => {
           theme="outline"
           textColor="primary"
         />
-      </View>
+      </View> */}
     </View>
   );
 };

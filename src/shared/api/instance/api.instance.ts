@@ -40,7 +40,7 @@ const refreshAccessToken = async () => {
   try {
     const refreshToken = await getRefreshToken();
     if (!refreshToken) {
-      throw new Error("No refresh token available");
+      console.log("No refresh token available");
     }
     const response = await axios.post(
       `${API_URL}auth/refresh`,

@@ -8,7 +8,7 @@ export const useChangeMentorAvatar = () => {
     mutationFn: ({ uri }: { uri: string }) => mentor.uploadAvatar(uri),
     onError: (err) => {
       if (isAxiosError(err)) {
-        alert(err.response?.data.message);
+        alert(JSON.stringify(err.response?.data,null,2));
       }
     },
   });

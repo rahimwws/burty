@@ -2,6 +2,7 @@ import { View } from 'react-native'
 import React from 'react'
 import styles from './styles'
 import Typography from '@/shared/ui/Typography'
+import dayjs from 'dayjs'
 
 type PersonalDetailsProps = {
   items: ({
@@ -59,7 +60,7 @@ const PersonalDetails = ({
               </View>
               <View style={styles.tCell}>
                 <Typography font='b' color='border' align='left'>
-                  {item.timing}
+                  {dayjs(item.timing).format("HH:mm")}
                 </Typography>
               </View>
             </View>

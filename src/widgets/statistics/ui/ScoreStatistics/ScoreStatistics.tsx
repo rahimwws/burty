@@ -58,7 +58,7 @@ const ScoreStatistics = ({
       <View style={[
         styles.row,
         styles.itemsCenter,
-        styles.justifyBetween
+        styles.justifyBetween,
       ]}>
         <Typography color='border' align='left'>
           {team1.name}
