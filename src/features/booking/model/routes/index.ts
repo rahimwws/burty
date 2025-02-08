@@ -45,5 +45,21 @@ export const booking = {
       return await client.post<BookingPaymentIntent>(
          `/stripe/create-payment-intent`
       )
+   },
+   async createTeam(bookingId: string, teamName: string) {
+      return await client.post<{ id: string }>(
+         `/teams/${bookingId}`,
+         {
+            teamName
+         }
+      )
+   },
+   async createTeamParticipants(bookingId: string, teamId: string, email: string) {
+      return await client.post(
+         `/bookings/${bookingId}/participiants/${teamId}`,
+         {
+            email
+         }
+      )
    }
 };

@@ -117,7 +117,6 @@ const WorkoutPlaceDetail = () => {
                />
                <WorkoutDetail
                   date={booking?.data.startDate}
-                  passType={booking?.data.passType}
                   price={booking?.data.price}
                   status={booking?.data.status}
                />
@@ -133,34 +132,50 @@ const WorkoutPlaceDetail = () => {
             style={{
                marginBottom: "5%",
                paddingHorizontal: 20,
+               gap: 10,
             }}
          >
             {
-               !finished ? (
-                  <LargeButton
-                     bg={colors.error}
-                     text="Cancel Reservation"
-                     type="rounded"
-                     textColor="error"
-                     isRoute={false}
-                     theme="outline"
-                     action={() => setModalVisible(true)}
-                  />
-               ) : (
-                  <LargeButton
-                     bg={colors.primary}
-                     text="Detail of Workouts"
-                     type="rounded"
-                     textColor="primary"
-                     isRoute={false}
-                     theme="outline"
-                     action={() => navigation.navigate("WorkoutDetail", {
-                        bookingId,
-                        placeName: booking?.data.spaces.name,
-                        startTime: booking?.data.startTime
-                     })}
-                  />
-               )
+               !finished ?
+                  booking?.data?.status != 'cancelled' ? (
+                     <LargeButton
+                        bg={colors.error}
+                        text="Cancel Reservation"
+                        type="rounded"
+                        textColor="error"
+                        isRoute={false}
+                        theme="outline"
+                        action={() => setModalVisible(true)}
+                     />
+                  ) : null
+                  : (
+                     <>
+                        <LargeButton
+                           bg={colors.primary}
+                           text="Detail of Workouts"
+                           type="rounded"
+                           textColor="primary"
+                           isRoute={false}
+                           theme="outline"
+                           action={() => navigation.navigate("WorkoutDetail", {
+                              bookingId,
+                              placeName: booking?.data.spaces.name,
+                              startTime: booking?.data.startTime
+                           })}
+                        />
+                        <LargeButton
+                           bg={colors.primary}
+                           text="Add team"
+                           type="rounded"
+                           textColor="primary"
+                           isRoute={false}
+                           theme="outline"
+                           action={() => navigation.navigate("AddTeamAndParticipants", {
+                              bookingId,
+                           })}
+                        />
+                     </>
+                  )
             }
          </View>
          <Modal

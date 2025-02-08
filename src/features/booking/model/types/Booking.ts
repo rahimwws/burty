@@ -2,9 +2,16 @@ import BookingStatus from "./BookingStatus"
 
 type Booking = {
    id: string
-   passType: string
-   playersCount: number
+   startDate: string
+   endDate: string
+   startTime: string
+   endTime: string
+   isArchived: boolean
    price: number
+   playersCount: number
+   createdAt: string
+   status: BookingStatus
+   userId: string
    spaceId: string
    spaces: {
       id: string
@@ -34,13 +41,6 @@ type Booking = {
          updatedAt: string
       }[]
    }
-   isArchived: boolean
-   startDate: string
-   status: BookingStatus
-   userId: string
-   createdAt: string
-   startTime: string
-   endTime: string
 }
 
 export default Booking;

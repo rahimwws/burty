@@ -12,7 +12,6 @@ import isTimeOver from "@/shared/lib/utils/isTimeOver";
 import { PlaceCard } from "@/widgets/place";
 import getDateOnly from "@/shared/lib/utils/getDateOnly";
 
-
 const Workouts = () => {
   const [time, setTime] = useState<7 | 30 | 90>(7);
   const role = useRoleStore((store) => store.role);

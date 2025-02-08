@@ -39,7 +39,6 @@ const MentorEditProfile: React.FC = () => {
   const handleChangeAvatar = useCallback(async () => {
     const result = await pickImageAsync();
     if (!result?.assets?.length) return;
-    console.log(result.assets?.[0]?.uri)
     const uri = result.assets[0].uri;
     setImageUri(uri);
     changeAvatar({ uri });
