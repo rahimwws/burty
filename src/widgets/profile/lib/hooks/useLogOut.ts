@@ -13,13 +13,13 @@ export const useLogOut = () => {
     return useMutation({
         mutationFn: () => user.logOut(),
         onSuccess: async () => {
+            navigation.navigate("Auth");
             await removeTokens();
             setUserId("");
             queryClient.invalidateQueries({
                 queryKey: ["profile"]
             });
             alert("Logged out");
-            navigation.navigate("Auth");
         },
         onError: (err) => {
             if (isAxiosError(err)) {
