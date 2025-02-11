@@ -26,9 +26,9 @@ const PlayersTableList = ({
         { gap: 15 }
       ]}>
         {
-          teams?.map(team => {
+          teams?.map((team, index) => {
             return (
-              <View style={[
+              <View key={index} style={[
                 styles.col,
                 styles.flex1,
                 { gap: 12 }

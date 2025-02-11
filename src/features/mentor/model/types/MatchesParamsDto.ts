@@ -1,7 +1,7 @@
 type MatchesParamsDto = {
    page: number
    take: number
-   isCompleted: boolean
+   isCompleted?: boolean
 };
 
 export default MatchesParamsDto;

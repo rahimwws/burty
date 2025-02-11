@@ -52,6 +52,9 @@ const AddTeamAndParticipants = () => {
       }, {
          onSuccess(data) {
             setCreatedTeamId(data?.data?.id);
+         },
+         onError(err) {
+            console.log(err)
          }
       })
    }, [teamName, bookingId]);

@@ -20,7 +20,6 @@ const MatchesHistory = () => {
       refetch: matchesRefetch,
       isRefetching: matchesRefetching
    } = useMatches({
-      isCompleted: true,
       page: 1,
       take: 10,
    });
@@ -59,17 +58,21 @@ const MatchesHistory = () => {
                      place={item.space}
                      used={isTimeOver({ startDate: item.space.openTime, endTime: item.space.endTime })}
                      matchId={item.id}
+                     isHistory
                   />
                );
             }}
             contentContainerStyle={{
                gap: 20,
+               paddingBottom: '14%',
             }}
             showsHorizontalScrollIndicator={false}
             style={{
                marginVertical: "5%",
             }}
-            keyExtractor={(item, index) => item?.id ?? index?.toString()}
+            keyExtractor={(item, index) => {
+               return item?.id ?? index?.toString()
+            }}
             onEndReached={() => {
                if (
                   (!matchesLoading || !matchesError) &&
@@ -78,7 +81,7 @@ const MatchesHistory = () => {
                   matchesFetchNextPage();
                }
             }}
-            onEndReachedThreshold={0.3}
+            onEndReachedThreshold={0.5}
          />
       </ScreenLayout>
    );

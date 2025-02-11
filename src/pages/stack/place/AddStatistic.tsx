@@ -29,7 +29,7 @@ const AddStatistic = () => {
   const { params: { matchId } } = useRoute<MyScreenRouteProp>();
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [showSelectPlayer, setShowSelectPlayer] = useState(false);
-  const [showSelectFoulCard, setShowSelectFoulCard] = useState(true);
+  const [showSelectFoulCard, setShowSelectFoulCard] = useState(false);
   const [showSelectTeam, setShowSelectTeam] = useState(false);
   const [showCompleteMatch, setShowCompleteMatch] = useState(false);
   const [fouledPlayer, setFouledPlayer] = useState<string | null>(null);
@@ -58,6 +58,7 @@ const AddStatistic = () => {
   }
 
   const handleSelectTeam = (team: TeamT) => {
+    console.log(JSON.stringify(team, null, 2))
     setSelectedTeam(team);
     setShowSelectTeam(false);
     setShowSelectPlayer(true);
@@ -93,7 +94,7 @@ const AddStatistic = () => {
   }
 
   const scoreTable = useMatchDetails(match?.data.team)
-
+  console.log(JSON.stringify(match?.data, null, 2))
   return (
     <ScreenLayout>
       <Header

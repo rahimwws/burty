@@ -8,11 +8,14 @@ import {
   MentorComments,
   PlaceHeader,
   PlaceInfo,
+  PlaceLinks,
 } from "@/widgets/place";
 import { LargeButton } from "@/shared/ui/Button";
 import { toast } from "@/shared/ui/Toast";
 import useLinkedSpace from "@/features/mentor/lib/hooks/useLinkedSpace";
 import { useMatch } from "@/features/mentor";
+import { useMatchDetails } from "@/features/statistics";
+import getTimeOnly from "@/shared/lib/utils/getTimeOnly";
 
 type RouteParams = {
   MyScreen: {
@@ -45,6 +48,8 @@ const MentorDetail = () => {
   }, [matchId, match?.data, matchLoading]);
 
   const matchDetails = match?.data;
+
+  const scoreTable = useMatchDetails(match?.data.team)
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -90,11 +95,17 @@ const MentorDetail = () => {
             reserved={true}
             mentor
           />
-          {/* <PlaceLinks
-            isMentor
-          // link={`${matchDetails.goal}`}
-          /> */}
-          <MentorComments />
+          {
+            scoreTable && matchDetails ?
+              <PlaceLinks
+                isMentor
+                link={`Goals: ${scoreTable?.goal?.[0]?.score + scoreTable?.goal?.[1]?.score}`}
+                address={`Foul: ${scoreTable?.foul?.[0]?.score + scoreTable?.foul?.[1]?.score}`}
+                workTime={`${getTimeOnly(matchDetails?.space?.openTime ?? '', 'HH:mm')} - ${getTimeOnly(matchDetails?.space?.endTime ?? '', 'HH:mm')}`}
+              />
+              : null
+          }
+          {/* <MentorComments /> */}
         </View>
       </ParallaxScrollView>
       <View

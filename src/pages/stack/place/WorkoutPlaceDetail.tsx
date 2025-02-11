@@ -160,22 +160,7 @@ const WorkoutPlaceDetail = () => {
                            })}
                         />
                      </>
-                  ) : null
-                  : (
-                     <LargeButton
-                        bg={colors.primary}
-                        text="Detail of Workouts"
-                        type="rounded"
-                        textColor="primary"
-                        isRoute={false}
-                        theme="outline"
-                        action={() => navigation.navigate("WorkoutDetail", {
-                           bookingId,
-                           placeName: booking?.data.spaces.name,
-                           startTime: booking?.data.startTime
-                        })}
-                     />
-                  )
+                  ) : null : null
             }
          </View>
          <Modal

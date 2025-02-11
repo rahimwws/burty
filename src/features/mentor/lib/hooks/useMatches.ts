@@ -8,8 +8,8 @@ const useMatches = ({
    return useInfiniteQuery({
       initialPageParam: 1,
       queryKey: ["matches", isCompleted, page, take],
-      queryFn: ({ pageParam }) => {
-         return mentor.getMatches({ isCompleted, page, take })
+      queryFn: ({ pageParam = page }) => {
+         return mentor.getMatches({ isCompleted, page: pageParam, take })
       },
       getNextPageParam: (lastPage, allPages) =>
          lastPage.data.length ? Number(allPages.length) + 1 : undefined,

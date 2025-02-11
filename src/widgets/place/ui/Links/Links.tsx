@@ -67,27 +67,21 @@ const PlaceLinks = ({
           <Typography>{address}</Typography>
         </View>
         {
-          isMentor ?
-            <View
-              style={styles.row}
-            >
-              <Call size={15} fill={colors.light} />
-              <Typography>{phoneNumber}</Typography>
-            </View>
-            :
+          !isMentor ?
             <TouchableOpacity
               style={styles.row}
-              onPress={() => openLink("tel:+99365123456")}
+              onPress={() => openLink(`tel:${phoneNumber}`)}
             >
               <Call size={15} fill={colors.light} />
               <Typography>{phoneNumber}</Typography>
             </TouchableOpacity>
+            : null
         }
         <View
           style={styles.row}
         >
           <Time size={15} fill={colors.light} />
-          <Typography>Open: {workTime}</Typography>
+          <Typography>{!isMentor ? `Open: ${workTime}` : workTime}</Typography>
         </View>
       </View>
     </>
