@@ -55,6 +55,7 @@ const AddTeamAndParticipants = () => {
                type: "success",
                description: `Team is created`
             })
+            console.log(data?.data)
             setCreatedTeamId(data?.data?.id);
          },
          onError(err) {

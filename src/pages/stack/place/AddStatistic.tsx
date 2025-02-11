@@ -58,7 +58,6 @@ const AddStatistic = () => {
   }
 
   const handleSelectTeam = (team: TeamT) => {
-    console.log(JSON.stringify(team, null, 2))
     setSelectedTeam(team);
     setShowSelectTeam(false);
     setShowSelectPlayer(true);
@@ -94,7 +93,7 @@ const AddStatistic = () => {
   }
 
   const scoreTable = useMatchDetails(match?.data.team)
-  console.log(JSON.stringify(match?.data, null, 2))
+
   return (
     <ScreenLayout>
       <Header

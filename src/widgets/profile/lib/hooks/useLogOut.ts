@@ -22,9 +22,12 @@ export const useLogOut = () => {
             alert("Logged out");
         },
         onError: (err) => {
-            if (isAxiosError(err)) {
-                alert(err.response?.data.message);
-            }
+            navigation.navigate("Auth");
+            setUserId("");
+            queryClient.invalidateQueries({
+                queryKey: ["profile"]
+            });
+            alert("Logged out");
         },
     });
 };

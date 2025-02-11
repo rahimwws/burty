@@ -1,4 +1,4 @@
-import { FlatList } from "react-native";
+import { ActivityIndicator, FlatList } from "react-native";
 import React, { useEffect } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import { Header } from "@/components/header";
@@ -7,6 +7,7 @@ import Line from "@/shared/ui/Lines";
 import { useLinkedSpaces } from "@/features/mentor";
 import { toast } from "@/shared/ui/Toast";
 import isTimeOver from "@/shared/lib/utils/isTimeOver";
+import { colors } from "@/shared/lib/theme";
 
 const Matches = () => {
   const {
