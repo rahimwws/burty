@@ -138,30 +138,15 @@ const WorkoutPlaceDetail = () => {
             {
                !finished ?
                   booking?.data?.status != 'cancelled' ? (
-                     <LargeButton
-                        bg={colors.error}
-                        text="Cancel Reservation"
-                        type="rounded"
-                        textColor="error"
-                        isRoute={false}
-                        theme="outline"
-                        action={() => setModalVisible(true)}
-                     />
-                  ) : null
-                  : (
                      <>
                         <LargeButton
-                           bg={colors.primary}
-                           text="Detail of Workouts"
+                           bg={colors.error}
+                           text="Cancel Reservation"
                            type="rounded"
-                           textColor="primary"
+                           textColor="error"
                            isRoute={false}
                            theme="outline"
-                           action={() => navigation.navigate("WorkoutDetail", {
-                              bookingId,
-                              placeName: booking?.data.spaces.name,
-                              startTime: booking?.data.startTime
-                           })}
+                           action={() => setModalVisible(true)}
                         />
                         <LargeButton
                            bg={colors.primary}
@@ -175,6 +160,21 @@ const WorkoutPlaceDetail = () => {
                            })}
                         />
                      </>
+                  ) : null
+                  : (
+                     <LargeButton
+                        bg={colors.primary}
+                        text="Detail of Workouts"
+                        type="rounded"
+                        textColor="primary"
+                        isRoute={false}
+                        theme="outline"
+                        action={() => navigation.navigate("WorkoutDetail", {
+                           bookingId,
+                           placeName: booking?.data.spaces.name,
+                           startTime: booking?.data.startTime
+                        })}
+                     />
                   )
             }
          </View>
