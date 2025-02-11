@@ -51,6 +51,10 @@ const AddTeamAndParticipants = () => {
          teamName
       }, {
          onSuccess(data) {
+            toast.show({
+               type: "success",
+               description: `Team is created`
+            })
             setCreatedTeamId(data?.data?.id);
          },
          onError(err) {
@@ -73,6 +77,10 @@ const AddTeamAndParticipants = () => {
          email: participantEmail
       }, {
          onSuccess() {
+            toast.show({
+               type: "success",
+               description: `Invitation sent to given email`
+            })
             setParticipantEmail("");
          }
       })
