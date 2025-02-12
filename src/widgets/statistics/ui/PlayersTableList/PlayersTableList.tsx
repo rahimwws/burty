@@ -26,7 +26,7 @@ const PlayersTableList = ({
         { gap: 15 }
       ]}>
         {
-          teams?.map((team, index) => {
+          teams?.slice(0,2)?.map((team, index) => {
             return (
               <View key={index} style={[
                 styles.col,

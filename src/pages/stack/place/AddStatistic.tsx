@@ -66,25 +66,26 @@ const AddStatistic = () => {
   const handleSelectPlayer = (player: TeamT["matchPlayers"][number]) => {
     switch (selectedAction) {
       case "GOAL":
-        createMatchAction({ matchId, playerId: player.users?.[0].id, matchAction: 'GOAL' })
+        createMatchAction({ matchId, playerId: player.users?.id, matchAction: 'GOAL' })
         break;
 
       case "ASSIST":
-        createMatchAction({ matchId, playerId: player.users?.[0].id, matchAction: "ASSIST" })
+        createMatchAction({ matchId, playerId: player.users?.id, matchAction: "ASSIST" })
         break;
 
       case "SAVE":
-        createMatchAction({ matchId, playerId: player.users?.[0].id, matchAction: "SAVE" })
+        createMatchAction({ matchId, playerId: player.users?.id, matchAction: "SAVE" })
         break;
 
       case "YELLOW_CARD":
         setShowSelectFoulCard(true);
-        setFouledPlayer(player.users?.[0].id);
+        setFouledPlayer(player.users?.id);
         break;
 
       default:
         break;
     }
+    setShowSelectPlayer(false);
   }
 
   const handleSelectFoulCard = (action: MatchAction) => {
@@ -134,7 +135,7 @@ const AddStatistic = () => {
                 name: item.teamName,
                 players: item.matchPlayers.map(player => {
                   return {
-                    name: `${player.users?.[0].firstName ?? " "}${player.users?.[0].lastName ?? ""}`
+                    name: player.users?.email
                   }
                 })
               }
@@ -211,7 +212,8 @@ const AddStatistic = () => {
       />
       <ModalSelectFoulCard
         visible={showSelectFoulCard}
-        onClose={handleSelectFoulCard}
+        onClose={() => setShowSelectFoulCard(false)}
+        onConfirmCardSelection={handleSelectFoulCard}
       />
       <ModalSelectPlayer
         visible={showSelectPlayer}

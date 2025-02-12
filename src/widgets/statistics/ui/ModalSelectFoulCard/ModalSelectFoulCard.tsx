@@ -15,12 +15,14 @@ const foulCards = [
 
 type ModalSelectFoulCardProps = {
    visible: boolean
-   onClose?: (action: MatchAction) => void
+   onClose?: Function
+   onConfirmCardSelection?: (action: MatchAction) => void
 }
 
 const ModalSelectFoulCard = ({
    visible = false,
    onClose,
+   onConfirmCardSelection,
 }: ModalSelectFoulCardProps) => {
    const [foulCard, setFoulCard] = useState<MatchAction>("YELLOW_CARD");
 
@@ -77,7 +79,7 @@ const ModalSelectFoulCard = ({
             <View style={{ width: '35%' }}>
                <LargeButton
                   text="Cancel"
-                  action={() => onClose?.(foulCard)}
+                  action={() => onClose?.()}
                   bg={colors.input}
                   textColor="light"
                />
@@ -85,7 +87,7 @@ const ModalSelectFoulCard = ({
             <View style={{ width: '65%' }}>
                <LargeButton
                   text="Cofirm"
-                  action={() => onClose?.(foulCard)}
+                  action={() => onConfirmCardSelection?.(foulCard)}
                   bg={colors.blue}
                   textColor="light"
                   disabled={!foulCard}

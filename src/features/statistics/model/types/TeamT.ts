@@ -9,9 +9,8 @@ type TeamT = {
    matchPlayers: {
       users: {
          id: string
-         firstName: string
-         lastName: string
-      }[]
+         email: string
+      }
    }[]
 }
 
