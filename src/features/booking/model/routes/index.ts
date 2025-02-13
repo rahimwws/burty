@@ -47,7 +47,7 @@ export const booking = {
       )
    },
    async createTeam(bookingId: string, teamName: string) {
-      return await client.post<{ id: string }>(
+      return await client.post<CreatedTeamDto>(
          `/teams/${bookingId}`,
          {
             teamName

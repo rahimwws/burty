@@ -55,8 +55,7 @@ const AddTeamAndParticipants = () => {
                type: "success",
                description: `Team is created`
             })
-            console.log(data?.data)
-            setCreatedTeamId(data?.data?.id);
+            setCreatedTeamId(data?.data?.createdTeam.id);
          },
          onError(err) {
             console.log(err)
@@ -83,6 +82,9 @@ const AddTeamAndParticipants = () => {
                description: `Invitation sent to given email`
             })
             setParticipantEmail("");
+         },
+         onError(err) {
+            console.log(JSON.stringify(err?.response, null, 2))
          }
       })
    }, [bookingId, createdTeamId, participantEmail])
