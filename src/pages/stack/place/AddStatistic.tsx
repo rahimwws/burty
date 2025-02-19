@@ -135,7 +135,7 @@ const AddStatistic = () => {
                 name: item.teamName,
                 players: item.matchPlayers.map(player => {
                   return {
-                    name: player.users?.email
+                    name: `${player?.users?.firstName ?? ""}${" " + (player?.users?.lastName ?? "")}`
                   }
                 })
               }

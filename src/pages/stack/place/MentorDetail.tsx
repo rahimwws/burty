@@ -63,8 +63,8 @@ const MentorDetail = () => {
             <PlaceHeader role="mentor" link="" />
             <Image
               source={
-                matchDetails?.space?.medias?.[0].filePath ?
-                  { uri: matchDetails?.space?.medias?.[0].filePath }
+                matchDetails?.space?.medias?.[0]?.filePath ?
+                  { uri: matchDetails?.space?.medias?.[0]?.filePath }
                   :
                   require("@/shared/assets/images/bg-card.png")
               }
@@ -99,8 +99,8 @@ const MentorDetail = () => {
             scoreTable && matchDetails ?
               <PlaceLinks
                 isMentor
-                link={`Goals: ${scoreTable?.goal?.[0]?.score + scoreTable?.goal?.[1]?.score}`}
-                address={`Foul: ${scoreTable?.foul?.[0]?.score + scoreTable?.foul?.[1]?.score}`}
+                link={`Goals: ${scoreTable?.goal?.[0]?.score + scoreTable?.goal?.[1]?.score || 0}`}
+                address={`Foul: ${scoreTable?.foul?.[0]?.score + scoreTable?.foul?.[1]?.score || 0}`}
                 workTime={`${getTimeOnly(matchDetails?.space?.openTime ?? '', 'HH:mm')} - ${getTimeOnly(matchDetails?.space?.endTime ?? '', 'HH:mm')}`}
               />
               : null
