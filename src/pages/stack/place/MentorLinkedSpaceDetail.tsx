@@ -53,8 +53,8 @@ const MentorLinkedSpaceDetail = () => {
                   <PlaceHeader link={spaceDetail?.site || ''} />
                   <Image
                      source={
-                        spaceDetail?.medias?.[0].filePath ?
-                           { uri: spaceDetail?.medias?.[0].filePath }
+                        spaceDetail?.medias?.[0]?.filePath ?
+                           { uri: spaceDetail?.medias?.[0]?.filePath }
                            :
                            require("@/shared/assets/images/bg-card.png")
                      }

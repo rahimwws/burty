@@ -22,7 +22,7 @@ const ModalSelectPlayer = ({
   onSelectPlayer
 }: ModalSelectPlayerProps) => {
   const [player, setPlayer] = useState<string | null>(null);
-  
+
   return (
     <Modal
       visible={visible}
@@ -59,11 +59,11 @@ const ModalSelectPlayer = ({
                 <DarkButton
                   isRoute={false}
                   text={item.users?.email}
-                  disabled={item.users?.id !== player}
                   action={() => {
                     setPlayer(item.users?.id);
                     onSelectPlayer?.(item)
                   }}
+                  disabled
                 />
               </View>
             )

@@ -59,6 +59,7 @@ const ModalSelectTeam = ({
                            isRoute={false}
                            text={team.teamName}
                            action={() => onSelectTeam?.(team)}
+                           disabled
                         />
                      </View>
                   )
